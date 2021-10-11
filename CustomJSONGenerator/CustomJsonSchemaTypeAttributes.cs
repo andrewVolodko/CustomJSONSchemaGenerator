@@ -29,10 +29,5 @@ namespace CustomJSONGenerator
     }
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
-    public class GenerateJSONSchemaAttribute : Attribute
-    {
-        public bool Value { get; }
-
-        public GenerateJSONSchemaAttribute(bool value = true) => Value = value;
-    }
+    public class GenerateJSONSchemaAttribute : Attribute {}
 }
