@@ -1,6 +1,7 @@
 using System;
 using CustomJSONGenerator;
 using NUnit.Framework;
+using TestPart.Model.Meetings;
 
 namespace TestPart
 {
@@ -12,7 +13,8 @@ namespace TestPart
         {
             var type = JSONSchemaGenerator.BuildTypeWithTypesToGenerateJSchema();
 
-            var jSchemaFromType = JSONSchemaGenerator.GenerateJSchema(type).ToString();
+            var jSchemaFromType = JSONSchemaGenerator.GenerateJSchema(type);
+            var test = jSchemaFromType.Properties[typeof(MeetingSync).FullName].ToString();
             Console.WriteLine();
         }
     }

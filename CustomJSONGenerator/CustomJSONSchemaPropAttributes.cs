@@ -2,7 +2,7 @@ using System;
 
 namespace CustomJSONGenerator
 {
-    public class JSONSchemaPropAttribute : Attribute {}
+    public abstract class JSONSchemaPropAttribute : Attribute {}
     
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
     public class MaximumAttribute : JSONSchemaPropAttribute
