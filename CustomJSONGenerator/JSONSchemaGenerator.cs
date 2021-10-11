@@ -11,11 +11,12 @@ using RoomBot.Infrastructure.Helpers;
 
 namespace CustomJSONGenerator
 {
-    public static class JSONSchemaGenerator
+    public class JSONSchemaGenerator
     {
-        private static JSchema _generatedJSchema;
+        private static JSONSchemaGenerator _instance;
+        private readonly JSchema _globalJSONSchema;
 
-        public static JSchema GenerateJSchema(Type type)
+        private JSONSchemaGenerator()
         {
             var generator = new JSchemaGenerator
             {
@@ -23,21 +24,33 @@ namespace CustomJSONGenerator
                 SchemaIdGenerationHandling = SchemaIdGenerationHandling.TypeName
             };
 
-            return generator.Generate(type);
+            var type = BuildTypeWithTypesToGenerateJSONSchema();
+            _globalJSONSchema = generator.Generate(type);
         }
 
-        public static Type BuildTypeWithTypesToGenerateJSchema()
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="jsonSchemaName">FullName of the type the schema was generated for</param>
+        /// <returns></returns>
+        public static JSchema GetJSONSchema(string jsonSchemaName)
+        {
+            _instance ??= new JSONSchemaGenerator();
+            return _instance._globalJSONSchema.Properties[jsonSchemaName];
+        }
+
+        private static Type BuildTypeWithTypesToGenerateJSONSchema()
         {
             var types = new Dictionary<string, Type>();
 
-            var returnTypesToGenerateJSchema = AppDomain.CurrentDomain.GetAssemblies()
+            var typesToGenerateJSONSchema = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(assemble => assemble.GetTypes())
                 .Where(type =>
                     // !type.IsAbstract &&
                     Attribute.IsDefined(type, typeof(GenerateJSONSchemaAttribute), true))
                 .ToList();
 
-            foreach (var returnType in returnTypesToGenerateJSchema)
+            foreach (var returnType in typesToGenerateJSONSchema)
             {
                 var fullName = returnType.FullName;
                 if (!types.ContainsKey(fullName!))

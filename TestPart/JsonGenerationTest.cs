@@ -11,10 +11,7 @@ namespace TestPart
         [Test]
         public void Test1()
         {
-            var type = JSONSchemaGenerator.BuildTypeWithTypesToGenerateJSchema();
-
-            var jSchemaFromType = JSONSchemaGenerator.GenerateJSchema(type);
-            var test = jSchemaFromType.Properties[typeof(MeetingSync).FullName].ToString();
+            var jSchemaForType = JSONSchemaGenerator.GetJSONSchema(typeof(MeetingSync).FullName).ToString();
             Console.WriteLine();
         }
     }
