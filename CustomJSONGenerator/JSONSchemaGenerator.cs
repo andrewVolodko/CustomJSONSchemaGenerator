@@ -59,37 +59,6 @@ namespace CustomJSONGenerator
             var classBuilder = new DynamicClassBuilder("TypesToCreateJSchema");
             return classBuilder.CreateType(types.Keys.ToArray(), types.Values.ToArray());
         }
-
-        // public static bool ValidateJsonSchema<T>(string jsonData, out IList<ValidationError> errors) // Add errors
-        // {
-        //     // Create class that contains all props of all types to create json-schema.
-        //     // It's necessary to do this way because of the JSchemaGenerator restriction of 10 schema generations per hour
-        //     // Doing this way JSchemaGenerator generates only one big schema with sub-schemas inside
-        //     _generatedJSchema ??= GenerateJSchema(BuildTypeWithTypesToGenerateJSchema());
-        //
-        //     var schema = _generatedJSchema.Properties[typeof(T).FullName!];
-        //     var jObjectData = JObject.Parse(jsonData);
-        //     return jObjectData.IsValid(schema, out errors);
-        // }
-        //
-        // public static JObject GetJsonObjectFromJsonFile(string jsonFile)
-        // {
-        //     string fileString;
-        //     using (var sw = new StreamReader(jsonFile))
-        //     {
-        //         try
-        //         {
-        //             fileString = sw.ReadToEnd();
-        //             sw.Close();
-        //         }
-        //         catch (FileNotFoundException)
-        //         {
-        //             throw new FileNotFoundException("Configuration file was NOT found.");
-        //         }
-        //     }
-        //
-        //     return JObject.Parse(fileString);
-        // }
     }
 
     // Class to extend JSchemaGenerationProvider functionality. E.g. add more jsonSchema field and object attributes

@@ -1,27 +1,25 @@
 {
-    "result": {
-        "event_id": "000000006C92E5D2EB9B774FAA55905DF423430D0700FF8B1B35016BEC418DA5136B7C49C24200000000010D0000FF8B1B35016BEC418DA5136B7C49C2420000A4EE8E300000",
-        "item_id": {
-            "id": "AAMkADdmMTZhNzg5LTE0ODUtNGJiZi05YTE4LTZiNTBjYjU3OTZkYgBGAAAAAAA6/pai2V8VTauuZK1WpxO9BwDu5d6HJWYHToPxXM3YGokOAAAA3lG4AADyJWQ76KlZSITSdyXwkBkyAAEjIHqNAAA=",
-            "change_key": "DwAAABYAAADyJWQ76KlZSITSdyXwkBkyAAEjfLOx"
-        },
-        "attendees": [
-            {
-                "name": "Minsk I T10 I 901 I 12",
-                "email": "Minsk-T10-901-12@itechart-group.com"
-            },
-            {
-                "name": "roomfinder.tbot-qa",
-                "email": "roomfinder.tbot-qa@itechart-group.com"
-            }
-        ],
-        "room": {
-            "name": "Minsk I T10 I 901 I 12",
-            "email": "Minsk-T10-901-12@itechart-group.com"
-        },
-        "start": 1634367600,
-        "end": 1634370000,
-        "location_name": "Minsk I T10 I 901 I 12",
-        "subject": "New meeting for roomfinder.tbot-qa@itechart-group.com"
+  "event_id": "000000006C92E5D2EB9B774FAA55905DF423430D0700FF8B1B35016BEC418DA5136B7C49C24200000000010D0000FF8B1B35016BEC418DA5136B7C49C2420000A4EE8E300000",
+  "item_id": {
+    "id": "AAMkADdmMTZhNzg5LTE0ODUtNGJiZi05YTE4LTZiNTBjYjU3OTZkYgBGAAAAAAA6/pai2V8VTauuZK1WpxO9BwDu5d6HJWYHToPxXM3YGokOAAAA3lG4AADyJWQ76KlZSITSdyXwkBkyAAEjIHqNAAA=",
+    "change_key": "DwAAABYAAADyJWQ76KlZSITSdyXwkBkyAAEjfLOx"
+  },
+  "attendees": [
+    {
+      "name": "Minsk I T10 I 901 I 12",
+      "email": "Minsk-T10-901-12@itechart-group.com"
+    },
+    {
+      "name": "roomfinder.tbot-qa",
+      "email": "roomfinder.tbot-qa@itechart-group.com"
     }
+  ],
+  "room": {
+    "name": "Minsk I T10 I 901 I 12",
+    "email": "Minsk-T10-901-12@itechart-group.com"
+  },
+  "start": 1634367600,
+  "end": 1634370000,
+  "location_name": "Minsk I T10 I 901 I 12",
+  "subject": "New meeting for roomfinder.tbot-qa@itechart-group.com"
 }
