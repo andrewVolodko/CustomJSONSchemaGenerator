@@ -1,0 +1,26 @@
+using CustomJSONGenerator;
+using Newtonsoft.Json;
+
+namespace TestPart.Model.Meeting
+{
+    public abstract class BaseMeeting
+    {
+        [JsonProperty("item_id", Required = Required.Always)]
+        public ItemId ItemId { get; set; }
+        
+        [JsonProperty("location_name", Required = Required.Always), MinimumStringLength(1)]
+        public string LocationName { get; set; }
+        
+        [JsonProperty("subject", Required = Required.Always), MinimumStringLength(1)]
+        public string Subject { get; set; }
+
+        protected BaseMeeting(ItemId itemId, string locationName, string subject) : 
+            this(locationName, subject) => ItemId = itemId;
+
+        protected BaseMeeting(string locationName, string subject)
+        {
+            LocationName = locationName;
+            Subject = subject;
+        }
+    }
+}
