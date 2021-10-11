@@ -46,8 +46,7 @@ namespace CustomJSONGenerator
             var typesToGenerateJSONSchema = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(assemble => assemble.GetTypes())
                 .Where(type =>
-                    // !type.IsAbstract &&
-                    Attribute.IsDefined(type, typeof(GenerateJSONSchemaAttribute), true))
+                    Attribute.IsDefined(type, typeof(GenerateJSONSchemaAttribute)))
                 .ToList();
 
             foreach (var returnType in typesToGenerateJSONSchema)
