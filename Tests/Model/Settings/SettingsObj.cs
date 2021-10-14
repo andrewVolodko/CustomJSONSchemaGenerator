@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace Tests.Model.Settings
 {
     [GenerateJSONSchema]
-    public class SettingsObj
+    public class SettingsObj : IResponse
 
     {
     [JsonProperty("settings", Required = Required.Always), MinimumStringLength(1)]

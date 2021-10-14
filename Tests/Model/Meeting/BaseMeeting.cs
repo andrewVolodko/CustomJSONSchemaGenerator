@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Tests.Model.Meeting
 {
-    public abstract class BaseMeeting
+    public abstract class BaseMeeting : IResponse
     {
         [JsonProperty("item_id", Required = Required.Always)]
         public ItemId ItemId { get; set; }

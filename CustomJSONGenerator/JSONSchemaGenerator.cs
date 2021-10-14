@@ -26,6 +26,8 @@ namespace CustomJSONGenerator
 
             var type = BuildTypeWithTypesToGenerateJSONSchema();
             _globalJSONSchema = generator.Generate(type);
+            var test = _globalJSONSchema.ToString();
+            Console.WriteLine();
         }
 
         /// <summary>
@@ -43,17 +45,36 @@ namespace CustomJSONGenerator
         {
             var types = new Dictionary<string, Type>();
 
-            var typesToGenerateJSONSchema = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(assemble => assemble.GetTypes())
-                .Where(type =>
-                    Attribute.IsDefined(type, typeof(GenerateJSONSchemaAttribute)))
+            var assembleTypes = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(assemble => assemble.GetTypes());
+
+            var typesToGenerateJSONSchema = assembleTypes
+                .Where(type => Attribute.IsDefined(type, typeof(GenerateJSONSchemaAttribute)))
                 .ToList();
 
-            foreach (var returnType in typesToGenerateJSONSchema)
+            foreach (var type in typesToGenerateJSONSchema)
             {
-                var fullName = returnType.FullName;
-                if (!types.ContainsKey(fullName!))
-                    types.Add(fullName, returnType);
+                string fullName;
+                if (type.IsGenericType)
+                {
+                    var constraintType = type.GetGenericArguments()[0].GetGenericParameterConstraints()[0];
+                    var typesImplOrInheritConstraint = assembleTypes
+                        .Where(t => constraintType.IsAssignableFrom(t) && t.Name != constraintType.Name)
+                        .ToList();
+
+                    foreach (var constructedGenericType in typesImplOrInheritConstraint.Select(typeImplOrInheritConstraint => type.MakeGenericType(typeImplOrInheritConstraint)))
+                    {
+                        fullName = constructedGenericType.FullName;
+                        if (!types.ContainsKey(fullName!))
+                            types.Add(fullName, constructedGenericType);
+                    }
+                }
+                else
+                {
+                    fullName = type.FullName;
+                    if (!types.ContainsKey(fullName!))
+                        types.Add(fullName, type);
+                }
             }
 
             var classBuilder = new DynamicClassBuilder("TypesToCreateJSchema");

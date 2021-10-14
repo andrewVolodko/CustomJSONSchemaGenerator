@@ -5,7 +5,9 @@ using CustomJSONGenerator;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using NUnit.Framework;
+using Tests.Model;
 using Tests.Model.Meetings;
+using Tests.Model.Settings;
 
 namespace Tests
 {
@@ -15,13 +17,13 @@ namespace Tests
         [Test]
         public void Test1()
         {
-            var jsonData = GetJsonObjectFromJsonFile("MeetingSyncResponse.json").ToString();
-            var schema = JSONSchemaGenerator.GetJSONSchema(typeof(MeetingSync).FullName);
+            var jsonData = GetJsonObjectFromJsonFile("MeetingSyncResponseWithResult.json").ToString();
+            var schema = JSONSchemaGenerator.GetJSONSchema(typeof(MeetingAsync).FullName);
 
             var test = schema.ToString();
             var result = ValidateJsonSchema(jsonData, schema, out var jsonSchemaValidationErrors);
 
-            Console.WriteLine();
+            Console.WriteLine(result);
         }
 
         public static bool ValidateJsonSchema(string jsonData, JSchema schema, out IList<ValidationError> errors) // Add errors
