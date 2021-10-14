@@ -2,9 +2,9 @@ using System;
 
 namespace CustomJSONGenerator
 {
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public abstract class JSONSchemaTypeAttribute : Attribute { }
 
-    [AttributeUsage(AttributeTargets.Class)]
     public class MaximumPropertiesAttribute : JSONSchemaTypeAttribute
     {
         public int Value { get; }
@@ -12,7 +12,6 @@ namespace CustomJSONGenerator
         public MaximumPropertiesAttribute(int value) => Value = value;
     }
 
-    [AttributeUsage(AttributeTargets.Class)]
     public class MinimumPropertiesAttribute : JSONSchemaTypeAttribute
     {
         public int Value { get; }
@@ -20,7 +19,6 @@ namespace CustomJSONGenerator
         public MinimumPropertiesAttribute(int value) => Value = value;
     }
     
-    [AttributeUsage(AttributeTargets.Class)]
     public class AllowAdditionalPropertiesAttribute : JSONSchemaTypeAttribute
     {
         public bool Value { get; }
@@ -28,6 +26,6 @@ namespace CustomJSONGenerator
         public AllowAdditionalPropertiesAttribute(bool value = true) => Value = value;
     }
 
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface, Inherited = false)]
     public class GenerateJSONSchemaAttribute : Attribute {}
 }
