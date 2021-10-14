@@ -226,6 +226,7 @@ namespace CustomJSONGenerator
                                     curProp.Minimum = minimumAttribute.Value;
                                     break;
                             }
+
                             break;
                         case JSchemaType.String:
                             switch (propAttribute)
@@ -240,23 +241,22 @@ namespace CustomJSONGenerator
                                     curProp.Format = stringFormat.Value;
                                     break;
                             }
+
                             break;
                         case JSchemaType.Array:
                             switch (propAttribute)
                             {
                                 case MinimumItemsAttribute minItemsAttribute:
-                                    if (curPropType == JSchemaType.Array)
-                                        curProp.MinimumItems = minItemsAttribute.Value;
+                                    curProp.MinimumItems = minItemsAttribute.Value;
                                     break;
                                 case MaximumItemsAttribute maxItemsAttribute:
-                                    if (curPropType == JSchemaType.Array)
-                                        curProp.MaximumItems = maxItemsAttribute.Value;
+                                    curProp.MaximumItems = maxItemsAttribute.Value;
                                     break;
                                 case AllowAdditionalItemsAttribute allowAdditionalItemsAttribute:
-                                    if (curPropType == JSchemaType.Array)
-                                        curProp.AllowAdditionalItems = allowAdditionalItemsAttribute.Value;
+                                    curProp.AllowAdditionalItems = allowAdditionalItemsAttribute.Value;
                                     break;
                             }
+
                             break;
                     }
                 }
