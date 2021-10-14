@@ -41,6 +41,17 @@ namespace CustomJSONGenerator
             return _instance._globalJSONSchema.Properties[jsonSchemaName];
         }
 
+
+        /// <summary>
+        /// Obtaining all types which require JSON schemas, and generating one big common type
+        /// with properties of types obtained.
+        /// If obtained type is generic type, Generic Parameter Constraint HAVE to be specified.
+        /// Algorithm searches for all types that inherit or implement the constraint and makes generic type
+        /// E.g. there is Response<T> where T: IResponse
+        /// MeetingObj implements IResponse
+        /// So that algorithm will generate Response<MeetingObj> generic type, in order to generate such JSON schema in the future
+        /// </summary>
+        /// <returns>Common type with props of types for which JSON schemas required</returns>
         private static Type BuildTypeWithTypesToGenerateJSONSchema()
         {
             var types = new Dictionary<string, Type>();
