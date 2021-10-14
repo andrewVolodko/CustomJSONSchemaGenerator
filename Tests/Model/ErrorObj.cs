@@ -1,4 +1,4 @@
-﻿namespace RoomBot.API.Model
+﻿namespace Tests.Model
 {
     public class ErrorObj
     {

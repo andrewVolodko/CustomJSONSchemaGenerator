@@ -1,8 +1,8 @@
 using CustomJSONGenerator;
 using Newtonsoft.Json;
-using TestPart.Model.Meeting;
+using Tests.Model.Meeting;
 
-namespace TestPart.Model.Meetings
+namespace Tests.Model.Meetings
 {
     [GenerateJSONSchema]
     [AllowAdditionalProperties(false)]

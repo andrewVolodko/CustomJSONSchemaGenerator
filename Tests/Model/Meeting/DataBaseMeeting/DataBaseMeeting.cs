@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using TestPart.Model.Meeting.DataBaseMeeting.RequiredAttendeesArray;
+using Tests.Model.Meeting.DataBaseMeeting.RequiredAttendeesArray;
 
-namespace TestPart.Model.Meeting.DataBaseMeeting
+namespace Tests.Model.Meeting.DataBaseMeeting
 {
     public class DataBaseMeeting : BaseMeeting, IComparable<DataBaseMeeting>
     {

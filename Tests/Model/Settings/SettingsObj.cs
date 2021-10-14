@@ -1,7 +1,7 @@
 ﻿using CustomJSONGenerator;
 using Newtonsoft.Json;
 
-namespace TestPart.Model.Settings
+namespace Tests.Model.Settings
 {
     [GenerateJSONSchema]
     public class SettingsObj

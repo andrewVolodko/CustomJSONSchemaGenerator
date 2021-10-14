@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
-namespace TestPart.Model.Meeting.DataBaseMeeting.RequiredAttendeesArray
+namespace Tests.Model.Meeting.DataBaseMeeting.RequiredAttendeesArray
 {
     public class RequiredAttendee : IComparable<RequiredAttendee>
     {

@@ -1,7 +1,7 @@
 ﻿using CustomJSONGenerator;
 using Newtonsoft.Json;
 
-namespace TestPart.Model
+namespace Tests.Model
 {
     [GenerateJSONSchema]
     [AllowAdditionalProperties(false)]

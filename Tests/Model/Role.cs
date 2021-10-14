@@ -1,4 +1,4 @@
-﻿namespace TestPart.Model
+﻿namespace Tests.Model
 {
     public enum Role
     {

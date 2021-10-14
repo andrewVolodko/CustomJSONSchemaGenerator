@@ -1,4 +1,4 @@
-﻿namespace TestPart.Model.Meeting
+﻿namespace Tests.Model.Meeting
 {
     public enum EventType
     {

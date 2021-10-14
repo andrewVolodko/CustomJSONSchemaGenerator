@@ -5,9 +5,9 @@ using CustomJSONGenerator;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using NUnit.Framework;
-using TestPart.Model.Meetings;
+using Tests.Model.Meetings;
 
-namespace TestPart
+namespace Tests
 {
     [TestFixture]
     public class JsonGenerationTest
@@ -16,7 +16,7 @@ namespace TestPart
         public void Test1()
         {
             var jsonData = GetJsonObjectFromJsonFile("MeetingSyncResponse.json").ToString();
-            JSchema schema = JSONSchemaGenerator.GetJSONSchema(typeof(MeetingSync).FullName);
+            var schema = JSONSchemaGenerator.GetJSONSchema(typeof(MeetingSync).FullName);
 
             var result = ValidateJsonSchema(jsonData, schema, out var jsonSchemaValidationErrors);
 

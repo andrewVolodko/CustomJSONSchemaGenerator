@@ -2,7 +2,7 @@
 using CustomJSONGenerator;
 using Newtonsoft.Json;
 
-namespace TestPart.Model.Auth
+namespace Tests.Model.Auth
 {
     [GenerateJSONSchema]
     [AllowAdditionalProperties(false)]

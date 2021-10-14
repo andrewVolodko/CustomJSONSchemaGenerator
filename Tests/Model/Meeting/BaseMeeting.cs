@@ -1,7 +1,7 @@
 using CustomJSONGenerator;
 using Newtonsoft.Json;
 
-namespace TestPart.Model.Meeting
+namespace Tests.Model.Meeting
 {
     public abstract class BaseMeeting
     {

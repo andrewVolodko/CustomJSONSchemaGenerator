@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomJSONGenerator", "CustomJSONGenerator\CustomJSONGenerator.csproj", "{96E1612C-7927-4D9B-B283-9710995A36B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPart", "TestPart\TestPart.csproj", "{07E41B90-A69F-46E7-A1F7-C14AD6435542}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{07E41B90-A69F-46E7-A1F7-C14AD6435542}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
