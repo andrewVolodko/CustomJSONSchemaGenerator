@@ -8,7 +8,7 @@ namespace Tests.Model
     public class AuthTokenData : IResponse
 
     {
-    [JsonProperty("auth_token", Required = Required.Always), MinimumStringLength(1)]
+    [JsonProperty("auth_token", Required = Required.Always), MinimumLength(1)]
     public string AuthToken { get; set; }
 
     [JsonProperty("issued", Required = Required.Always), Minimum(1)]

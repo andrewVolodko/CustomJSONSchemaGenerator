@@ -17,7 +17,7 @@ namespace Tests
         public void Test1()
         {
             var jsonData = GetJsonObjectFromJsonFile("MeetingSyncResponseWithResult.json").ToString();
-            var schema = CustomJsonSchemaGenerator.GetJsonSchema(typeof(Response<MeetingSync>).FullName);
+            var schema = CustomJsonSchemaGenerator.GetJsonSchema(typeof(Response<Meeting>).FullName);
 
             var test = schema.ToString();
             var result = ValidateJsonSchema(jsonData, schema, out var jsonSchemaValidationErrors);

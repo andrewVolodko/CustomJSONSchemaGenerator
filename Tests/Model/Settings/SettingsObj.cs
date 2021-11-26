@@ -7,7 +7,7 @@ namespace Tests.Model.Settings
     public class SettingsObj : IResponse
 
     {
-    [JsonProperty("settings", Required = Required.Always), MinimumStringLength(1)]
+    [JsonProperty("settings", Required = Required.Always), MinimumLength(1)]
     public string Settings { get; set; }
 
 

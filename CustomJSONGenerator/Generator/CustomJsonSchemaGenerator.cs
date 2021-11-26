@@ -281,6 +281,9 @@ namespace CustomJSONGenerator.Generator
                                 case ExclusiveMinimumAttribute:
                                     currentProperty.ExclusiveMinimum = true;
                                     break;
+                                case MultipleOfAttribute multipleOfAttribute:
+                                    currentProperty.MultipleOf = multipleOfAttribute.Value;
+                                    break;
                             }
 
                             break;
@@ -290,7 +293,7 @@ namespace CustomJSONGenerator.Generator
                                 case MaximumLengthAttribute maxLengthAttribute:
                                     currentProperty.MaximumLength = (long)maxLengthAttribute.Value;
                                     break;
-                                case MinimumStringLengthAttribute minLengthAttribute:
+                                case MinimumLengthAttribute minLengthAttribute:
                                     currentProperty.MinimumLength = (long)minLengthAttribute.Value;
                                     break;
                                 case StringFormat stringFormat:

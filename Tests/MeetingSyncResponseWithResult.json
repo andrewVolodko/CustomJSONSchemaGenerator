@@ -19,8 +19,8 @@
             "name": "Minsk I T10 I 901 I 12",
             "email": "Minsk-T10-901-12@itechart-group.com"
         },
-        "start": 1634367600,
-        "end": 21474836471,
+        "start": 20000,
+        "end": 100,
         "location_name": "Minsk I T10 I 901 I 12",
         "subject": "New meeting for roomfinder.tbot-qa@itechart-group.com"
     }

@@ -26,6 +26,13 @@ namespace CustomJSONGenerator.Generator
     [Description("If provided, Minimum property will be verified not inclusively")]
     public class ExclusiveMinimumAttribute : JsonSchemaPropAttribute {}
 
+    public class MultipleOfAttribute : JsonSchemaPropAttribute
+    {
+        public double Value { get; }
+
+        public MultipleOfAttribute(double value) => Value = value;
+    }
+
     public class MaximumLengthAttribute : JsonSchemaPropAttribute
     {
         public ulong Value { get; }
@@ -33,11 +40,11 @@ namespace CustomJSONGenerator.Generator
         public MaximumLengthAttribute(ulong value) => Value = value;
     }
 
-    public class MinimumStringLengthAttribute : JsonSchemaPropAttribute
+    public class MinimumLengthAttribute : JsonSchemaPropAttribute
     {
         public ulong Value { get; }
 
-        public MinimumStringLengthAttribute(ulong value) => Value = value;
+        public MinimumLengthAttribute(ulong value) => Value = value;
     }
 
     public class MinimumItemsAttribute : JsonSchemaPropAttribute
