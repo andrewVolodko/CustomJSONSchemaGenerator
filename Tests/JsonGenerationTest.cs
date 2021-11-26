@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using CustomJSONGenerator;
+using CustomJSONGenerator.Generator;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using NUnit.Framework;
 using Tests.Model;
 using Tests.Model.Meetings;
-using Tests.Model.Settings;
 
 namespace Tests
 {
@@ -18,7 +17,7 @@ namespace Tests
         public void Test1()
         {
             var jsonData = GetJsonObjectFromJsonFile("MeetingSyncResponseWithResult.json").ToString();
-            var schema = JSONSchemaGenerator.GetJSONSchema(typeof(MeetingAsync).FullName);
+            var schema = CustomJsonSchemaGenerator.GetJsonSchema(typeof(Response<MeetingSync>).FullName);
 
             var test = schema.ToString();
             var result = ValidateJsonSchema(jsonData, schema, out var jsonSchemaValidationErrors);

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 
-namespace RoomBot.Infrastructure.Helpers
+namespace CustomJSONGenerator.Generator
 {
     public class DynamicClassBuilder
     {

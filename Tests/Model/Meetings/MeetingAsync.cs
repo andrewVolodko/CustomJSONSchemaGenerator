@@ -1,4 +1,4 @@
-using CustomJSONGenerator;
+using CustomJSONGenerator.Generator;
 using Newtonsoft.Json;
 using Tests.Model.Meeting;
 
@@ -17,7 +17,7 @@ namespace Tests.Model.Meetings
         [JsonProperty("start", Required = Required.Always), Minimum(0)] 
         public long Start { get; set; }
         
-        [JsonProperty("end", Required = Required.Always), Minimum(0)] 
+        [JsonProperty("end", Required = Required.Always), Minimum(0)]
         public long End { get; set; }
 
         

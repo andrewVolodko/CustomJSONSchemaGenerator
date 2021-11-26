@@ -1,4 +1,4 @@
-using CustomJSONGenerator;
+using CustomJSONGenerator.Generator;
 using Newtonsoft.Json;
 using Tests.Model.Meeting;
 

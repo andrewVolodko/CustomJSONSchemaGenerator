@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using Newtonsoft.Json.Schema.Generation;
-using RoomBot.Infrastructure.Helpers;
 
-namespace CustomJSONGenerator
+namespace CustomJSONGenerator.Generator
 {
-    public class JSONSchemaGenerator
+    public class CustomJsonSchemaGenerator
     {
-        private static JSONSchemaGenerator _instance;
-        private readonly JSchema _globalJSONSchema;
+        private static CustomJsonSchemaGenerator _instance;
+        private readonly JSchema _globalJsonSchema;
 
-        private JSONSchemaGenerator()
+        private CustomJsonSchemaGenerator()
         {
             var generator = new JSchemaGenerator
             {
@@ -24,10 +21,8 @@ namespace CustomJSONGenerator
                 SchemaIdGenerationHandling = SchemaIdGenerationHandling.TypeName
             };
 
-            var type = BuildTypeWithTypesToGenerateJSONSchema();
-            _globalJSONSchema = generator.Generate(type);
-            var test = _globalJSONSchema.ToString();
-            Console.WriteLine();
+            var type = BuildTypeWithTypesToGenerateJsonSchema();
+            _globalJsonSchema = generator.Generate(type);
         }
 
         /// <summary>
@@ -35,10 +30,10 @@ namespace CustomJSONGenerator
         /// </summary>
         /// <param name="jsonSchemaName">FullName of the type the schema was generated for</param>
         /// <returns></returns>
-        public static JSchema GetJSONSchema(string jsonSchemaName)
+        public static JSchema GetJsonSchema(string jsonSchemaName)
         {
-            _instance ??= new JSONSchemaGenerator();
-            return _instance._globalJSONSchema.Properties[jsonSchemaName];
+            _instance ??= new CustomJsonSchemaGenerator();
+            return _instance._globalJsonSchema.Properties[jsonSchemaName];
         }
 
 
@@ -52,20 +47,22 @@ namespace CustomJSONGenerator
         /// So that algorithm will generate Response<MeetingObj> generic type, in order to generate such JSON schema in the future
         /// </summary>
         /// <returns>Common type with props of types for which JSON schemas required</returns>
-        private static Type BuildTypeWithTypesToGenerateJSONSchema()
+        private static Type BuildTypeWithTypesToGenerateJsonSchema()
         {
             var types = new Dictionary<string, Type>();
 
             var assembleTypes = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(assemble => assemble.GetTypes());
+                .SelectMany(assemble => assemble.GetTypes()).ToList();
 
-            var typesToGenerateJSONSchema = assembleTypes
+            var typesToGenerateJsonSchema = assembleTypes
                 .Where(type => Attribute.IsDefined(type, typeof(GenerateJSONSchemaAttribute)))
                 .ToList();
 
-            foreach (var type in typesToGenerateJSONSchema)
+            foreach (var type in typesToGenerateJsonSchema)
             {
                 string fullName;
+                // If current type is generic, it's necessary to obtain all it's constraints
+                // to understand which type could be used with this generic, and so that generate schema for it
                 if (type.IsGenericType)
                 {
                     var constraintType = type.GetGenericArguments()[0].GetGenericParameterConstraints()[0];
@@ -73,7 +70,8 @@ namespace CustomJSONGenerator
                         .Where(t => constraintType.IsAssignableFrom(t) && t.Name != constraintType.Name)
                         .ToList();
 
-                    foreach (var constructedGenericType in typesImplOrInheritConstraint.Select(typeImplOrInheritConstraint => type.MakeGenericType(typeImplOrInheritConstraint)))
+                    foreach (var constructedGenericType in typesImplOrInheritConstraint.Select(
+                        typeImplOrInheritConstraint => type.MakeGenericType(typeImplOrInheritConstraint)))
                     {
                         fullName = constructedGenericType.FullName;
                         if (!types.ContainsKey(fullName!))
@@ -110,10 +108,8 @@ namespace CustomJSONGenerator
             return context.Generator.Generate(context.ObjectType);
         }
 
-        public override bool CanGenerateSchema(JSchemaTypeGenerationContext context)
-        {
-            return context.ObjectType.Namespace != "System";
-        }
+        public override bool CanGenerateSchema(JSchemaTypeGenerationContext context) =>
+            context.ObjectType.Namespace != "System";
 
         private static void GetCustomAttributesFromTypeAndItsProps(Type baseType,
             IDictionary<Type, TypeAttributesAndPropsWithAttributes> typesWithAttributesAndItsPropsWithAttributes)
@@ -162,100 +158,128 @@ namespace CustomJSONGenerator
             }
         }
 
-        private static Tuple<string, List<JSONSchemaPropAttribute>> GetPropNameAndCustomAttributes(
+        private static Tuple<string, List<JsonSchemaPropAttribute>> GetPropNameAndCustomAttributes(
             PropertyInfo prop)
         {
-            var customAttributes = prop.GetCustomAttributes(typeof(JSONSchemaPropAttribute), false);
+            var customAttributes = prop.GetCustomAttributes(typeof(JsonSchemaPropAttribute), false);
             if (customAttributes.Length == 0) return null;
 
             var customJsonSchemaPropAttributes = customAttributes
-                .Select(el => (JSONSchemaPropAttribute) el).ToList();
+                .Select(el => (JsonSchemaPropAttribute) el).ToList();
 
             var propName = GetPropNameFromJsonPropertyAttribute(prop);
 
-            return new Tuple<string, List<JSONSchemaPropAttribute>>(propName, customJsonSchemaPropAttributes);
+            return new Tuple<string, List<JsonSchemaPropAttribute>>(propName, customJsonSchemaPropAttributes);
         }
 
-        private static string GetPropNameFromJsonPropertyAttribute(PropertyInfo prop) =>
-            ((JsonPropertyAttribute) prop.GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0])
+        private static string GetPropNameFromJsonPropertyAttribute(PropertyInfo property) =>
+            ((JsonPropertyAttribute) property.GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0])
             .PropertyName;
 
-        private static List<JSONSchemaTypeAttribute> GetCustomAttributesListFromType(Type type)
+        private static List<JsonSchemaTypeAttribute> GetCustomAttributesListFromType(Type type)
         {
-            var typeCustomAttributes = type.GetCustomAttributes(typeof(JSONSchemaTypeAttribute), false)
-                .Select(el => (JSONSchemaTypeAttribute) el).ToList();
+            var typeCustomAttributes = type.GetCustomAttributes(typeof(JsonSchemaTypeAttribute), false)
+                .Select(el => (JsonSchemaTypeAttribute) el).ToList();
 
             return typeCustomAttributes.Count > 0 ? typeCustomAttributes : null;
         }
 
-        private static bool IsIntegerNumber(Type type)
+        private static bool IsIntegerNumber(Type type) => new[]
         {
-            return new[]
-            {
-                typeof(sbyte),
-                typeof(byte),
-                typeof(short),
-                typeof(ushort),
-                typeof(int),
-                typeof(uint),
-                typeof(long),
-                typeof(ulong)
-            }.Contains(type);
-        }
+            typeof(byte),
+            typeof(short),
+            typeof(int),
+            typeof(long)
+        }.Contains(type);
 
+        private static bool IsFloatNumber(Type type) => new[]
+        {
+            typeof(float),
+            typeof(double),
+            typeof(decimal)
+        }.Contains(type);
+
+
+    private static JSchema _schema;
         private static void GenerateSchema(JSchemaTypeGenerationContext context,
             Type type, TypeAttributesAndPropsWithAttributes typeAttributesAndItsPropsWithAttributes)
         {
-            var schema = context.Generator.Generate(type);
+            _schema = context.Generator.Generate(type);
 
+            HandleNumberJsonProperties(type);
+
+            AddCustomPropertiesToJsonTypesIfExist(typeAttributesAndItsPropsWithAttributes);
+
+            AddCustomPropertiesToJsonPropertiesIfExist(typeAttributesAndItsPropsWithAttributes);
+        }
+
+        private static void HandleNumberJsonProperties(Type type)
+        {
             foreach (var prop in type.GetProperties())
             {
-                if (!IsIntegerNumber(prop.PropertyType)) continue;
-                var propName = GetPropNameFromJsonPropertyAttribute(prop);
-                var schemaProp = schema.Properties[propName];
-                schemaProp.Type = JSchemaType.Number;
-                schemaProp.Format = prop.PropertyType.Name.ToLower();
-            }
+                var isInteger = IsIntegerNumber(prop.PropertyType);
+                var isFloat = IsFloatNumber(prop.PropertyType);
 
-            if (typeAttributesAndItsPropsWithAttributes.Attributes != null)
-            {
-                // Iterate through type attributes
-                foreach (var typeAttribute in typeAttributesAndItsPropsWithAttributes.Attributes)
+                if (isInteger || isFloat)
                 {
-                    switch (typeAttribute)
-                    {
-                        case MaximumPropertiesAttribute maxProperties:
-                            schema.MaximumProperties = maxProperties.Value;
-                            break;
-                        case MinimumPropertiesAttribute minProperties:
-                            schema.MinimumProperties = minProperties.Value;
-                            break;
-                        case AllowAdditionalPropertiesAttribute allowAdditionalProperties:
-                            schema.AllowAdditionalProperties = allowAdditionalProperties.Value;
-                            break;
-                    }
+                    var propName = GetPropNameFromJsonPropertyAttribute(prop);
+                    _schema.Properties[propName].Type = isInteger ? JSchemaType.Integer : JSchemaType.Number;
                 }
             }
+        }
 
+        private static void AddCustomPropertiesToJsonTypesIfExist(TypeAttributesAndPropsWithAttributes typeAttributesAndItsPropsWithAttributes)
+        {
+            if (typeAttributesAndItsPropsWithAttributes.Attributes == null) return;
+
+            // Iterate through type attributes
+            foreach (var typeAttribute in typeAttributesAndItsPropsWithAttributes.Attributes)
+            {
+                switch (typeAttribute)
+                {
+                    case MaximumPropertiesAttribute maxProperties:
+                        _schema.MaximumProperties = (long)maxProperties.Value;
+                        break;
+                    case MinimumPropertiesAttribute minProperties:
+                        _schema.MinimumProperties = (long)minProperties.Value;
+                        break;
+                    case AllowAdditionalPropertiesAttribute allowAdditionalProperties:
+                        _schema.AllowAdditionalProperties = allowAdditionalProperties.Value;
+                        break;
+                }
+            }
+        }
+
+        private static void AddCustomPropertiesToJsonPropertiesIfExist(
+            TypeAttributesAndPropsWithAttributes typeAttributesAndItsPropsWithAttributes)
+        {
             if (typeAttributesAndItsPropsWithAttributes.PropertiesWithAttributes == null) return;
-            foreach (var (propName, propAttributes) in typeAttributesAndItsPropsWithAttributes.PropertiesWithAttributes)
+
+            foreach (var (propName, propAttributes) in
+                typeAttributesAndItsPropsWithAttributes.PropertiesWithAttributes)
             {
                 foreach (var propAttribute in propAttributes)
                 {
-                    var curProp = schema.Properties[propName];
-                    var curPropType = curProp.Type;
+                    var currentProperty = _schema.Properties[propName];
+                    var currentPropertyType = currentProperty.Type;
 
-                    switch (curPropType)
+                    switch (currentPropertyType)
                     {
                         case JSchemaType.Number:
                         case JSchemaType.Integer:
                             switch (propAttribute)
                             {
                                 case MaximumAttribute maximumAttribute:
-                                    curProp.Maximum = maximumAttribute.Value;
+                                    currentProperty.Maximum = maximumAttribute.Value;
                                     break;
                                 case MinimumAttribute minimumAttribute:
-                                    curProp.Minimum = minimumAttribute.Value;
+                                    currentProperty.Minimum = minimumAttribute.Value;
+                                    break;
+                                case ExclusiveMaximumAttribute:
+                                    currentProperty.ExclusiveMaximum = true;
+                                    break;
+                                case ExclusiveMinimumAttribute:
+                                    currentProperty.ExclusiveMinimum = true;
                                     break;
                             }
 
@@ -263,14 +287,14 @@ namespace CustomJSONGenerator
                         case JSchemaType.String:
                             switch (propAttribute)
                             {
-                                case MaximumStringLengthAttribute maxLengthAttribute:
-                                    curProp.MaximumLength = maxLengthAttribute.Value;
+                                case MaximumLengthAttribute maxLengthAttribute:
+                                    currentProperty.MaximumLength = (long)maxLengthAttribute.Value;
                                     break;
                                 case MinimumStringLengthAttribute minLengthAttribute:
-                                    curProp.MinimumLength = minLengthAttribute.Value;
+                                    currentProperty.MinimumLength = (long)minLengthAttribute.Value;
                                     break;
                                 case StringFormat stringFormat:
-                                    curProp.Format = stringFormat.Value;
+                                    currentProperty.Format = stringFormat.Value;
                                     break;
                             }
 
@@ -279,13 +303,13 @@ namespace CustomJSONGenerator
                             switch (propAttribute)
                             {
                                 case MinimumItemsAttribute minItemsAttribute:
-                                    curProp.MinimumItems = minItemsAttribute.Value;
+                                    currentProperty.MinimumItems = (long)minItemsAttribute.Value;
                                     break;
                                 case MaximumItemsAttribute maxItemsAttribute:
-                                    curProp.MaximumItems = maxItemsAttribute.Value;
+                                    currentProperty.MaximumItems = (long)maxItemsAttribute.Value;
                                     break;
                                 case AllowAdditionalItemsAttribute allowAdditionalItemsAttribute:
-                                    curProp.AllowAdditionalItems = allowAdditionalItemsAttribute.Value;
+                                    currentProperty.AllowAdditionalItems = allowAdditionalItemsAttribute.Value;
                                     break;
                             }
 
@@ -299,20 +323,20 @@ namespace CustomJSONGenerator
     // Class stores Attributes of a type and all its props names with their attributes if presented
     internal class TypeAttributesAndPropsWithAttributes
     {
-        internal List<JSONSchemaTypeAttribute> Attributes;
-        internal Dictionary<string, List<JSONSchemaPropAttribute>> PropertiesWithAttributes;
+        internal List<JsonSchemaTypeAttribute> Attributes;
+        internal Dictionary<string, List<JsonSchemaPropAttribute>> PropertiesWithAttributes;
 
         internal TypeAttributesAndPropsWithAttributes AddTypeAttributes(
-            IEnumerable<JSONSchemaTypeAttribute> typeAttributes)
+            IEnumerable<JsonSchemaTypeAttribute> typeAttributes)
         {
-            Attributes = new List<JSONSchemaTypeAttribute>(typeAttributes);
+            Attributes = new List<JsonSchemaTypeAttribute>(typeAttributes);
             return this;
         }
 
         internal TypeAttributesAndPropsWithAttributes AddPropsWithAttributes(string propName,
-            List<JSONSchemaPropAttribute> attributes)
+            List<JsonSchemaPropAttribute> attributes)
         {
-            PropertiesWithAttributes ??= new Dictionary<string, List<JSONSchemaPropAttribute>>();
+            PropertiesWithAttributes ??= new Dictionary<string, List<JsonSchemaPropAttribute>>();
             PropertiesWithAttributes.Add(propName, attributes);
 
             return this;

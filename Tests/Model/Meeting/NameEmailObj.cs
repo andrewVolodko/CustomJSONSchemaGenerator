@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using CustomJSONGenerator;
+using CustomJSONGenerator.Generator;
 using Newtonsoft.Json;
 
 namespace Tests.Model.Meeting
