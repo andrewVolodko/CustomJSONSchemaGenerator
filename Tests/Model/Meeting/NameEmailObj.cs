@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Tests.Model.Meeting
 {
-    [AllowAdditionalProperties(false)]
+    [DisallowAdditionalProperties]
     public class NameEmailObj : IComparable<NameEmailObj>
     {
         [JsonProperty("name", Required = Required.Always), MinimumLength(1)]

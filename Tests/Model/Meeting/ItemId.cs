@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Tests.Model.Meeting
 {
-    [AllowAdditionalProperties(false)]
+    [DisallowAdditionalProperties]
     public class ItemId
     {
         [JsonProperty("id", Required = Required.Always), MinimumLength(1)]

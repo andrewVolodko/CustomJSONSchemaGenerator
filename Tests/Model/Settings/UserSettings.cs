@@ -4,8 +4,8 @@ using Newtonsoft.Json;
 
 namespace Tests.Model.Settings
 {
-    [GenerateJSONSchema]
-    [AllowAdditionalProperties(false)]
+    [GenerateJsonSchema]
+    [DisallowAdditionalProperties]
     public class UserSettings : SettingsObj
     {
         [JsonProperty("email", Required = Required.Always), RegularExpression("^.+\\..+(@itechart-group\\.com)$")] 

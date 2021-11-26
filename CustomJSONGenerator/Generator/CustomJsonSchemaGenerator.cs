@@ -55,7 +55,7 @@ namespace CustomJSONGenerator.Generator
                 .SelectMany(assemble => assemble.GetTypes()).ToList();
 
             var typesToGenerateJsonSchema = assembleTypes
-                .Where(type => Attribute.IsDefined(type, typeof(GenerateJSONSchemaAttribute)))
+                .Where(type => Attribute.IsDefined(type, typeof(GenerateJsonSchemaAttribute)))
                 .ToList();
 
             foreach (var type in typesToGenerateJsonSchema)
@@ -243,8 +243,8 @@ namespace CustomJSONGenerator.Generator
                     case MinimumPropertiesAttribute minProperties:
                         _schema.MinimumProperties = (long)minProperties.Value;
                         break;
-                    case AllowAdditionalPropertiesAttribute allowAdditionalProperties:
-                        _schema.AllowAdditionalProperties = allowAdditionalProperties.Value;
+                    case DisallowAdditionalPropertiesAttribute:
+                        _schema.AllowAdditionalProperties = false;
                         break;
                 }
             }
@@ -311,8 +311,8 @@ namespace CustomJSONGenerator.Generator
                                 case MaximumItemsAttribute maxItemsAttribute:
                                     currentProperty.MaximumItems = (long)maxItemsAttribute.Value;
                                     break;
-                                case AllowAdditionalItemsAttribute allowAdditionalItemsAttribute:
-                                    currentProperty.AllowAdditionalItems = allowAdditionalItemsAttribute.Value;
+                                case DisallowAdditionalItemsAttribute:
+                                    currentProperty.AllowAdditionalItems = false;
                                     break;
                             }
 

@@ -3,8 +3,8 @@ using Newtonsoft.Json;
 
 namespace Tests.Model
 {
-    [GenerateJSONSchema]
-    [AllowAdditionalProperties(false)]
+    [GenerateJsonSchema]
+    [DisallowAdditionalProperties]
     public class AuthTokenData : IResponse
 
     {

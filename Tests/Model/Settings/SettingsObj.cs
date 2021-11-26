@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Tests.Model.Settings
 {
-    [GenerateJSONSchema]
+    [GenerateJsonSchema]
     public class SettingsObj : IResponse
 
     {

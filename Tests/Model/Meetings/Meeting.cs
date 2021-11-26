@@ -5,11 +5,11 @@ using Tests.Model.Meeting;
 
 namespace Tests.Model.Meetings
 {
-    [GenerateJSONSchema]
-    [AllowAdditionalProperties(false)]
+    [GenerateJsonSchema]
+    [DisallowAdditionalProperties]
     public class Meeting : BaseMeeting
     {
-        [JsonProperty("attendees", Required = Required.Always), MinimumItems(2), AllowAdditionalItems(false)] 
+        [JsonProperty("attendees", Required = Required.Always), MinimumItems(2), DisallowAdditionalItems]
         public NameEmailObj[] Attendees { get; set; }
         
         [JsonProperty("room", Required = Required.Always)] 
