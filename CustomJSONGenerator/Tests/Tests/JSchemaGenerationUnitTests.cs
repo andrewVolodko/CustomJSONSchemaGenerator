@@ -25,16 +25,16 @@ namespace CustomJSONGenerator.Tests.Tests
 
         private static IEnumerable<Type> GetSimpleStringClassesNamesToGenerateJSchema()
         {
-            yield return typeof(SimpleStringFields.SimpleStringWithJsonPropertyName);
-            yield return typeof(SimpleStringFields.SimpleStringWithRequiredAlways);
-            yield return typeof(SimpleStringFields.SimpleStringWithRequiredDefault);
-            yield return typeof(SimpleStringFields.SimpleStringWithRequiredAllowNull);
-            yield return typeof(SimpleStringFields.SimpleStringWithRequiredDisallowNull);
-            yield return typeof(SimpleStringFields.SimpleStringWithMinimumLength);
-            yield return typeof(SimpleStringFields.SimpleStringWithMaximumLength);
-            yield return typeof(SimpleStringFields.SimpleStringFieldWithMaximumLength);
-            yield return typeof(SimpleStringFields.SimpleStringWithRegEx);
-            yield return typeof(SimpleStringFields.SimpleStringWithFormat);
+            yield return typeof(SimpleString.SimpleStringWithJsonPropertyName);
+            yield return typeof(SimpleString.SimpleStringWithRequiredAlways);
+            yield return typeof(SimpleString.SimpleStringWithRequiredDefault);
+            yield return typeof(SimpleString.SimpleStringWithRequiredAllowNull);
+            yield return typeof(SimpleString.SimpleStringWithRequiredDisallowNull);
+            yield return typeof(SimpleString.SimpleStringWithMinimumLength);
+            yield return typeof(SimpleString.SimpleStringWithMaximumLength);
+            yield return typeof(SimpleString.SimpleStringFieldWithMaximumLength);
+            yield return typeof(SimpleString.SimpleStringWithRegEx);
+            yield return typeof(SimpleString.SimpleStringWithFormat);
         }
 
         private static JObject GetJsonObjectFromJsonFile(string jsonFile)

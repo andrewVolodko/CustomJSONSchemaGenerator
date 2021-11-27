@@ -1,11 +1,10 @@
-using System.ComponentModel.DataAnnotations;
 using CustomJSONGenerator.Generator;
 using Newtonsoft.Json;
 using Required = Newtonsoft.Json.Required;
 
 namespace CustomJSONGenerator.Tests.Models
 {
-    public class SimpleStringFields
+    public class SimpleString
     {
         [GenerateJsonSchema]
         public class SimpleStringWithJsonPropertyName
