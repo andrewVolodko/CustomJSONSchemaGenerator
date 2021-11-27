@@ -12,7 +12,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Tests\JsonFiles" />
+      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithMinimumLengthRestriction.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithJsonPropertyName.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

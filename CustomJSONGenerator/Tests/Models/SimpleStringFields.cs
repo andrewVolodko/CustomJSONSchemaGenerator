@@ -8,9 +8,16 @@ namespace CustomJSONGenerator.Tests.Models
     public class SimpleStringFields
     {
         [GenerateJsonSchema]
+        public class SimpleStringWithJsonPropertyName
+        {
+            [JsonProperty("simpleStringName")]
+            public string SimpleString { get; set; }
+        }
+
+        [GenerateJsonSchema]
         public class SimpleStringWithMinimumLengthRestriction
         {
-            [JsonProperty("simpleString"), MinimumLength(1)]
+            [MinimumLength(1)]
             public string SimpleString { get; set; }
         }
 

@@ -1,0 +1,15 @@
+{
+  "$id": "SimpleStringWithJsonPropertyName",
+  "type": "object",
+  "properties": {
+    "simpleStringName": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "simpleStringName"
+  ]
+}
