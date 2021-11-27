@@ -61,12 +61,19 @@ namespace CustomJSONGenerator.Generator
         public MaximumItemsAttribute(ulong value) => Value = value;
     }
 
+    public class RegEx : JsonSchemaPropAttribute
+    {
+        public string Pattern { get; }
+
+        public RegEx(string pattern) => Pattern = pattern;
+    }
+
     public class DisallowAdditionalItemsAttribute : JsonSchemaPropAttribute {}
 
     public class StringFormat : JsonSchemaPropAttribute
     {
-        public string Value { get; }
+        public string Format { get; }
 
-        public StringFormat(string value) => Value = value;
+        public StringFormat(string format) => Format = format;
     }
 }

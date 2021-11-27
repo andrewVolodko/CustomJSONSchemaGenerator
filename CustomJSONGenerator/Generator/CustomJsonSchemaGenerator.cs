@@ -98,7 +98,7 @@ namespace CustomJSONGenerator.Generator
         {
             var typesWithAttributesAndPropsWithAttributes =
                 new Dictionary<Type, TypeAttributesAndPropsWithAttributes>();
-            GetCustomAttributesFromTypeAndItsProps(context.ObjectType, typesWithAttributesAndPropsWithAttributes);
+            GetCustomAttributesFromTypeAndItsProps(context.ObjectType, ref typesWithAttributesAndPropsWithAttributes);
 
             foreach (var (type, typeAttributesAndPropsWithAttributes) in typesWithAttributesAndPropsWithAttributes)
             {
@@ -112,7 +112,7 @@ namespace CustomJSONGenerator.Generator
             context.ObjectType.Namespace != "System";
 
         private static void GetCustomAttributesFromTypeAndItsProps(Type baseType,
-            IDictionary<Type, TypeAttributesAndPropsWithAttributes> typesWithAttributesAndItsPropsWithAttributes)
+            ref Dictionary<Type, TypeAttributesAndPropsWithAttributes> typesWithAttributesAndItsPropsWithAttributes)
         {
             // Getting base type attributes. Adding to Dictionary if attrs were found
             var baseTypeCustomAttributes = GetCustomAttributesListFromType(baseType);
@@ -154,7 +154,7 @@ namespace CustomJSONGenerator.Generator
                     typesWithAttributesAndItsPropsWithAttributes.ContainsKey(curPropType)) continue;
 
                 // Invoke method to get attributes of a property type if they presented
-                GetCustomAttributesFromTypeAndItsProps(curPropType, typesWithAttributesAndItsPropsWithAttributes);
+                GetCustomAttributesFromTypeAndItsProps(curPropType, ref typesWithAttributesAndItsPropsWithAttributes);
             }
         }
 
@@ -167,14 +167,19 @@ namespace CustomJSONGenerator.Generator
             var customJsonSchemaPropAttributes = customAttributes
                 .Select(el => (JsonSchemaPropAttribute) el).ToList();
 
-            var propName = GetPropNameFromJsonPropertyAttribute(prop);
+            var propName = GetPropName(prop);
 
             return new Tuple<string, List<JsonSchemaPropAttribute>>(propName, customJsonSchemaPropAttributes);
         }
 
-        private static string GetPropNameFromJsonPropertyAttribute(PropertyInfo property) =>
-            ((JsonPropertyAttribute) property.GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0])
-            .PropertyName;
+        private static string GetPropName(PropertyInfo property)
+        {
+            var jsonPropertyAttributes = property.GetCustomAttributes(typeof(JsonPropertyAttribute), false);
+
+            return jsonPropertyAttributes.Any()
+                ? ((JsonPropertyAttribute) jsonPropertyAttributes.First()).PropertyName
+                : property.Name;
+        }
 
         private static List<JsonSchemaTypeAttribute> GetCustomAttributesListFromType(Type type)
         {
@@ -200,11 +205,13 @@ namespace CustomJSONGenerator.Generator
         }.Contains(type);
 
 
-    private static JSchema _schema;
+        private static JSchema _schema;
         private static void GenerateSchema(JSchemaTypeGenerationContext context,
             Type type, TypeAttributesAndPropsWithAttributes typeAttributesAndItsPropsWithAttributes)
         {
             _schema = context.Generator.Generate(type);
+
+            var test = _schema.Required;
 
             HandleNumberJsonProperties(type);
 
@@ -222,7 +229,7 @@ namespace CustomJSONGenerator.Generator
 
                 if (isInteger || isFloat)
                 {
-                    var propName = GetPropNameFromJsonPropertyAttribute(prop);
+                    var propName = GetPropName(prop);
                     _schema.Properties[propName].Type = isInteger ? JSchemaType.Integer : JSchemaType.Number;
                 }
             }
@@ -265,8 +272,10 @@ namespace CustomJSONGenerator.Generator
 
                     switch (currentPropertyType)
                     {
-                        case JSchemaType.Number:
+                        case JSchemaType.Number :
                         case JSchemaType.Integer:
+                        case JSchemaType.Number | JSchemaType.Null:
+                        case JSchemaType.Integer | JSchemaType.Null:
                             switch (propAttribute)
                             {
                                 case MaximumAttribute maximumAttribute:
@@ -288,6 +297,7 @@ namespace CustomJSONGenerator.Generator
 
                             break;
                         case JSchemaType.String:
+                        case JSchemaType.String | JSchemaType.Null:
                             switch (propAttribute)
                             {
                                 case MaximumLengthAttribute maxLengthAttribute:
@@ -297,12 +307,16 @@ namespace CustomJSONGenerator.Generator
                                     currentProperty.MinimumLength = (long)minLengthAttribute.Value;
                                     break;
                                 case StringFormat stringFormat:
-                                    currentProperty.Format = stringFormat.Value;
+                                    currentProperty.Format = stringFormat.Format;
+                                    break;
+                                case RegEx regEx:
+                                    currentProperty.Pattern = regEx.Pattern;
                                     break;
                             }
 
                             break;
                         case JSchemaType.Array:
+                        case JSchemaType.Array | JSchemaType.Null:
                             switch (propAttribute)
                             {
                                 case MinimumItemsAttribute minItemsAttribute:

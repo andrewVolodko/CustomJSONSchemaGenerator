@@ -9,7 +9,7 @@ namespace Tests.Model.Meeting
     [DisallowAdditionalProperties]
     public class NameEmailObj : IComparable<NameEmailObj>
     {
-        [JsonProperty("name", Required = Required.Always), MinimumLength(1)]
+        [JsonProperty("name", Required = Required.Always), StringFormat("uuid")]
         public string Name { get; set; }
         
         [JsonProperty("email", Required = Required.Always), RegularExpression("^.+(@itechart-group\\.com)$")]
