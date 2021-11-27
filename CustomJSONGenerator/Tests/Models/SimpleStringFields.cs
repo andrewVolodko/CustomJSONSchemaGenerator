@@ -11,42 +11,42 @@ namespace CustomJSONGenerator.Tests.Models
         public class SimpleStringWithJsonPropertyName
         {
             [JsonProperty("simpleStringName")]
-            public string SimpleString { get; set; }
+            public string SimpleString;
         }
 
         [GenerateJsonSchema]
         public class SimpleStringWithRequiredAlways
         {
             [JsonProperty(Required = Required.Always)]
-            public string SimpleString { get; set; }
+            public string SimpleString;
         }
 
         [GenerateJsonSchema]
         public class SimpleStringWithRequiredDefault
         {
             [JsonProperty(Required = Required.Default)]
-            public string SimpleString { get; set; }
+            public string SimpleString;
         }
 
         [GenerateJsonSchema]
         public class SimpleStringWithRequiredAllowNull
         {
             [JsonProperty(Required = Required.AllowNull)]
-            public string SimpleString { get; set; }
+            public string SimpleString;
         }
 
         [GenerateJsonSchema]
         public class SimpleStringWithRequiredDisallowNull
         {
             [JsonProperty(Required = Required.DisallowNull)]
-            public string SimpleString { get; set; }
+            public string SimpleString;
         }
 
         [GenerateJsonSchema]
         public class SimpleStringWithMinimumLength
         {
             [MinimumLength(1)]
-            public string SimpleString { get; set; }
+            public string SimpleString;
         }
 
         [GenerateJsonSchema]

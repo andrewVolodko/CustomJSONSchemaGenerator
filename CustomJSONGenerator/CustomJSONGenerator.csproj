@@ -12,28 +12,34 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithMinimumLength.json">
+      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringFieldWithMaximumLength.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithJsonPropertyName.json">
+      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithJsonPropertyName.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithRequiredDefault.json">
+      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithMaximumLength.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithRequiredAlways.json">
+      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithMinimumLength.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithRequiredAllowNull.json">
+      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithRequiredAllowNull.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithRequiredDisallowNull.json">
+      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithRequiredAlways.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithMaximumLength.json">
+      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithRequiredDefault.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleStringFieldWithMaximumLength.json">
+      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithRequiredDisallowNull.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithRegEx.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithFormat.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>

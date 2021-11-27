@@ -1,0 +1,16 @@
+{
+  "$id": "SimpleStringWithFormat",
+  "type": "object",
+  "properties": {
+    "SimpleString": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uuid"
+    }
+  },
+  "required": [
+    "SimpleString"
+  ]
+}

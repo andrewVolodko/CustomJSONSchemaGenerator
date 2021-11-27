@@ -13,17 +13,17 @@ namespace CustomJSONGenerator.Tests.Tests
         private const string ExpectedJsonSchemasFolderName = "Tests/ExpectedJsonSchemas";
 
         [Test]
-        [TestCaseSource(nameof(GetClassesNamesToGenerateJSchema))]
+        [TestCaseSource(nameof(GetSimpleStringClassesNamesToGenerateJSchema))]
         public void VerifySimpleStringWithJsonPropertyName(Type classToGenerateJSchema)
         {
-            var expectedJsonSchema = GetJsonObjectFromJsonFile($"{ExpectedJsonSchemasFolderName}/{classToGenerateJSchema.Name}.json").ToString();
+            var expectedJsonSchema = GetJsonObjectFromJsonFile($"{ExpectedJsonSchemasFolderName}/SimpleString/{classToGenerateJSchema.Name}.json").ToString();
             var actualJsonSchema = GetJsonSchema(classToGenerateJSchema.FullName).ToString();
 
             Assert.AreEqual(expectedJsonSchema, actualJsonSchema);
         }
 
 
-        private static IEnumerable<Type> GetClassesNamesToGenerateJSchema()
+        private static IEnumerable<Type> GetSimpleStringClassesNamesToGenerateJSchema()
         {
             yield return typeof(SimpleStringFields.SimpleStringWithJsonPropertyName);
             yield return typeof(SimpleStringFields.SimpleStringWithRequiredAlways);
@@ -33,6 +33,8 @@ namespace CustomJSONGenerator.Tests.Tests
             yield return typeof(SimpleStringFields.SimpleStringWithMinimumLength);
             yield return typeof(SimpleStringFields.SimpleStringWithMaximumLength);
             yield return typeof(SimpleStringFields.SimpleStringFieldWithMaximumLength);
+            yield return typeof(SimpleStringFields.SimpleStringWithRegEx);
+            yield return typeof(SimpleStringFields.SimpleStringWithFormat);
         }
 
         private static JObject GetJsonObjectFromJsonFile(string jsonFile)

@@ -1,0 +1,16 @@
+{
+  "$id": "SimpleStringWithRegEx",
+  "type": "object",
+  "properties": {
+    "SimpleString": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^.+(@mail\\.ru)$)"
+    }
+  },
+  "required": [
+    "SimpleString"
+  ]
+}
