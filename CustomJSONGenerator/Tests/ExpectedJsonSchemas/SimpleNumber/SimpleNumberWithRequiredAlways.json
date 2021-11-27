@@ -1,0 +1,12 @@
+{
+  "$id": "SimpleNumberWithRequiredAlways",
+  "type": "object",
+  "properties": {
+    "SimpleNumber": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "SimpleNumber"
+  ]
+}

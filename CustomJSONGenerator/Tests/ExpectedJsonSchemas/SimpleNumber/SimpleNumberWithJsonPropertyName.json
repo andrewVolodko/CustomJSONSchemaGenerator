@@ -1,0 +1,12 @@
+{
+  "$id": "SimpleNumberWithJsonPropertyName",
+  "type": "object",
+  "properties": {
+    "simpleNumberName": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "simpleNumberName"
+  ]
+}

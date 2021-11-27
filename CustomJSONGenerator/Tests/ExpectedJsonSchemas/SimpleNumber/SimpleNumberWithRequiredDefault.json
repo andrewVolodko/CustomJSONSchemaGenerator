@@ -1,0 +1,9 @@
+{
+  "$id": "SimpleNumberWithRequiredDefault",
+  "type": "object",
+  "properties": {
+    "SimpleNumber": {
+      "type": "number"
+    }
+  }
+}

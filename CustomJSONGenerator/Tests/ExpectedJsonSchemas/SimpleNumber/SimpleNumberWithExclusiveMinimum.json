@@ -1,0 +1,13 @@
+{
+  "$id": "SimpleNumberWithExclusiveMinimum",
+  "type": "object",
+  "properties": {
+    "SimpleNumber": {
+      "type": "number",
+      "exclusiveMinimum": -1.7976931348623157E+308
+    }
+  },
+  "required": [
+    "SimpleNumber"
+  ]
+}

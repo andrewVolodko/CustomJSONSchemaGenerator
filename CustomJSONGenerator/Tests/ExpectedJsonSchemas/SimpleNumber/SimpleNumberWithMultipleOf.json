@@ -1,0 +1,13 @@
+{
+  "$id": "SimpleNumberWithMultipleOf",
+  "type": "object",
+  "properties": {
+    "SimpleNumber": {
+      "type": "number",
+      "multipleOf": 10.0
+    }
+  },
+  "required": [
+    "SimpleNumber"
+  ]
+}

@@ -16,12 +16,24 @@ namespace CustomJSONGenerator.Tests.Tests
         [TestCaseSource(nameof(GetSimpleStringClassesNamesToGenerateJSchema))]
         public void VerifySimpleStringWithJsonPropertyName(Type classToGenerateJSchema)
         {
-            var expectedJsonSchema = GetJsonObjectFromJsonFile($"{ExpectedJsonSchemasFolderName}/SimpleString/{classToGenerateJSchema.Name}.json").ToString();
+            AssertClassSchemas(classToGenerateJSchema, nameof(SimpleString));
+        }
+
+        [Test]
+        [TestCaseSource(nameof(GetSimpleNumberClassesNamesToGenerateJSchema))]
+        public void VerifySimpleNumberWithJsonPropertyName(Type classToGenerateJSchema)
+        {
+            AssertClassSchemas(classToGenerateJSchema, nameof(SimpleNumber));
+        }
+
+
+        private static void AssertClassSchemas(Type classToGenerateJSchema, string folderName)
+        {
+            var expectedJsonSchema = GetJsonObjectFromJsonFile($"{ExpectedJsonSchemasFolderName}/{folderName}/{classToGenerateJSchema.Name}.json").ToString();
             var actualJsonSchema = GetJsonSchema(classToGenerateJSchema.FullName).ToString();
 
             Assert.AreEqual(expectedJsonSchema, actualJsonSchema);
         }
-
 
         private static IEnumerable<Type> GetSimpleStringClassesNamesToGenerateJSchema()
         {
@@ -35,6 +47,18 @@ namespace CustomJSONGenerator.Tests.Tests
             yield return typeof(SimpleString.SimpleStringFieldWithMaximumLength);
             yield return typeof(SimpleString.SimpleStringWithRegEx);
             yield return typeof(SimpleString.SimpleStringWithFormat);
+        }
+
+        private static IEnumerable<Type> GetSimpleNumberClassesNamesToGenerateJSchema()
+        {
+            yield return typeof(SimpleNumber.SimpleNumberWithJsonPropertyName);
+            yield return typeof(SimpleNumber.SimpleNumberWithRequiredAlways);
+            yield return typeof(SimpleNumber.SimpleNumberWithRequiredDefault);
+            yield return typeof(SimpleNumber.SimpleNumberWithMinimum);
+            yield return typeof(SimpleNumber.SimpleNumberWithExclusiveMinimum);
+            yield return typeof(SimpleNumber.SimpleNumberWithMaximum);
+            yield return typeof(SimpleNumber.SimpleNumberWithExclusiveMaximum);
+            yield return typeof(SimpleNumber.SimpleNumberWithMultipleOf);
         }
 
         private static JObject GetJsonObjectFromJsonFile(string jsonFile)

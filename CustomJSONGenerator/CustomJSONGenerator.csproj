@@ -42,10 +42,30 @@
       <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithFormat.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Tests\ExpectedJsonSchemas\SimpleNumber" />
+      <None Update="Tests\ExpectedJsonSchemas\SimpleNumber\SimpleNumberWithJsonPropertyName.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleNumber\SimpleNumberWithRequiredAlways.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleNumber\SimpleNumberWithRequiredDefault.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleNumber\SimpleNumberWithMinimum.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleNumber\SimpleNumberWithMaximum.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleNumber\SimpleNumberWithExclusiveMinimum.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleNumber\SimpleNumberWithExclusiveMaximum.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleNumber\SimpleNumberWithMultipleOf.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>
