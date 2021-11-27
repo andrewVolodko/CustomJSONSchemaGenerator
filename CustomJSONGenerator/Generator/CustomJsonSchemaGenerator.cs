@@ -96,13 +96,13 @@ namespace CustomJSONGenerator.Generator
     {
         public override JSchema GetSchema(JSchemaTypeGenerationContext context)
         {
-            var typesWithAttributesAndPropsWithAttributes =
-                new Dictionary<Type, TypeAttributesAndPropsWithAttributes>();
-            GetCustomAttributesFromTypeAndItsProps(context.ObjectType, ref typesWithAttributesAndPropsWithAttributes);
+            var typesWithAttributesAndMembersWithAttributes =
+                new Dictionary<Type, TypeAttributesAndMembersWithAttributes>();
+            GetCustomAttributesFromTypeAndItsMembers(context.ObjectType, ref typesWithAttributesAndMembersWithAttributes);
 
-            foreach (var (type, typeAttributesAndPropsWithAttributes) in typesWithAttributesAndPropsWithAttributes)
+            foreach (var (type, typeAttributesAndMembersWithAttributes) in typesWithAttributesAndMembersWithAttributes)
             {
-                GenerateSchema(context, type, typeAttributesAndPropsWithAttributes);
+                GenerateSchema(context, type, typeAttributesAndMembersWithAttributes);
             }
 
             return context.Generator.Generate(context.ObjectType);
@@ -111,55 +111,66 @@ namespace CustomJSONGenerator.Generator
         public override bool CanGenerateSchema(JSchemaTypeGenerationContext context) =>
             context.ObjectType.Namespace != "System";
 
-        private static void GetCustomAttributesFromTypeAndItsProps(Type baseType,
-            ref Dictionary<Type, TypeAttributesAndPropsWithAttributes> typesWithAttributesAndItsPropsWithAttributes)
+        private static void GetCustomAttributesFromTypeAndItsMembers(Type baseType,
+            ref Dictionary<Type, TypeAttributesAndMembersWithAttributes> typesWithAttributesAndItsMembersWithAttributes)
         {
             // Getting base type attributes. Adding to Dictionary if attrs were found
             var baseTypeCustomAttributes = GetCustomAttributesListFromType(baseType);
-            TypeAttributesAndPropsWithAttributes typeAttributesAndPropsWithAttributes;
+            TypeAttributesAndMembersWithAttributes typeAttributesAndPropsWithAttributes;
             if (baseTypeCustomAttributes != null)
             {
                 typeAttributesAndPropsWithAttributes =
-                    new TypeAttributesAndPropsWithAttributes().AddTypeAttributes(baseTypeCustomAttributes);
-                typesWithAttributesAndItsPropsWithAttributes.Add(baseType, typeAttributesAndPropsWithAttributes);
+                    new TypeAttributesAndMembersWithAttributes().AddTypeAttributes(baseTypeCustomAttributes);
+                typesWithAttributesAndItsMembersWithAttributes.Add(baseType, typeAttributesAndPropsWithAttributes);
             }
 
             // Getting all properties of baseType
             var properties = baseType.GetProperties();
 
             // Loop through found properties
-            foreach (var prop in properties)
+            LoopThroughFoundMembers(properties, ref typesWithAttributesAndItsMembersWithAttributes);
+
+            // Getting all fields of baseType
+            var fields = baseType.GetFields();
+
+            // Loop through found fields
+            LoopThroughFoundMembers(fields, ref typesWithAttributesAndItsMembersWithAttributes);
+
+            void LoopThroughFoundMembers(IEnumerable<dynamic> members, ref Dictionary<Type, TypeAttributesAndMembersWithAttributes> typesWithAttributesAndItsMembersWithAttributes)
             {
-                // Getting name and attributes of the current property
-                var curPropNameAndAttributes = GetPropNameAndCustomAttributes(prop);
-                if (curPropNameAndAttributes != null)
+                foreach (var member in members)
                 {
-                    // Add property with attributes if they were found
-                    try
+                    // Getting name and attributes of the current property
+                    var curPropNameAndAttributes = GetMemberNameAndCustomAttributes(member);
+                    if (curPropNameAndAttributes != null)
                     {
-                        typesWithAttributesAndItsPropsWithAttributes[baseType]
-                            .AddPropsWithAttributes(curPropNameAndAttributes.Item1, curPropNameAndAttributes.Item2);
+                        // Add property with attributes if they were found
+                        try
+                        {
+                            typesWithAttributesAndItsMembersWithAttributes[baseType]
+                                .AddMembersWithAttributes(curPropNameAndAttributes.Item1, curPropNameAndAttributes.Item2);
+                        }
+                        catch (KeyNotFoundException)
+                        {
+                            typeAttributesAndPropsWithAttributes = new TypeAttributesAndMembersWithAttributes()
+                                .AddMembersWithAttributes(curPropNameAndAttributes.Item1, curPropNameAndAttributes.Item2);
+                            typesWithAttributesAndItsMembersWithAttributes.Add(baseType,
+                                typeAttributesAndPropsWithAttributes);
+                        }
                     }
-                    catch (KeyNotFoundException)
-                    {
-                        typeAttributesAndPropsWithAttributes = new TypeAttributesAndPropsWithAttributes()
-                            .AddPropsWithAttributes(curPropNameAndAttributes.Item1, curPropNameAndAttributes.Item2);
-                        typesWithAttributesAndItsPropsWithAttributes.Add(baseType,
-                            typeAttributesAndPropsWithAttributes);
-                    }
+
+                    var curPropType = member is PropertyInfo ? member.PropertyType : member.FieldType;
+                    if (curPropType.Namespace == "System" ||
+                        typesWithAttributesAndItsMembersWithAttributes.ContainsKey(curPropType)) continue;
+
+                    // Invoke method to get attributes of a property type if they presented
+                    GetCustomAttributesFromTypeAndItsMembers(curPropType, ref typesWithAttributesAndItsMembersWithAttributes);
                 }
-
-                var curPropType = prop.PropertyType;
-                if (curPropType.Namespace == "System" ||
-                    typesWithAttributesAndItsPropsWithAttributes.ContainsKey(curPropType)) continue;
-
-                // Invoke method to get attributes of a property type if they presented
-                GetCustomAttributesFromTypeAndItsProps(curPropType, ref typesWithAttributesAndItsPropsWithAttributes);
             }
         }
 
-        private static Tuple<string, List<JsonSchemaPropAttribute>> GetPropNameAndCustomAttributes(
-            PropertyInfo prop)
+        private static Tuple<string, List<JsonSchemaPropAttribute>> GetMemberNameAndCustomAttributes(
+            MemberInfo prop)
         {
             var customAttributes = prop.GetCustomAttributes(typeof(JsonSchemaPropAttribute), false);
             if (customAttributes.Length == 0) return null;
@@ -167,12 +178,12 @@ namespace CustomJSONGenerator.Generator
             var customJsonSchemaPropAttributes = customAttributes
                 .Select(el => (JsonSchemaPropAttribute) el).ToList();
 
-            var propName = GetPropName(prop);
+            var propName = GetMemberName(prop);
 
             return new Tuple<string, List<JsonSchemaPropAttribute>>(propName, customJsonSchemaPropAttributes);
         }
 
-        private static string GetPropName(PropertyInfo property)
+        private static string GetMemberName(MemberInfo property)
         {
             var jsonPropertyAttributes = property.GetCustomAttributes(typeof(JsonPropertyAttribute), false);
 
@@ -207,7 +218,7 @@ namespace CustomJSONGenerator.Generator
 
         private static JSchema _schema;
         private static void GenerateSchema(JSchemaTypeGenerationContext context,
-            Type type, TypeAttributesAndPropsWithAttributes typeAttributesAndItsPropsWithAttributes)
+            Type type, TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
         {
             _schema = context.Generator.Generate(type);
 
@@ -229,13 +240,13 @@ namespace CustomJSONGenerator.Generator
 
                 if (isInteger || isFloat)
                 {
-                    var propName = GetPropName(prop);
+                    var propName = GetMemberName(prop);
                     _schema.Properties[propName].Type = isInteger ? JSchemaType.Integer : JSchemaType.Number;
                 }
             }
         }
 
-        private static void AddCustomPropertiesToJsonTypesIfExist(TypeAttributesAndPropsWithAttributes typeAttributesAndItsPropsWithAttributes)
+        private static void AddCustomPropertiesToJsonTypesIfExist(TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
         {
             if (typeAttributesAndItsPropsWithAttributes.Attributes == null) return;
 
@@ -258,12 +269,12 @@ namespace CustomJSONGenerator.Generator
         }
 
         private static void AddCustomPropertiesToJsonPropertiesIfExist(
-            TypeAttributesAndPropsWithAttributes typeAttributesAndItsPropsWithAttributes)
+            TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
         {
-            if (typeAttributesAndItsPropsWithAttributes.PropertiesWithAttributes == null) return;
+            if (typeAttributesAndItsPropsWithAttributes.MembersNamesWithAttributes == null) return;
 
             foreach (var (propName, propAttributes) in
-                typeAttributesAndItsPropsWithAttributes.PropertiesWithAttributes)
+                typeAttributesAndItsPropsWithAttributes.MembersNamesWithAttributes)
             {
                 foreach (var propAttribute in propAttributes)
                 {
@@ -338,23 +349,23 @@ namespace CustomJSONGenerator.Generator
     }
 
     // Class stores Attributes of a type and all its props names with their attributes if presented
-    internal class TypeAttributesAndPropsWithAttributes
+    internal class TypeAttributesAndMembersWithAttributes
     {
         internal List<JsonSchemaTypeAttribute> Attributes;
-        internal Dictionary<string, List<JsonSchemaPropAttribute>> PropertiesWithAttributes;
+        internal Dictionary<string, List<JsonSchemaPropAttribute>> MembersNamesWithAttributes;
 
-        internal TypeAttributesAndPropsWithAttributes AddTypeAttributes(
+        internal TypeAttributesAndMembersWithAttributes AddTypeAttributes(
             IEnumerable<JsonSchemaTypeAttribute> typeAttributes)
         {
             Attributes = new List<JsonSchemaTypeAttribute>(typeAttributes);
             return this;
         }
 
-        internal TypeAttributesAndPropsWithAttributes AddPropsWithAttributes(string propName,
+        internal TypeAttributesAndMembersWithAttributes AddMembersWithAttributes(string memberName,
             List<JsonSchemaPropAttribute> attributes)
         {
-            PropertiesWithAttributes ??= new Dictionary<string, List<JsonSchemaPropAttribute>>();
-            PropertiesWithAttributes.Add(propName, attributes);
+            MembersNamesWithAttributes ??= new Dictionary<string, List<JsonSchemaPropAttribute>>();
+            MembersNamesWithAttributes.Add(memberName, attributes);
 
             return this;
         }

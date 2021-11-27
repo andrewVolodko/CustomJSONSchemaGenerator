@@ -1,0 +1,16 @@
+{
+  "$id": "SimpleStringFieldWithMaximumLength",
+  "type": "object",
+  "properties": {
+    "SimpleString": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 9223372036854775807
+    }
+  },
+  "required": [
+    "SimpleString"
+  ]
+}

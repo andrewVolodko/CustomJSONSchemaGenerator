@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using CustomJSONGenerator.Tests.Models;
@@ -17,22 +16,23 @@ namespace CustomJSONGenerator.Tests.Tests
         [TestCaseSource(nameof(GetClassesNamesToGenerateJSchema))]
         public void VerifySimpleStringWithJsonPropertyName(Type classToGenerateJSchema)
         {
-            // var expectedJsonSchema = GetJsonObjectFromJsonFile($"{ExpectedJsonSchemasFolderName}/{classToGenerateJSchema.Name}.json").ToString();
+            var expectedJsonSchema = GetJsonObjectFromJsonFile($"{ExpectedJsonSchemasFolderName}/{classToGenerateJSchema.Name}.json").ToString();
             var actualJsonSchema = GetJsonSchema(classToGenerateJSchema.FullName).ToString();
 
-            // Assert.AreEqual(expectedJsonSchema, actualJsonSchema);
+            Assert.AreEqual(expectedJsonSchema, actualJsonSchema);
         }
 
 
         private static IEnumerable<Type> GetClassesNamesToGenerateJSchema()
         {
-            // yield return typeof(SimpleStringFields.SimpleStringWithJsonPropertyName);
-            // yield return typeof(SimpleStringFields.SimpleStringWithRequiredAlways);
-            // yield return typeof(SimpleStringFields.SimpleStringWithRequiredDefault);
-            // yield return typeof(SimpleStringFields.SimpleStringWithRequiredAllowNull);
-            // yield return typeof(SimpleStringFields.SimpleStringWithRequiredDisallowNull);
-            // yield return typeof(SimpleStringFields.SimpleStringWithMinimumLength);
+            yield return typeof(SimpleStringFields.SimpleStringWithJsonPropertyName);
+            yield return typeof(SimpleStringFields.SimpleStringWithRequiredAlways);
+            yield return typeof(SimpleStringFields.SimpleStringWithRequiredDefault);
+            yield return typeof(SimpleStringFields.SimpleStringWithRequiredAllowNull);
+            yield return typeof(SimpleStringFields.SimpleStringWithRequiredDisallowNull);
+            yield return typeof(SimpleStringFields.SimpleStringWithMinimumLength);
             yield return typeof(SimpleStringFields.SimpleStringWithMaximumLength);
+            yield return typeof(SimpleStringFields.SimpleStringFieldWithMaximumLength);
         }
 
         private static JObject GetJsonObjectFromJsonFile(string jsonFile)

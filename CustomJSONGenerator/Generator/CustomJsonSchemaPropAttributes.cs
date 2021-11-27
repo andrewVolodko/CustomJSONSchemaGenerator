@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace CustomJSONGenerator.Generator
 {
-    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property | AttributeTargets.Parameter)]
+    [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public abstract class JsonSchemaPropAttribute : Attribute {}
     
     public class MaximumAttribute : JsonSchemaPropAttribute

@@ -30,6 +30,12 @@
       <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithRequiredDisallowNull.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithMaximumLength.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleStringFieldWithMaximumLength.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

@@ -57,6 +57,13 @@ namespace CustomJSONGenerator.Tests.Models
         }
 
         [GenerateJsonSchema]
+        public class SimpleStringFieldWithMaximumLength
+        {
+            [MaximumLength(long.MaxValue)]
+            public string SimpleString;
+        }
+
+        [GenerateJsonSchema]
         public class SimpleStringWithRegEx
         {
             [RegEx("^.+(@mail\\.ru)$)")]
