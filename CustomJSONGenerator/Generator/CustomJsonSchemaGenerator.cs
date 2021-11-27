@@ -245,10 +245,10 @@ namespace CustomJSONGenerator.Generator
                 switch (typeAttribute)
                 {
                     case MaximumPropertiesAttribute maxProperties:
-                        _schema.MaximumProperties = (long)maxProperties.Value;
+                        _schema.MaximumProperties = maxProperties.Value;
                         break;
                     case MinimumPropertiesAttribute minProperties:
-                        _schema.MinimumProperties = (long)minProperties.Value;
+                        _schema.MinimumProperties = minProperties.Value;
                         break;
                     case DisallowAdditionalPropertiesAttribute:
                         _schema.AllowAdditionalProperties = false;
@@ -301,10 +301,10 @@ namespace CustomJSONGenerator.Generator
                             switch (propAttribute)
                             {
                                 case MaximumLengthAttribute maxLengthAttribute:
-                                    currentProperty.MaximumLength = (long)maxLengthAttribute.Value;
+                                    currentProperty.MaximumLength = maxLengthAttribute.Value;
                                     break;
                                 case MinimumLengthAttribute minLengthAttribute:
-                                    currentProperty.MinimumLength = (long)minLengthAttribute.Value;
+                                    currentProperty.MinimumLength = minLengthAttribute.Value;
                                     break;
                                 case StringFormat stringFormat:
                                     currentProperty.Format = stringFormat.Format;
@@ -320,10 +320,10 @@ namespace CustomJSONGenerator.Generator
                             switch (propAttribute)
                             {
                                 case MinimumItemsAttribute minItemsAttribute:
-                                    currentProperty.MinimumItems = (long)minItemsAttribute.Value;
+                                    currentProperty.MinimumItems = minItemsAttribute.Value;
                                     break;
                                 case MaximumItemsAttribute maxItemsAttribute:
-                                    currentProperty.MaximumItems = (long)maxItemsAttribute.Value;
+                                    currentProperty.MaximumItems = maxItemsAttribute.Value;
                                     break;
                                 case DisallowAdditionalItemsAttribute:
                                     currentProperty.AllowAdditionalItems = false;

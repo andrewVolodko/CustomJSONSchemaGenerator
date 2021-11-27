@@ -35,30 +35,30 @@ namespace CustomJSONGenerator.Generator
 
     public class MaximumLengthAttribute : JsonSchemaPropAttribute
     {
-        public ulong Value { get; }
+        public long Value { get; }
 
-        public MaximumLengthAttribute(ulong value) => Value = value;
+        public MaximumLengthAttribute(long value) => Value = value;
     }
 
     public class MinimumLengthAttribute : JsonSchemaPropAttribute
     {
-        public ulong Value { get; }
+        public long Value { get; }
 
-        public MinimumLengthAttribute(ulong value) => Value = value;
+        public MinimumLengthAttribute(long value) => Value = value;
     }
 
     public class MinimumItemsAttribute : JsonSchemaPropAttribute
     {
-        public ulong Value { get; }
+        public long Value { get; }
 
-        public MinimumItemsAttribute(ulong value) => Value = value;
+        public MinimumItemsAttribute(long value) => Value = value;
     }
 
     public class MaximumItemsAttribute : JsonSchemaPropAttribute
     {
-        public ulong Value { get; }
+        public long Value { get; }
 
-        public MaximumItemsAttribute(ulong value) => Value = value;
+        public MaximumItemsAttribute(long value) => Value = value;
     }
 
     public class RegEx : JsonSchemaPropAttribute

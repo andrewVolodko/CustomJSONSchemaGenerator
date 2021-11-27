@@ -7,16 +7,16 @@ namespace CustomJSONGenerator.Generator
 
     public class MaximumPropertiesAttribute : JsonSchemaTypeAttribute
     {
-        public ulong Value { get; }
+        public long Value { get; }
 
-        public MaximumPropertiesAttribute(ulong value) => Value = value;
+        public MaximumPropertiesAttribute(long value) => Value = value;
     }
 
     public class MinimumPropertiesAttribute : JsonSchemaTypeAttribute
     {
-        public ulong Value { get; }
+        public long Value { get; }
 
-        public MinimumPropertiesAttribute(ulong value) => Value = value;
+        public MinimumPropertiesAttribute(long value) => Value = value;
     }
     
     public class DisallowAdditionalPropertiesAttribute : JsonSchemaTypeAttribute {}

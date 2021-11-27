@@ -12,10 +12,22 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithMinimumLengthRestriction.json">
+      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithMinimumLength.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
       <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithJsonPropertyName.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithRequiredDefault.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithRequiredAlways.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithRequiredAllowNull.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleStringWithRequiredDisallowNull.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>

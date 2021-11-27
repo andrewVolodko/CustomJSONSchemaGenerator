@@ -1,0 +1,15 @@
+{
+  "$id": "SimpleStringWithRequiredAllowNull",
+  "type": "object",
+  "properties": {
+    "SimpleString": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "SimpleString"
+  ]
+}

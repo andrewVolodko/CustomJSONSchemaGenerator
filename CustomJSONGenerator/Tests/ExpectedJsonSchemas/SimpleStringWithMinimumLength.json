@@ -1,5 +1,5 @@
 {
-  "$id": "SimpleStringWithMinimumLengthRestriction",
+  "$id": "SimpleStringWithMinimumLength",
   "type": "object",
   "properties": {
     "SimpleString": {
