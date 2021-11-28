@@ -136,7 +136,7 @@ namespace CustomJSONGenerator.Generator
             // Loop through found fields
             LoopThroughFoundMembers(fields, ref typesWithAttributesAndItsMembersWithAttributes);
 
-            void LoopThroughFoundMembers(IEnumerable<dynamic> members, ref Dictionary<Type, TypeAttributesAndMembersWithAttributes> typesWithAttributesAndItsMembersWithAttributes)
+            void LoopThroughFoundMembers(IEnumerable<dynamic> members, ref Dictionary<Type, TypeAttributesAndMembersWithAttributes> typesWithItsMembersWithAttributes)
             {
                 foreach (var member in members)
                 {
@@ -147,24 +147,24 @@ namespace CustomJSONGenerator.Generator
                         // Add property with attributes if they were found
                         try
                         {
-                            typesWithAttributesAndItsMembersWithAttributes[baseType]
+                            typesWithItsMembersWithAttributes[baseType]
                                 .AddMembersWithAttributes(curPropNameAndAttributes.Item1, curPropNameAndAttributes.Item2);
                         }
                         catch (KeyNotFoundException)
                         {
                             typeAttributesAndPropsWithAttributes = new TypeAttributesAndMembersWithAttributes()
                                 .AddMembersWithAttributes(curPropNameAndAttributes.Item1, curPropNameAndAttributes.Item2);
-                            typesWithAttributesAndItsMembersWithAttributes.Add(baseType,
+                            typesWithItsMembersWithAttributes.Add(baseType,
                                 typeAttributesAndPropsWithAttributes);
                         }
                     }
 
                     var curPropType = member is PropertyInfo ? member.PropertyType : member.FieldType;
                     if (curPropType.Namespace == "System" ||
-                        typesWithAttributesAndItsMembersWithAttributes.ContainsKey(curPropType)) continue;
+                        typesWithItsMembersWithAttributes.ContainsKey(curPropType)) continue;
 
                     // Invoke method to get attributes of a property type if they presented
-                    GetCustomAttributesFromTypeAndItsMembers(curPropType, ref typesWithAttributesAndItsMembersWithAttributes);
+                    GetCustomAttributesFromTypeAndItsMembers(curPropType, ref typesWithItsMembersWithAttributes);
                 }
             }
         }
