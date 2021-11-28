@@ -1,0 +1,18 @@
+{
+  "$id": "SimpleNumbersWithExclusiveMaximum",
+  "type": "object",
+  "properties": {
+    "SimpleNumber": {
+      "type": "number",
+      "exclusiveMaximum": 3.4028234663852886E+38
+    },
+    "SimpleNumberDouble": {
+      "type": "number",
+      "exclusiveMaximum": 1.7976931348623157E+308
+    }
+  },
+  "required": [
+    "SimpleNumber",
+    "SimpleNumberDouble"
+  ]
+}

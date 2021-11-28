@@ -15,7 +15,7 @@ namespace Tests.Model.Meetings
         [JsonProperty("room", Required = Required.Always)] 
         public NameEmailObj Room { get; set; }
         
-        [JsonProperty("start", Required = Required.Always), Minimum(0), Maximum(200000)]
+        [JsonProperty("start", Required = Required.Always), Minimum(0), Maximum(long.MaxValue)]
         public long Start { get; set; }
         
         [JsonProperty("end", Required = Required.Always), Minimum(0), ExclusiveMinimum, MultipleOf(10)]

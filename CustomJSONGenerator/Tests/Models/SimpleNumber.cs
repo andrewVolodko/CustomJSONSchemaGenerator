@@ -27,31 +27,39 @@ namespace CustomJSONGenerator.Tests.Models
         }
 
         [GenerateJsonSchema]
-        public class SimpleNumberWithMinimum
+        public class SimpleNumbersWithMinimum
         {
+            [Minimum(float.MinValue)]
+            public float SimpleNumberFloat;
             [Minimum(double.MinValue)]
-            public double SimpleNumber;
+            public double SimpleNumberDouble;
         }
 
         [GenerateJsonSchema]
-        public class SimpleNumberWithExclusiveMinimum
+        public class SimpleNumbersWithExclusiveMinimum
         {
+            [Minimum(float.MinValue), ExclusiveMinimum]
+            public double SimpleNumberFloat;
             [Minimum(double.MinValue), ExclusiveMinimum]
-            public double SimpleNumber;
+            public double SimpleNumberDouble;
         }
 
         [GenerateJsonSchema]
-        public class SimpleNumberWithMaximum
+        public class SimpleNumbersWithMaximum
         {
+            [Maximum(float.MaxValue)]
+            public float SimpleNumberFloat;
             [Maximum(double.MaxValue)]
-            public double SimpleNumber;
+            public double SimpleNumberDouble;
         }
 
         [GenerateJsonSchema]
-        public class SimpleNumberWithExclusiveMaximum
+        public class SimpleNumbersWithExclusiveMaximum
         {
+            [Maximum(float.MaxValue), ExclusiveMaximum]
+            public float SimpleNumber;
             [Maximum(double.MaxValue), ExclusiveMaximum]
-            public double SimpleNumber;
+            public double SimpleNumberDouble;
         }
 
         [GenerateJsonSchema]

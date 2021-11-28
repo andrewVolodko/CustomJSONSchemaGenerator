@@ -1,0 +1,48 @@
+{
+  "$id": "SimpleIntegersWithMaximum",
+  "type": "object",
+  "properties": {
+    "SimpleIntegerByte": {
+      "type": "integer",
+      "maximum": 255.0
+    },
+    "SimpleIntegerSByte": {
+      "type": "integer",
+      "maximum": 127.0
+    },
+    "SimpleIntegerShort": {
+      "type": "integer",
+      "maximum": 32767.0
+    },
+    "SimpleIntegerUShort": {
+      "type": "integer",
+      "maximum": 65535.0
+    },
+    "SimpleIntegerInt": {
+      "type": "integer",
+      "maximum": 2147483647.0
+    },
+    "SimpleIntegerUInt": {
+      "type": "integer",
+      "maximum": 4294967295.0
+    },
+    "SimpleIntegerLong": {
+      "type": "integer",
+      "maximum": 9.223372036854776E+18
+    },
+    "SimpleIntegerULong": {
+      "type": "integer",
+      "maximum": 1.8446744073709552E+19
+    }
+  },
+  "required": [
+    "SimpleIntegerByte",
+    "SimpleIntegerSByte",
+    "SimpleIntegerShort",
+    "SimpleIntegerUShort",
+    "SimpleIntegerInt",
+    "SimpleIntegerUInt",
+    "SimpleIntegerLong",
+    "SimpleIntegerULong"
+  ]
+}

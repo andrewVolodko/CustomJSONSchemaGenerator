@@ -203,9 +203,13 @@ namespace CustomJSONGenerator.Generator
         private static bool IsIntegerNumber(Type type) => new[]
         {
             typeof(byte),
+            typeof(sbyte),
             typeof(short),
+            typeof(ushort),
             typeof(int),
-            typeof(long)
+            typeof(uint),
+            typeof(long),
+            typeof(ulong)
         }.Contains(type);
 
         private static bool IsFloatNumber(Type type) => new[]
@@ -221,8 +225,6 @@ namespace CustomJSONGenerator.Generator
             Type type, TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
         {
             _schema = context.Generator.Generate(type);
-
-            var test = _schema.Required;
 
             HandleNumberJsonProperties(type);
 

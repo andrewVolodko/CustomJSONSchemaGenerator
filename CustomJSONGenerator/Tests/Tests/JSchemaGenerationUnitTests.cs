@@ -14,16 +14,23 @@ namespace CustomJSONGenerator.Tests.Tests
 
         [Test]
         [TestCaseSource(nameof(GetSimpleStringClassesNamesToGenerateJSchema))]
-        public void VerifySimpleStringWithJsonPropertyName(Type classToGenerateJSchema)
+        public void VerifySimpleString(Type classToGenerateJSchema)
         {
             AssertClassSchemas(classToGenerateJSchema, nameof(SimpleString));
         }
 
         [Test]
         [TestCaseSource(nameof(GetSimpleNumberClassesNamesToGenerateJSchema))]
-        public void VerifySimpleNumberWithJsonPropertyName(Type classToGenerateJSchema)
+        public void VerifySimpleNumber(Type classToGenerateJSchema)
         {
             AssertClassSchemas(classToGenerateJSchema, nameof(SimpleNumber));
+        }
+
+        [Test]
+        [TestCaseSource(nameof(GetSimpleIntegerClassesNamesToGenerateJSchema))]
+        public void VerifySimpleInteger(Type classToGenerateJSchema)
+        {
+            AssertClassSchemas(classToGenerateJSchema, nameof(SimpleInteger));
         }
 
 
@@ -57,11 +64,23 @@ namespace CustomJSONGenerator.Tests.Tests
             yield return typeof(SimpleNumber.SimpleNumberWithJsonPropertyName);
             yield return typeof(SimpleNumber.SimpleNumberWithRequiredAlways);
             yield return typeof(SimpleNumber.SimpleNumberWithRequiredDefault);
-            yield return typeof(SimpleNumber.SimpleNumberWithMinimum);
-            yield return typeof(SimpleNumber.SimpleNumberWithExclusiveMinimum);
-            yield return typeof(SimpleNumber.SimpleNumberWithMaximum);
-            yield return typeof(SimpleNumber.SimpleNumberWithExclusiveMaximum);
+            yield return typeof(SimpleNumber.SimpleNumbersWithMinimum);
+            yield return typeof(SimpleNumber.SimpleNumbersWithExclusiveMinimum);
+            yield return typeof(SimpleNumber.SimpleNumbersWithMaximum);
+            yield return typeof(SimpleNumber.SimpleNumbersWithExclusiveMaximum);
             yield return typeof(SimpleNumber.SimpleNumberWithMultipleOf);
+        }
+
+        private static IEnumerable<Type> GetSimpleIntegerClassesNamesToGenerateJSchema()
+        {
+            yield return typeof(SimpleInteger.SimpleIntegerWithJsonPropertyName);
+            yield return typeof(SimpleInteger.SimpleIntegerWithRequiredAlways);
+            yield return typeof(SimpleInteger.SimpleIntegerWithRequiredDefault);
+            yield return typeof(SimpleInteger.SimpleIntegersWithMinimum);
+            yield return typeof(SimpleInteger.SimpleIntegersWithExclusiveMinimum);
+            yield return typeof(SimpleInteger.SimpleIntegersWithMaximum);
+            yield return typeof(SimpleInteger.SimpleIntegersWithExclusiveMaximum);
+            yield return typeof(SimpleInteger.SimpleIntegerWithMultipleOf);
         }
 
         private static JObject GetJsonObjectFromJsonFile(string jsonFile)
