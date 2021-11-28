@@ -29,7 +29,10 @@ namespace CustomJSONGenerator.Tests.Tests
 
         private static void AssertClassSchemas(Type classToGenerateJSchema, string folderName)
         {
-            var expectedJsonSchema = GetJsonObjectFromJsonFile($"{ExpectedJsonSchemasFolderName}/{folderName}/{classToGenerateJSchema.Name}.json").ToString();
+            var expectedJsonSchemaFilePath =
+                $"{ExpectedJsonSchemasFolderName}/{folderName}/{classToGenerateJSchema.Name}.json";
+
+            var expectedJsonSchema = GetJsonObjectFromJsonFile(expectedJsonSchemaFilePath).ToString();
             var actualJsonSchema = GetJsonSchema(classToGenerateJSchema.FullName).ToString();
 
             Assert.AreEqual(expectedJsonSchema, actualJsonSchema);
