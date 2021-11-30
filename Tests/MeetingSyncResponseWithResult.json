@@ -1,10 +1,19 @@
 {
     "result": {
         "item_id": {
-            "id": "AAMkADdmMTZhNzg5LTE0ODUtNGJiZi05YTE4LTZiNTBjYjU3OTZkYgBGAAAAAAA6/pai2V8VTauuZK1WpxO9BwDu5d6HJWYHToPxXM3YGokOAAAA3lG4AADyJWQ76KlZSITSdyXwkBkyAAEjIHqNAAA=",
+            "id": "81dd48d8-0aa2-4d66-b741-f3f242abcb2c",
             "change_key": "DwAAABYAAADyJWQ76KlZSITSdyXwkBkyAAEjfLOx"
         },
-        "attendees": null,
+        "attendees": [
+            {
+                "name": "testname1",
+                "email": "Minsk-T10-901-12@itechart-group.com"
+            },
+            {
+                "name": "testname",
+                "email": "Minsk-T10-901-12@itechart-group.com"
+            }
+        ],
         "room": {
             "name": "81dd48d8-0aa2-4d66-b741-f3f242abcb2c",
             "email": "Minsk-T10-901-12@itechart-group.com"

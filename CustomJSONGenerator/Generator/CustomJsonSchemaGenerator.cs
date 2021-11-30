@@ -102,7 +102,8 @@ namespace CustomJSONGenerator.Generator
             var typesWithAttributesAndMembersWithAttributes =
                 new Dictionary<Type, TypeAttributesAndMembersWithAttributes>();
 
-            GetCustomAttributesFromTypeAndItsMembers(context.ObjectType, ref typesWithAttributesAndMembersWithAttributes);
+            GetCustomAttributesFromTypeAndItsMembers(context.ObjectType,
+                ref typesWithAttributesAndMembersWithAttributes);
 
             foreach (var (type, typeAttributesAndMembersWithAttributes) in typesWithAttributesAndMembersWithAttributes)
             {
@@ -142,24 +143,28 @@ namespace CustomJSONGenerator.Generator
             // Loop through found fields
             LoopThroughFoundMembers(fields, ref typesWithAttributesAndItsMembersWithAttributes);
 
-            void LoopThroughFoundMembers(IEnumerable<dynamic> members, ref Dictionary<Type, TypeAttributesAndMembersWithAttributes> typesWithItsMembersWithAttributes)
+            void LoopThroughFoundMembers(IEnumerable<dynamic> members,
+                ref Dictionary<Type, TypeAttributesAndMembersWithAttributes> typesWithItsMembersWithAttributes)
             {
                 foreach (var member in members)
                 {
                     // Getting name and attributes of the current property
-                    Tuple<string, List<JsonSchemaPropAttribute>> curPropNameAndAttributes = GetMemberNameAndCustomAttributes(member);
+                    Tuple<string, List<JsonSchemaPropAttribute>> curPropNameAndAttributes =
+                        GetMemberNameAndCustomAttributes(member);
                     if (curPropNameAndAttributes != null)
                     {
                         // Add property with attributes if they were found
                         try
                         {
                             typesWithItsMembersWithAttributes[baseType]
-                                .AddMemberWithAttributes(curPropNameAndAttributes.Item1, curPropNameAndAttributes.Item2);
+                                .AddMemberWithAttributes(curPropNameAndAttributes.Item1,
+                                    curPropNameAndAttributes.Item2);
                         }
                         catch (KeyNotFoundException)
                         {
                             typeAttributesAndPropsWithAttributes = new TypeAttributesAndMembersWithAttributes()
-                                .AddMemberWithAttributes(curPropNameAndAttributes.Item1, curPropNameAndAttributes.Item2);
+                                .AddMemberWithAttributes(curPropNameAndAttributes.Item1,
+                                    curPropNameAndAttributes.Item2);
                             typesWithItsMembersWithAttributes.Add(baseType,
                                 typeAttributesAndPropsWithAttributes);
                         }
@@ -175,12 +180,14 @@ namespace CustomJSONGenerator.Generator
                             try
                             {
                                 typesWithItsMembersWithAttributes[baseType]
-                                    .AddArrayMemberWithRequiredAttributes(arrayPropWithRequiredAttribute.Item1, arrayPropWithRequiredAttribute.Item2);
+                                    .AddArrayMemberWithRequiredAttributes(arrayPropWithRequiredAttribute.Item1,
+                                        arrayPropWithRequiredAttribute.Item2);
                             }
                             catch (KeyNotFoundException)
                             {
                                 typeAttributesAndPropsWithAttributes = new TypeAttributesAndMembersWithAttributes()
-                                    .AddArrayMemberWithRequiredAttributes(arrayPropWithRequiredAttribute.Item1, arrayPropWithRequiredAttribute.Item2);
+                                    .AddArrayMemberWithRequiredAttributes(arrayPropWithRequiredAttribute.Item1,
+                                        arrayPropWithRequiredAttribute.Item2);
                                 typesWithItsMembersWithAttributes.Add(baseType,
                                     typeAttributesAndPropsWithAttributes);
                             }
@@ -240,6 +247,7 @@ namespace CustomJSONGenerator.Generator
         }
 
         private static JSchema _schema;
+
         private static void GenerateSchema(JSchemaTypeGenerationContext context,
             Type type, TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
         {
@@ -254,7 +262,8 @@ namespace CustomJSONGenerator.Generator
 
         // This is just a "plug" in order to add ability of having nullable arrays in schema
         // This feature is presented in Newtonsoft lib, but does not work for some reason
-        private static void HandleArrayPropertiesIfExist(TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
+        private static void HandleArrayPropertiesIfExist(
+            TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
         {
             if (typeAttributesAndItsPropsWithAttributes.ArrayMembersNamesWithRequiredAttribute == null) return;
 
@@ -273,7 +282,8 @@ namespace CustomJSONGenerator.Generator
             }
         }
 
-        private static void AddCustomPropertiesToJsonTypesIfExist(TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
+        private static void AddCustomPropertiesToJsonTypesIfExist(
+            TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
         {
             if (typeAttributesAndItsPropsWithAttributes.Attributes == null) return;
 
@@ -310,7 +320,7 @@ namespace CustomJSONGenerator.Generator
 
                     switch (currentPropertyType)
                     {
-                        case JSchemaType.Number :
+                        case JSchemaType.Number:
                         case JSchemaType.Integer:
                         case JSchemaType.Number | JSchemaType.Null:
                         case JSchemaType.Integer | JSchemaType.Null:
@@ -324,6 +334,16 @@ namespace CustomJSONGenerator.Generator
                                     break;
                                 case MultipleOfAttribute multipleOfAttribute:
                                     currentProperty.MultipleOf = multipleOfAttribute.Value;
+                                    break;
+                            }
+
+                            break;
+                        case JSchemaType.String:
+                        case JSchemaType.String | JSchemaType.Null:
+                            switch (propAttribute)
+                            {
+                                case Format format:
+                                    currentProperty.Format = format.Value;
                                     break;
                             }
 

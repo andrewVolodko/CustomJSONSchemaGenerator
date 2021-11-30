@@ -19,5 +19,12 @@ namespace CustomJSONGenerator.Generator
         public MultipleOfAttribute(double value) => Value = value;
     }
 
+    public class Format : JsonSchemaPropAttribute
+    {
+        public string Value { get; }
+
+        public Format(string value) => Value = value;
+    }
+
     public class DisallowAdditionalItemsAttribute : JsonSchemaPropAttribute {}
 }

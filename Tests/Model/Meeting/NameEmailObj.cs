@@ -1,30 +1,19 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.ComponentModel.DataAnnotations;
 using CustomJSONGenerator.Generator;
 using Newtonsoft.Json;
 
 namespace Tests.Model.Meeting
 {
     [DisallowAdditionalProperties]
-    public class NameEmailObj : IComparable<NameEmailObj>
+    public class NameEmailObj
     {
-        [JsonProperty("name", Required = Required.Always)]
+        [JsonProperty("name", Required = Required.Always), MinLength(1), MaxLength(100)]
         public string Name { get; set; }
         
-        [JsonProperty("email", Required = Required.Always), RegularExpression("^.+(@itechart-group\\.com)$")]
+        [JsonProperty("email", Required = Required.Always)]
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression("^.+\\..+(@itechart-group\\.com)$")]
+        [MaxLength(250)]
         public string Email { get; set; }
-
-        [JsonConstructor]
-        public NameEmailObj(string name, string email)
-        {
-            Name = name;
-            Email = email;
-        }
-        
-        public int CompareTo([DisallowNull] NameEmailObj other)
-        {
-            return string.Compare(Email, other.Email, StringComparison.Ordinal);
-        }
     }
 }
