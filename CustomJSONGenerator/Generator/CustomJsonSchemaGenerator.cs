@@ -98,6 +98,7 @@ namespace CustomJSONGenerator.Generator
         {
             var typesWithAttributesAndMembersWithAttributes =
                 new Dictionary<Type, TypeAttributesAndMembersWithAttributes>();
+
             GetCustomAttributesFromTypeAndItsMembers(context.ObjectType, ref typesWithAttributesAndMembersWithAttributes);
 
             foreach (var (type, typeAttributesAndMembersWithAttributes) in typesWithAttributesAndMembersWithAttributes)
@@ -116,9 +117,12 @@ namespace CustomJSONGenerator.Generator
         {
             // Getting base type attributes. Adding to Dictionary if attrs were found
             var baseTypeCustomAttributes = GetCustomAttributesListFromType(baseType);
+
             TypeAttributesAndMembersWithAttributes typeAttributesAndPropsWithAttributes;
+
             if (baseTypeCustomAttributes != null)
             {
+
                 typeAttributesAndPropsWithAttributes =
                     new TypeAttributesAndMembersWithAttributes().AddTypeAttributes(baseTypeCustomAttributes);
                 typesWithAttributesAndItsMembersWithAttributes.Add(baseType, typeAttributesAndPropsWithAttributes);
@@ -141,7 +145,7 @@ namespace CustomJSONGenerator.Generator
                 foreach (var member in members)
                 {
                     // Getting name and attributes of the current property
-                    var curPropNameAndAttributes = GetMemberNameAndCustomAttributes(member);
+                    Tuple<string, List<JsonSchemaPropAttribute>> curPropNameAndAttributes = GetMemberNameAndCustomAttributes(member);
                     if (curPropNameAndAttributes != null)
                     {
                         // Add property with attributes if they were found
@@ -200,53 +204,24 @@ namespace CustomJSONGenerator.Generator
             return typeCustomAttributes.Count > 0 ? typeCustomAttributes : null;
         }
 
-        private static bool IsIntegerNumber(Type type) => new[]
-        {
-            typeof(byte),
-            typeof(sbyte),
-            typeof(short),
-            typeof(ushort),
-            typeof(int),
-            typeof(uint),
-            typeof(long),
-            typeof(ulong)
-        }.Contains(type);
-
-        private static bool IsFloatNumber(Type type) => new[]
-        {
-            typeof(float),
-            typeof(double),
-            typeof(decimal)
-        }.Contains(type);
-
-
         private static JSchema _schema;
         private static void GenerateSchema(JSchemaTypeGenerationContext context,
             Type type, TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
         {
             _schema = context.Generator.Generate(type);
 
-            HandleNumberJsonProperties(type);
-
             AddCustomPropertiesToJsonTypesIfExist(typeAttributesAndItsPropsWithAttributes);
 
             AddCustomPropertiesToJsonPropertiesIfExist(typeAttributesAndItsPropsWithAttributes);
         }
 
-        private static void HandleNumberJsonProperties(Type type)
-        {
-            foreach (var prop in type.GetProperties())
-            {
-                var isInteger = IsIntegerNumber(prop.PropertyType);
-                var isFloat = IsFloatNumber(prop.PropertyType);
-
-                if (isInteger || isFloat)
-                {
-                    var propName = GetMemberName(prop);
-                    _schema.Properties[propName].Type = isInteger ? JSchemaType.Integer : JSchemaType.Number;
-                }
-            }
-        }
+        // private static void HandleArrayPropertiesIfExist(TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
+        // {
+        //     if (typeAttributesAndItsPropsWithAttributes.MembersNamesWithAttributes == null) return;
+        //
+        //     foreach (var (propName, propAttributes) in
+        //         typeAttributesAndItsPropsWithAttributes.MembersNamesWithAttributes)
+        // }
 
         private static void AddCustomPropertiesToJsonTypesIfExist(TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
         {

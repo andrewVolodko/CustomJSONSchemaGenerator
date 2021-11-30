@@ -1,4 +1,6 @@
+#nullable enable
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 using CustomJSONGenerator.Generator;
 using Newtonsoft.Json;
 using Tests.Model.Meeting;
@@ -9,7 +11,7 @@ namespace Tests.Model.Meetings
     [DisallowAdditionalProperties]
     public class Meeting : BaseMeeting
     {
-        [JsonProperty("attendees", Required = Required.Always), MinimumItems(2), DisallowAdditionalItems]
+        [JsonProperty("attendees", Required = Required.AllowNull), MinimumItems(2), DisallowAdditionalItems]
         public NameEmailObj[] Attendees { get; set; }
         
         [JsonProperty("room", Required = Required.Always)] 

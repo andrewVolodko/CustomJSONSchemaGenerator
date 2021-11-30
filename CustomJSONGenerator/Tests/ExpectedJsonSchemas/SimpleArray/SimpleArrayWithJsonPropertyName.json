@@ -1,0 +1,17 @@
+{
+  "$id": "SimpleArrayWithJsonPropertyName",
+  "type": "object",
+  "properties": {
+    "simpleArrayName": {
+      "$id": "IEnumerable`1",
+      "type": "array",
+      "items": {
+        "$id": "TestType",
+        "type": "object"
+      }
+    }
+  },
+  "required": [
+    "simpleArrayName"
+  ]
+}
