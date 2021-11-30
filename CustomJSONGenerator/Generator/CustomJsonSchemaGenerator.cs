@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Schema;
 using Newtonsoft.Json.Schema.Generation;
@@ -122,7 +124,6 @@ namespace CustomJSONGenerator.Generator
 
             if (baseTypeCustomAttributes != null)
             {
-
                 typeAttributesAndPropsWithAttributes =
                     new TypeAttributesAndMembersWithAttributes().AddTypeAttributes(baseTypeCustomAttributes);
                 typesWithAttributesAndItsMembersWithAttributes.Add(baseType, typeAttributesAndPropsWithAttributes);
@@ -152,18 +153,39 @@ namespace CustomJSONGenerator.Generator
                         try
                         {
                             typesWithItsMembersWithAttributes[baseType]
-                                .AddMembersWithAttributes(curPropNameAndAttributes.Item1, curPropNameAndAttributes.Item2);
+                                .AddMemberWithAttributes(curPropNameAndAttributes.Item1, curPropNameAndAttributes.Item2);
                         }
                         catch (KeyNotFoundException)
                         {
                             typeAttributesAndPropsWithAttributes = new TypeAttributesAndMembersWithAttributes()
-                                .AddMembersWithAttributes(curPropNameAndAttributes.Item1, curPropNameAndAttributes.Item2);
+                                .AddMemberWithAttributes(curPropNameAndAttributes.Item1, curPropNameAndAttributes.Item2);
                             typesWithItsMembersWithAttributes.Add(baseType,
                                 typeAttributesAndPropsWithAttributes);
                         }
                     }
 
                     var curPropType = member is PropertyInfo ? member.PropertyType : member.FieldType;
+
+                    if (curPropType.GetInterface(nameof(IEnumerable)) != null && curPropType != typeof(string))
+                    {
+                        var arrayPropWithRequiredAttribute = GetArrayMemberNameAndRequiredAttribute(member);
+                        if (arrayPropWithRequiredAttribute != null)
+                        {
+                            try
+                            {
+                                typesWithItsMembersWithAttributes[baseType]
+                                    .AddArrayMemberWithRequiredAttributes(arrayPropWithRequiredAttribute.Item1, arrayPropWithRequiredAttribute.Item2);
+                            }
+                            catch (KeyNotFoundException)
+                            {
+                                typeAttributesAndPropsWithAttributes = new TypeAttributesAndMembersWithAttributes()
+                                    .AddArrayMemberWithRequiredAttributes(arrayPropWithRequiredAttribute.Item1, arrayPropWithRequiredAttribute.Item2);
+                                typesWithItsMembersWithAttributes.Add(baseType,
+                                    typeAttributesAndPropsWithAttributes);
+                            }
+                        }
+                    }
+
                     if (curPropType.Namespace == "System" ||
                         typesWithItsMembersWithAttributes.ContainsKey(curPropType)) continue;
 
@@ -173,27 +195,39 @@ namespace CustomJSONGenerator.Generator
             }
         }
 
-        private static Tuple<string, List<JsonSchemaPropAttribute>> GetMemberNameAndCustomAttributes(
-            MemberInfo prop)
+        private static Tuple<string, Required> GetArrayMemberNameAndRequiredAttribute(MemberInfo member)
         {
-            var customAttributes = prop.GetCustomAttributes(typeof(JsonSchemaPropAttribute), false);
+            var customAttributes = member.GetCustomAttributes(typeof(JsonPropertyAttribute), false);
+            if (customAttributes.Length == 0) return null;
+
+            var requiredAttribute = customAttributes.Single<dynamic>().Required;
+
+            var propName = GetMemberName(member);
+
+            return new Tuple<string, Required>(propName, requiredAttribute);
+        }
+
+        private static Tuple<string, List<JsonSchemaPropAttribute>> GetMemberNameAndCustomAttributes(
+            MemberInfo member)
+        {
+            var customAttributes = member.GetCustomAttributes(typeof(JsonSchemaPropAttribute), false);
             if (customAttributes.Length == 0) return null;
 
             var customJsonSchemaPropAttributes = customAttributes
                 .Select(el => (JsonSchemaPropAttribute) el).ToList();
 
-            var propName = GetMemberName(prop);
+            var propName = GetMemberName(member);
 
             return new Tuple<string, List<JsonSchemaPropAttribute>>(propName, customJsonSchemaPropAttributes);
         }
 
-        private static string GetMemberName(MemberInfo property)
+        private static string GetMemberName(MemberInfo member)
         {
-            var jsonPropertyAttributes = property.GetCustomAttributes(typeof(JsonPropertyAttribute), false);
+            var jsonPropertyAttributes = member.GetCustomAttributes(typeof(JsonPropertyAttribute), false);
 
             return jsonPropertyAttributes.Any()
-                ? ((JsonPropertyAttribute) jsonPropertyAttributes.First()).PropertyName
-                : property.Name;
+                ? ((JsonPropertyAttribute) jsonPropertyAttributes.Single()).PropertyName ?? member.Name
+                : member.Name;
         }
 
         private static List<JsonSchemaTypeAttribute> GetCustomAttributesListFromType(Type type)
@@ -210,18 +244,33 @@ namespace CustomJSONGenerator.Generator
         {
             _schema = context.Generator.Generate(type);
 
+            HandleArrayPropertiesIfExist(typeAttributesAndItsPropsWithAttributes);
+
             AddCustomPropertiesToJsonTypesIfExist(typeAttributesAndItsPropsWithAttributes);
 
             AddCustomPropertiesToJsonPropertiesIfExist(typeAttributesAndItsPropsWithAttributes);
         }
 
-        // private static void HandleArrayPropertiesIfExist(TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
-        // {
-        //     if (typeAttributesAndItsPropsWithAttributes.MembersNamesWithAttributes == null) return;
-        //
-        //     foreach (var (propName, propAttributes) in
-        //         typeAttributesAndItsPropsWithAttributes.MembersNamesWithAttributes)
-        // }
+        // This is just a "plug" in order to add ability of having nullable arrays in schema
+        // This feature is presented in Newtonsoft lib, but does not work for some reason
+        private static void HandleArrayPropertiesIfExist(TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
+        {
+            if (typeAttributesAndItsPropsWithAttributes.ArrayMembersNamesWithRequiredAttribute == null) return;
+
+            foreach (var (propName, requiredAttr) in
+                typeAttributesAndItsPropsWithAttributes.ArrayMembersNamesWithRequiredAttribute)
+            {
+                if (requiredAttr != Required.AllowNull) continue;
+
+                const string pattern = "(?<=\"\\$id\"[\\S\\s]+\"type\": ).+(?=,\\n.*items)";
+
+                var stringSchema = _schema.Properties[propName].ToString();
+
+                var fixedStringSchema = Regex.Replace(stringSchema, pattern, "[\"array\", \"null\"]");
+
+                _schema.Properties[propName] = JSchema.Parse(fixedStringSchema);
+            }
+        }
 
         private static void AddCustomPropertiesToJsonTypesIfExist(TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
         {
@@ -330,6 +379,7 @@ namespace CustomJSONGenerator.Generator
     {
         internal List<JsonSchemaTypeAttribute> Attributes;
         internal Dictionary<string, List<JsonSchemaPropAttribute>> MembersNamesWithAttributes;
+        internal Dictionary<string, Required> ArrayMembersNamesWithRequiredAttribute;
 
         internal TypeAttributesAndMembersWithAttributes AddTypeAttributes(
             IEnumerable<JsonSchemaTypeAttribute> typeAttributes)
@@ -338,11 +388,20 @@ namespace CustomJSONGenerator.Generator
             return this;
         }
 
-        internal TypeAttributesAndMembersWithAttributes AddMembersWithAttributes(string memberName,
+        internal TypeAttributesAndMembersWithAttributes AddMemberWithAttributes(string memberName,
             List<JsonSchemaPropAttribute> attributes)
         {
             MembersNamesWithAttributes ??= new Dictionary<string, List<JsonSchemaPropAttribute>>();
             MembersNamesWithAttributes.Add(memberName, attributes);
+
+            return this;
+        }
+
+        internal TypeAttributesAndMembersWithAttributes AddArrayMemberWithRequiredAttributes(string memberName,
+            Required attribute)
+        {
+            ArrayMembersNamesWithRequiredAttribute ??= new Dictionary<string, Required>();
+            ArrayMembersNamesWithRequiredAttribute.Add(memberName, attribute);
 
             return this;
         }

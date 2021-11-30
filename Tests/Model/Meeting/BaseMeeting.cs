@@ -15,14 +15,5 @@ namespace Tests.Model.Meeting
         
         [JsonProperty("subject", Required = Required.Always), MinimumLength(1)]
         public string Subject { get; set; }
-
-        protected BaseMeeting(ItemId itemId, string locationName, string subject) : 
-            this(locationName, subject) => ItemId = itemId;
-
-        protected BaseMeeting(string locationName, string subject)
-        {
-            LocationName = locationName;
-            Subject = subject;
-        }
     }
 }
