@@ -20,7 +20,8 @@ namespace CustomJSONGenerator.Generator
             var generator = new JSchemaGenerator
             {
                 GenerationProviders = {new ObjectsSchemaGenerationProvider()},
-                SchemaIdGenerationHandling = SchemaIdGenerationHandling.TypeName
+                SchemaIdGenerationHandling = SchemaIdGenerationHandling.FullTypeName,
+                DefaultRequired = Required.Default
             };
 
             var type = BuildTypeWithTypesToGenerateJsonSchema();
@@ -315,12 +316,6 @@ namespace CustomJSONGenerator.Generator
                         case JSchemaType.Integer | JSchemaType.Null:
                             switch (propAttribute)
                             {
-                                case MaximumAttribute maximumAttribute:
-                                    currentProperty.Maximum = maximumAttribute.Value;
-                                    break;
-                                case MinimumAttribute minimumAttribute:
-                                    currentProperty.Minimum = minimumAttribute.Value;
-                                    break;
                                 case ExclusiveMaximumAttribute:
                                     currentProperty.ExclusiveMaximum = true;
                                     break;
@@ -333,35 +328,10 @@ namespace CustomJSONGenerator.Generator
                             }
 
                             break;
-                        case JSchemaType.String:
-                        case JSchemaType.String | JSchemaType.Null:
-                            switch (propAttribute)
-                            {
-                                case MaximumLengthAttribute maxLengthAttribute:
-                                    currentProperty.MaximumLength = maxLengthAttribute.Value;
-                                    break;
-                                case MinimumLengthAttribute minLengthAttribute:
-                                    currentProperty.MinimumLength = minLengthAttribute.Value;
-                                    break;
-                                case StringFormat stringFormat:
-                                    currentProperty.Format = stringFormat.Format;
-                                    break;
-                                case RegEx regEx:
-                                    currentProperty.Pattern = regEx.Pattern;
-                                    break;
-                            }
-
-                            break;
                         case JSchemaType.Array:
                         case JSchemaType.Array | JSchemaType.Null:
                             switch (propAttribute)
                             {
-                                case MinimumItemsAttribute minItemsAttribute:
-                                    currentProperty.MinimumItems = minItemsAttribute.Value;
-                                    break;
-                                case MaximumItemsAttribute maxItemsAttribute:
-                                    currentProperty.MaximumItems = maxItemsAttribute.Value;
-                                    break;
                                 case DisallowAdditionalItemsAttribute:
                                     currentProperty.AllowAdditionalItems = false;
                                     break;

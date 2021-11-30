@@ -7,7 +7,7 @@ namespace Tests.Model
     [DisallowAdditionalProperties]
     public class Response<T> where T: IResponse
     {
-        [JsonProperty("result", Required = Required.AllowNull), MinimumLength(1), DisallowAdditionalItems]
+        [JsonProperty("result", Required = Required.AllowNull), DisallowAdditionalItems]
         public T Result { get; set; }
     }
 }

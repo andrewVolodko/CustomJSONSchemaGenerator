@@ -8,16 +8,16 @@ namespace Tests.Model.Meetings
     [DisallowAdditionalProperties]
     public class Meeting : BaseMeeting
     {
-        [JsonProperty("attendees", Required = Required.AllowNull), MinimumItems(2), DisallowAdditionalItems]
+        [JsonProperty("attendees", Required = Required.AllowNull), DisallowAdditionalItems]
         public NameEmailObj[] Attendees { get; set; }
         
         [JsonProperty("room", Required = Required.Always)] 
         public NameEmailObj[] Room { get; set; }
         
-        [JsonProperty("start", Required = Required.Always), Minimum(0), Maximum(long.MaxValue)]
+        [JsonProperty("start", Required = Required.Always)]
         public long Start { get; set; }
         
-        [JsonProperty("end", Required = Required.Always), Minimum(0), ExclusiveMinimum, MultipleOf(10)]
+        [JsonProperty("end", Required = Required.Always), MultipleOf(10)]
         public long End { get; set; }
     }
 }

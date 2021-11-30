@@ -6,10 +6,10 @@ namespace Tests.Model.Meeting
     [DisallowAdditionalProperties]
     public class ItemId
     {
-        [JsonProperty("id", Required = Required.Always), MinimumLength(1)]
+        [JsonProperty("id", Required = Required.Always)]
         public string Id { get; set; }
 
-        [JsonProperty("change_key", Required = Required.Always), MinimumLength(1)]
+        [JsonProperty("change_key", Required = Required.Always)]
         public string ChangeKey { get; set; }
 
         [JsonConstructor]

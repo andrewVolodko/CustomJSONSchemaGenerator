@@ -10,10 +10,10 @@ namespace Tests.Model.Meeting
         [JsonProperty("item_id")]
         public ItemId ItemId { get; set; }
         
-        [JsonProperty("location_name", Required = Required.AllowNull), MinimumLength(1)]
+        [JsonProperty("location_name", Required = Required.AllowNull)]
         public string LocationName { get; set; }
         
-        [JsonProperty("subject", Required = Required.Always), MinimumLength(1)]
+        [JsonProperty("subject", Required = Required.Always)]
         public string Subject { get; set; }
     }
 }
