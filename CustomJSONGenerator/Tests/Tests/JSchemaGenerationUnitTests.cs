@@ -26,12 +26,12 @@ namespace CustomJSONGenerator.Tests.Tests
             AssertClassSchemas(classToGenerateJSchema, nameof(SimpleInteger));
         }
 
-        // [Test]
-        // // [TestCaseSource(nameof(GetSimpleNumberClassesNamesToGenerateJSchema))]
-        // public void VerifySimpleNumber(Type classToGenerateJSchema)
-        // {
-        //     AssertClassSchemas(classToGenerateJSchema, nameof(SimpleNumber));
-        // }
+        [Test]
+        [TestCaseSource(nameof(GetSimpleNumberClassesNamesToGenerateJSchema))]
+        public void VerifySimpleNumber(Type classToGenerateJSchema)
+        {
+            AssertClassSchemas(classToGenerateJSchema, nameof(SimpleNumber));
+        }
 
         //
         // [Test]
@@ -66,19 +66,14 @@ namespace CustomJSONGenerator.Tests.Tests
             yield return typeof(SimpleInteger.SimpleIntegerWithMultipleOf);
         }
 
-        // private static IEnumerable<Type> GetSimpleNumberClassesNamesToGenerateJSchema()
-        // {
-        //
-        //     yield return typeof(SimpleNumber.SimpleNumberWithJsonPropertyName);
-        //     yield return typeof(SimpleNumber.SimpleNumberWithRequiredAlways);
-        //     yield return typeof(SimpleNumber.SimpleNumberWithRequiredDefault);
-        //     yield return typeof(SimpleNumber.SimpleNumbersWithMinimum);
-        //     yield return typeof(SimpleNumber.SimpleNumbersWithExclusiveMinimum);
-        //     yield return typeof(SimpleNumber.SimpleNumbersWithMaximum);
-        //     yield return typeof(SimpleNumber.SimpleNumbersWithExclusiveMaximum);
-        //     yield return typeof(SimpleNumber.SimpleNumberWithMultipleOf);
-        // }
-        //
+        private static IEnumerable<Type> GetSimpleNumberClassesNamesToGenerateJSchema()
+        {
+            yield return typeof(SimpleNumber.SimpleNumberWithExclusiveMinimum);
+            yield return typeof(SimpleNumber.SimpleNumberWithExclusiveMaximum);
+            yield return typeof(SimpleNumber.SimpleNumberWithExclusiveMinimumAndExclusiveMaximum);
+            yield return typeof(SimpleNumber.SimpleNumberWithMultipleOf);
+        }
+
 
         // private static IEnumerable<Type> GetSimpleArrayClassesNamesToGenerateJSchema()
         // {
