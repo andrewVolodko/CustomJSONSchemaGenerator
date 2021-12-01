@@ -2,7 +2,14 @@
   "$id": "CustomJSONGenerator.Tests.Models.SimpleString+SimpleStringWithFormat",
   "type": "object",
   "properties": {
-    "SimpleString": {
+    "SimpleStringField": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uuid"
+    },
+    "SimpleStringProperty": {
       "type": [
         "string",
         "null"

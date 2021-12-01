@@ -1,13 +1,14 @@
 {
-  "$id": "SimpleIntegerWithMultipleOf",
+  "$id": "CustomJSONGenerator.Tests.Models.SimpleInteger+SimpleIntegerWithMultipleOf",
   "type": "object",
   "properties": {
-    "SimpleInteger": {
+    "SimpleIntegerField": {
+      "type": "integer",
+      "multipleOf": 10.0
+    },
+    "SimpleIntegerProperty": {
       "type": "integer",
       "multipleOf": 10.0
     }
-  },
-  "required": [
-    "SimpleInteger"
-  ]
+  }
 }

@@ -8,7 +8,10 @@ namespace CustomJSONGenerator.Tests.Models
         public class SimpleStringWithFormat
         {
             [Format("uuid")]
-            public string SimpleString;
+            public string SimpleStringField;
+
+            [Format("uuid")]
+            public string SimpleStringProperty { get; set; }
         }
     }
 }

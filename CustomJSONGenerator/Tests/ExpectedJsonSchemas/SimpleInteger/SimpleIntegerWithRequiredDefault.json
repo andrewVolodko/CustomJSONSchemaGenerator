@@ -1,9 +1,0 @@
-{
-  "$id": "SimpleIntegerWithRequiredDefault",
-  "type": "object",
-  "properties": {
-    "SimpleInteger": {
-      "type": "integer"
-    }
-  }
-}
