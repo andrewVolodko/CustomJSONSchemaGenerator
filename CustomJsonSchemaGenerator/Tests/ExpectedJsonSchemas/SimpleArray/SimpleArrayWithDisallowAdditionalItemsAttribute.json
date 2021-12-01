@@ -1,0 +1,23 @@
+{
+  "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleArray+SimpleArrayWithDisallowAdditionalItemsAttribute",
+  "type": "object",
+  "properties": {
+    "SimpleArrayField": {
+      "$id": "System.Collections.Generic.IEnumerable`1[[CustomJsonSchemaGenerator.Tests.Models.SimpleArray+TestType, CustomJsonSchemaGenerator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleArray+TestType",
+        "type": "object"
+      }
+    },
+    "SimpleArrayProperty": {
+      "$id": "System.Collections.Generic.IEnumerable`1[[CustomJsonSchemaGenerator.Tests.Models.SimpleArray+TestType, CustomJsonSchemaGenerator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "$ref": "CustomJsonSchemaGenerator.Tests.Models.SimpleArray+TestType"
+      }
+    }
+  }
+}

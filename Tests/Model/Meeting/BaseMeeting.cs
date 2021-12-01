@@ -1,7 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using CustomJSONGenerator.Generator;
 using Newtonsoft.Json;
-using Required = Newtonsoft.Json.Required;
 
 namespace Tests.Model.Meeting
 {

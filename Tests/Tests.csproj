@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CustomJSONGenerator\CustomJSONGenerator.csproj" />
+      <ProjectReference Include="..\CustomJsonSchemaGenerator\CustomJsonSchemaGenerator.csproj" />
     </ItemGroup>
 
     <ItemGroup>

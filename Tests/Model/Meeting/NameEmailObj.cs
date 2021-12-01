@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using CustomJSONGenerator.Generator;
+using CustomJsonSchemaGenerator.Generator.CustomAttributes;
 using Newtonsoft.Json;
 
 namespace Tests.Model.Meeting
@@ -11,7 +11,7 @@ namespace Tests.Model.Meeting
         public string Name { get; set; }
         
         [JsonProperty("email", Required = Required.Always)]
-        [DataType(DataType.EmailAddress)]
+        [Format("email")]
         [RegularExpression("^.+\\..+(@itechart-group\\.com)$")]
         [MaxLength(250)]
         public string Email { get; set; }

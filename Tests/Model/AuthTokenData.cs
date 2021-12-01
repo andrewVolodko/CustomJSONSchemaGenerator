@@ -1,4 +1,4 @@
-﻿using CustomJSONGenerator.Generator;
+﻿using CustomJsonSchemaGenerator.Generator.CustomAttributes;
 using Newtonsoft.Json;
 
 namespace Tests.Model

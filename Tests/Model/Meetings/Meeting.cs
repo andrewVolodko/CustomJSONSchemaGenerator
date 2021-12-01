@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using CustomJSONGenerator.Generator;
+using CustomJsonSchemaGenerator.Generator.CustomAttributes;
 using Newtonsoft.Json;
 using Tests.Model.Meeting;
 
