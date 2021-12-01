@@ -12,36 +12,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringFieldWithMaximumLength.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithJsonPropertyName.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithMaximumLength.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithMinimumLength.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithRequiredAllowNull.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithRequiredAlways.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithRequiredDefault.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithRequiredDisallowNull.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithRegEx.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithFormat.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
       <None Update="Tests\ExpectedJsonSchemas\SimpleNumber\SimpleNumberWithJsonPropertyName.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
@@ -88,6 +58,9 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
       <None Update="Tests\ExpectedJsonSchemas\SimpleInteger\SimpleIntegerWithMultipleOf.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithFormat.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>

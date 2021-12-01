@@ -1,5 +1,5 @@
 {
-  "$id": "SimpleStringWithFormat",
+  "$id": "CustomJSONGenerator.Tests.Models.SimpleString+SimpleStringWithFormat",
   "type": "object",
   "properties": {
     "SimpleString": {
@@ -9,8 +9,5 @@
       ],
       "format": "uuid"
     }
-  },
-  "required": [
-    "SimpleString"
-  ]
+  }
 }
