@@ -33,13 +33,12 @@ namespace CustomJSONGenerator.Tests.Tests
             AssertClassSchemas(classToGenerateJSchema, nameof(SimpleNumber));
         }
 
-        //
-        // [Test]
-        // [TestCaseSource(nameof(GetSimpleArrayClassesNamesToGenerateJSchema))]
-        // public void VerifySimpleArray(Type classToGenerateJSchema)
-        // {
-        //     AssertClassSchemas(classToGenerateJSchema, nameof(SimpleInteger));
-        // }
+        [Test]
+        [TestCaseSource(nameof(GetSimpleArrayClassesNamesToGenerateJSchema))]
+        public void VerifySimpleArray(Type classToGenerateJSchema)
+        {
+            AssertClassSchemas(classToGenerateJSchema, nameof(SimpleArray));
+        }
 
 
         private static void AssertClassSchemas(Type classToGenerateJSchema, string folderName)
@@ -74,14 +73,10 @@ namespace CustomJSONGenerator.Tests.Tests
             yield return typeof(SimpleNumber.SimpleNumberWithMultipleOf);
         }
 
-
-        // private static IEnumerable<Type> GetSimpleArrayClassesNamesToGenerateJSchema()
-        // {
-        //     yield return typeof(SimpleArray.SimpleArrayWithJsonPropertyName);
-        //     yield return typeof(SimpleArray.SimpleArrayWithRequiredAlways);
-        //     yield return typeof(SimpleArray.SimpleArrayWithRequiredDefault);
-        //     yield return typeof(SimpleArray.SimpleArrayWithRequiredAllowNull);
-        // }
+        private static IEnumerable<Type> GetSimpleArrayClassesNamesToGenerateJSchema()
+        {
+            yield return typeof(SimpleArray.SimpleArrayWithDisallowAdditionalItemsAttribute);
+        }
 
         private static JObject GetJsonObjectFromJsonFile(string jsonFile)
         {
