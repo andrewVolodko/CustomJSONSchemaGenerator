@@ -17,16 +17,18 @@ namespace CustomJsonSchemaGenerator.Generator.Providers
     {
         public override JSchema GetSchema(JSchemaTypeGenerationContext context)
         {
-            var typesWithAttributesAndMembersWithAttributes =
-                new Dictionary<Type, TypeAttributesAndMembersWithAttributes>();
+            // var typesWithAttributesAndMembersWithAttributes =
+            //     new Dictionary<Type, TypeAttributesAndMembersWithAttributes>();
+            //
+            // GetCustomAttributesFromTypeAndItsMembers(context.ObjectType,
+            //     ref typesWithAttributesAndMembersWithAttributes);
+            //
+            // foreach (var (type, typeAttributesAndMembersWithAttributes) in typesWithAttributesAndMembersWithAttributes)
+            // {
+            //     GenerateSchema(context, type, typeAttributesAndMembersWithAttributes);
+            // }
 
-            GetCustomAttributesFromTypeAndItsMembers(context.ObjectType,
-                ref typesWithAttributesAndMembersWithAttributes);
-
-            foreach (var (type, typeAttributesAndMembersWithAttributes) in typesWithAttributesAndMembersWithAttributes)
-            {
-                GenerateSchema(context, type, typeAttributesAndMembersWithAttributes);
-            }
+            var schema = context.Generator.Generate(context.ObjectType);
 
             return context.Generator.Generate(context.ObjectType);
         }
@@ -38,7 +40,7 @@ namespace CustomJsonSchemaGenerator.Generator.Providers
             ref Dictionary<Type, TypeAttributesAndMembersWithAttributes> typesWithAttributesAndItsMembersWithAttributes)
         {
             // Getting base type attributes. Adding to Dictionary if attrs were found
-            var baseTypeCustomAttributes = GetCustomAttributesListFromType(baseType);
+            var baseTypeCustomAttributes = GetMemberCustomAttributes(baseType);
 
             TypeAttributesAndMembersWithAttributes typeAttributesAndPropsWithAttributes;
 
@@ -66,51 +68,29 @@ namespace CustomJsonSchemaGenerator.Generator.Providers
             {
                 foreach (var member in members)
                 {
-                    // Getting name and attributes of the current property
-                    Tuple<string, List<JsonSchemaPropAttribute>> curPropNameAndAttributes =
-                        GetMemberNameAndCustomAttributes(member);
-                    if (curPropNameAndAttributes != null)
+                    // Getting name and attributes of the current member
+                    var memberName = GetMemberName(member);
+                    var memberCustomAttributes = GetMemberCustomAttributes(member);
+
+                    if (memberCustomAttributes != null)
                     {
                         // Add property with attributes if they were found
                         try
                         {
                             typesWithItsMembersWithAttributes[baseType]
-                                .AddMemberWithAttributes(curPropNameAndAttributes.Item1,
-                                    curPropNameAndAttributes.Item2);
+                                .AddMemberWithAttributes(memberName, memberCustomAttributes);
                         }
                         catch (KeyNotFoundException)
                         {
                             typeAttributesAndPropsWithAttributes = new TypeAttributesAndMembersWithAttributes()
-                                .AddMemberWithAttributes(curPropNameAndAttributes.Item1,
-                                    curPropNameAndAttributes.Item2);
+                                .AddMemberWithAttributes(memberName, memberCustomAttributes);
+
                             typesWithItsMembersWithAttributes.Add(baseType,
                                 typeAttributesAndPropsWithAttributes);
                         }
                     }
 
                     var curPropType = member is PropertyInfo ? member.PropertyType : member.FieldType;
-
-                    if (curPropType.GetInterface(nameof(IEnumerable)) != null && curPropType != typeof(string))
-                    {
-                        var arrayPropWithRequiredAttribute = GetArrayMemberNameAndRequiredAttribute(member);
-                        if (arrayPropWithRequiredAttribute != null)
-                        {
-                            try
-                            {
-                                typesWithItsMembersWithAttributes[baseType]
-                                    .AddArrayMemberWithRequiredAttributes(arrayPropWithRequiredAttribute.Item1,
-                                        arrayPropWithRequiredAttribute.Item2);
-                            }
-                            catch (KeyNotFoundException)
-                            {
-                                typeAttributesAndPropsWithAttributes = new TypeAttributesAndMembersWithAttributes()
-                                    .AddArrayMemberWithRequiredAttributes(arrayPropWithRequiredAttribute.Item1,
-                                        arrayPropWithRequiredAttribute.Item2);
-                                typesWithItsMembersWithAttributes.Add(baseType,
-                                    typeAttributesAndPropsWithAttributes);
-                            }
-                        }
-                    }
 
                     if (curPropType.Namespace == "System" ||
                         typesWithItsMembersWithAttributes.ContainsKey(curPropType)) continue;
@@ -119,32 +99,6 @@ namespace CustomJsonSchemaGenerator.Generator.Providers
                     GetCustomAttributesFromTypeAndItsMembers(curPropType, ref typesWithItsMembersWithAttributes);
                 }
             }
-        }
-
-        private static Tuple<string, Required> GetArrayMemberNameAndRequiredAttribute(MemberInfo member)
-        {
-            var customAttributes = member.GetCustomAttributes(typeof(JsonPropertyAttribute), false);
-            if (customAttributes.Length == 0) return null;
-
-            var requiredAttribute = customAttributes.Single<dynamic>().Required;
-
-            var propName = GetMemberName(member);
-
-            return new Tuple<string, Required>(propName, requiredAttribute);
-        }
-
-        private static Tuple<string, List<JsonSchemaPropAttribute>> GetMemberNameAndCustomAttributes(
-            MemberInfo member)
-        {
-            var customAttributes = member.GetCustomAttributes(typeof(JsonSchemaPropAttribute), false);
-            if (customAttributes.Length == 0) return null;
-
-            var customJsonSchemaPropAttributes = customAttributes
-                .Select(el => (JsonSchemaPropAttribute) el).ToList();
-
-            var propName = GetMemberName(member);
-
-            return new Tuple<string, List<JsonSchemaPropAttribute>>(propName, customJsonSchemaPropAttributes);
         }
 
         private static string GetMemberName(MemberInfo member)
@@ -156,10 +110,13 @@ namespace CustomJsonSchemaGenerator.Generator.Providers
                 : member.Name;
         }
 
-        private static List<JsonSchemaTypeAttribute> GetCustomAttributesListFromType(Type type)
+        // Getting CustomJsonSchemaType and Required attributes from type
+        private static List<Attribute> GetMemberCustomAttributes(MemberInfo member)
         {
-            var typeCustomAttributes = type.GetCustomAttributes(typeof(JsonSchemaTypeAttribute), false)
-                .Select(el => (JsonSchemaTypeAttribute) el).ToList();
+            var typeCustomAttributes = member.GetCustomAttributes(false)
+                .Where(el => el.GetType() == typeof(CustomJsonSchemaTypeAttribute) ||
+                             el.GetType() == typeof(JsonPropertyAttribute))
+                .Select(el => (Attribute) el).ToList();
 
             return typeCustomAttributes.Count > 0 ? typeCustomAttributes : null;
         }
@@ -171,33 +128,31 @@ namespace CustomJsonSchemaGenerator.Generator.Providers
         {
             _schema = context.Generator.Generate(type);
 
-            HandleArrayPropertiesIfExist(typeAttributesAndItsPropsWithAttributes);
-
             AddCustomPropertiesToJsonTypesIfExist(typeAttributesAndItsPropsWithAttributes);
 
             AddCustomPropertiesToJsonPropertiesIfExist(typeAttributesAndItsPropsWithAttributes);
         }
 
-        // This is just a "plug" in order to add ability of having nullable arrays in schema
+        // This is just a "plug" in order to add ability of having nullable arrays or objects in schema
         // This feature is presented in Newtonsoft lib, but does not work for some reason
-        private static void HandleArrayPropertiesIfExist(
-            TypeAttributesAndMembersWithAttributes typeAttributesAndItsPropsWithAttributes)
+        private static JSchema AddNullTypeToPropertyIfRequired(JSchema propertySchema)
         {
-            if (typeAttributesAndItsPropsWithAttributes.ArrayMembersNamesWithRequiredAttribute == null) return;
-
-            foreach (var (propName, requiredAttr) in
-                typeAttributesAndItsPropsWithAttributes.ArrayMembersNamesWithRequiredAttribute)
+            var regexEnding = propertySchema.Type switch
             {
-                if (requiredAttr != Required.AllowNull) continue;
+                JSchemaType.Array => "(?=,\\n.*items)",
+                JSchemaType.Object => "(?=,\\n.*[pP]roperties)",
+                _ => null
+            };
 
-                const string pattern = "(?<=\"\\$id\"[\\S\\s]+\"type\": ).+(?=,\\n.*items)";
+            var pattern = $"(?<=\"\\$id\"[\\S\\s]+,\\n.*type\": ).*{regexEnding}";
 
-                var stringSchema = _schema.Properties[propName].ToString();
+            var stringSchema = propertySchema.ToString();
 
-                var fixedStringSchema = Regex.Replace(stringSchema, pattern, "[\"array\", \"null\"]");
+            var matchValue = new Regex(pattern).Match(stringSchema).Value;
 
-                _schema.Properties[propName] = JSchema.Parse(fixedStringSchema);
-            }
+            var fixedStringSchema = Regex.Replace(stringSchema, pattern, $"[{matchValue}, \"null\"]");
+
+            return JSchema.Parse(fixedStringSchema);
         }
 
         private static void AddCustomPropertiesToJsonTypesIfExist(
@@ -272,6 +227,28 @@ namespace CustomJsonSchemaGenerator.Generator.Providers
                             {
                                 case DisallowAdditionalItemsAttribute:
                                     currentProperty.AllowAdditionalItems = false;
+                                    break;
+                                case JsonPropertyAttribute jsonPropertyAttribute:
+                                    if (jsonPropertyAttribute.Required == Required.AllowNull)
+                                    {
+                                        _schema.Properties[propName] =
+                                            AddNullTypeToPropertyIfRequired(currentProperty);
+                                    }
+
+                                    break;
+                            }
+
+                            break;
+                        case JSchemaType.Object:
+                        case JSchemaType.Object | JSchemaType.Null:
+                            switch (propAttribute)
+                            {
+                                case JsonPropertyAttribute jsonPropertyAttribute:
+                                    if (jsonPropertyAttribute.Required == Required.AllowNull)
+                                    {
+                                        _schema.Properties[propName] =
+                                            AddNullTypeToPropertyIfRequired(currentProperty);
+                                    }
                                     break;
                             }
 

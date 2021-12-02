@@ -12,7 +12,7 @@ namespace Tests.Model.Meetings
         [JsonProperty("attendees", Required = Required.AllowNull), MinLength(2)]
         public NameEmailObj[] Attendees { get; set; }
         
-        [JsonProperty("room", Required = Required.Always)]
+        [JsonProperty("room", Required = Required.AllowNull)]
         public NameEmailObj Room { get; set; }
         
         [JsonProperty("start"), Required, Range(0, long.MaxValue), ExclusiveMinimum]

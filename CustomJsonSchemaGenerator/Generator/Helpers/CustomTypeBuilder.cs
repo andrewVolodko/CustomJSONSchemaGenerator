@@ -36,7 +36,7 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                 {
                     var constraintType = type.GetGenericArguments()[0].GetGenericParameterConstraints()[0];
                     var typesImplOrInheritConstraint = assembleTypes
-                        .Where(t => constraintType.IsAssignableFrom(t) && t.Name != constraintType.Name)
+                        .Where(t => constraintType.IsAssignableFrom(t) && t.FullName != constraintType.FullName && !t.IsAbstract)
                         .ToList();
 
                     foreach (var constructedGenericType in typesImplOrInheritConstraint.Select(
