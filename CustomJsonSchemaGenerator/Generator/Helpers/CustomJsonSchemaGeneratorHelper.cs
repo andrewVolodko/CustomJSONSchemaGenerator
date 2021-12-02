@@ -20,20 +20,27 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
             }
         }
 
+        // Recursive method to loop through all properties of provided type
+        // Obtain custom type and field / property attributes
+        // Update current json property schema according to the obtained attribute value
         private static void LoopThroughTypeMembersAndUpdateSchema(Type type, ref JSchema schema)
         {
+            // It's necessary to handle arrays, since they have type "inside" - type of items
             JSchema arrayPropertySchema = null;
             if (type.GetInterface(nameof(IEnumerable)) != null)
             {
                 arrayPropertySchema = schema;
+                // Get array / list items type
                 type = type.GetElementType() ?? type.GetGenericArguments().Single();
                 schema = schema.Items[0];
             }
 
+            // Get custom attributes of type
             var typeCustomAttributes = GetTypeCustomAttributes(type);
 
             SetJsonPropertyTypeConstraints(ref schema, typeCustomAttributes, arrayPropertySchema);
 
+            // Obtain properties and fields of type
             var typeMembers = GetTypePropertiesAndFields(type);
 
             foreach (var typeMember in typeMembers)
@@ -43,6 +50,8 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
 
                 SetJsonPropertyPropertyConstraints(ref typeMemberPropertySchema, typeMemberCustomAttributes);
 
+                // It's necessary to decide whether further type inner properties processing required
+                // So that obtain property / field type
                 var typeMemberType = typeMember is PropertyInfo propertyInfo
                     ? propertyInfo.PropertyType
                     : ((FieldInfo) typeMember).FieldType;
@@ -52,6 +61,7 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                 var possibleSystemArrayItemsType =
                     typeMemberType.GetElementType() ?? typeMemberType.GetGenericArguments().SingleOrDefault();
 
+                // If type is in System namespace, further processing not necessary, since it's the "simplest" type for json schema
                 if (typeMemberType.Namespace == "System" || possibleSystemArrayItemsType?.Namespace == "System") continue;
 
                 LoopThroughTypeMembersAndUpdateSchema(typeMemberType, ref typeMemberPropertySchema);
