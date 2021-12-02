@@ -4,27 +4,27 @@ using System.ComponentModel;
 namespace CustomJsonSchemaGenerator.Generator.CustomAttributes
 {
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
-    public abstract class JsonSchemaPropAttribute : Attribute {}
+    public abstract class CustomJsonSchemaPropAttribute : Attribute {}
 
     [Description("If provided, Maximum property will be verified not inclusively")]
-    public class ExclusiveMaximumAttribute : JsonSchemaPropAttribute {}
+    public class ExclusiveMaximumAttribute : CustomJsonSchemaPropAttribute {}
 
     [Description("If provided, Minimum property will be verified not inclusively")]
-    public class ExclusiveMinimumAttribute : JsonSchemaPropAttribute {}
+    public class ExclusiveMinimumAttribute : CustomJsonSchemaPropAttribute {}
 
-    public class MultipleOfAttribute : JsonSchemaPropAttribute
+    public class MultipleOfAttribute : CustomJsonSchemaPropAttribute
     {
         public double Value { get; }
 
         public MultipleOfAttribute(double value) => Value = value;
     }
 
-    public class Format : JsonSchemaPropAttribute
+    public class Format : CustomJsonSchemaPropAttribute
     {
         public string Value { get; }
 
         public Format(string value) => Value = value;
     }
 
-    public class DisallowAdditionalItemsAttribute : JsonSchemaPropAttribute {}
+    public class DisallowAdditionalItemsAttribute : CustomJsonSchemaPropAttribute {}
 }

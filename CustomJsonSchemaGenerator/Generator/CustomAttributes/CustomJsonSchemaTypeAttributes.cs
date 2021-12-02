@@ -21,6 +21,8 @@ namespace CustomJsonSchemaGenerator.Generator.CustomAttributes
     
     public class DisallowAdditionalPropertiesAttribute : CustomJsonSchemaTypeAttribute {}
 
+    public class CannotBeNullInArray : CustomJsonSchemaTypeAttribute {}
+
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface, Inherited = false)]
     public class GenerateJsonSchemaAttribute : Attribute {}
 }

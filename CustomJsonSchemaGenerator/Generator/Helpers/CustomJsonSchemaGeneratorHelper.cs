@@ -108,6 +108,12 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                     case DisallowAdditionalPropertiesAttribute:
                         currentSchema.AllowAdditionalProperties = false;
                         break;
+                    case CannotBeNullInArray:
+                        if (optionalArrayPropertySchema != null)
+                        {
+                            currentSchema.Type = JSchemaType.Object;
+                        }
+                        break;
                 }
             }
         }
