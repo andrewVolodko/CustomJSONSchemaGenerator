@@ -5,13 +5,13 @@ namespace Tests.Model.Meeting
 {
     public abstract class BaseMeeting : IResponse
     {
-        [JsonProperty("item_id", Required = Required.Always)]
+        [JsonProperty("item_id"), Required]
         public ItemId ItemId { get; set; }
         
-        [JsonProperty("location_name", Required = Required.AllowNull), MinLength(20), MaxLength(250)]
+        [JsonProperty("location_name", NullValueHandling = NullValueHandling.Include), Required, MinLength(20), MaxLength(250)]
         public string LocationName { get; set; }
         
-        [JsonProperty("subject", Required = Required.Always), MinLength(1), MaxLength(250)]
+        [JsonProperty("subject"), MinLength(1), MaxLength(250)]
         public string Subject { get; set; }
     }
 }

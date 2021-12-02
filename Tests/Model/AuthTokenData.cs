@@ -7,7 +7,6 @@ namespace Tests.Model
     [GenerateJsonSchema]
     [DisallowAdditionalProperties]
     public class AuthTokenData : IResponse
-
     {
         [JsonProperty("auth_token", Required = Required.AllowNull), MinLength(10), Format("uuid")]
         public string AuthToken;

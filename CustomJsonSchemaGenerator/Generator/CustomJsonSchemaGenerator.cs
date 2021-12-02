@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -20,32 +21,38 @@ namespace CustomJsonSchemaGenerator.Generator
         {
             var generator = new JSchemaGenerator
             {
-                GenerationProviders = {new CustomJsonSchemaGenerationProvider()},
-                SchemaIdGenerationHandling = SchemaIdGenerationHandling.TypeName,
+                // GenerationProviders = {new CustomJsonSchemaGenerationProvider()},
+                SchemaIdGenerationHandling = SchemaIdGenerationHandling.FullTypeName,
                 SchemaReferenceHandling = SchemaReferenceHandling.None,
                 DefaultRequired = Required.Default
             };
 
-            var type = CustomTypeBuilder.BuildTypeWithTypesToGenerateJsonSchemaByAttribute(
+            var globalType = CustomTypeBuilder.BuildTypeWithTypesToGenerateJsonSchemaByAttribute(
                 typeof(GenerateJsonSchemaAttribute),
                 "TypesToCreateJSchema");
 
-            _globalJsonSchema = generator.Generate(type);
+            _globalJsonSchema = generator.Generate(globalType);
 
-            var curProp = type.GetProperties()[8];
-
-            var curPropSchema = _globalJsonSchema.Properties[curProp.Name];
-
-            GoThroughAllMembersOfTypeAndUpdateSchema(curProp.PropertyType, ref curPropSchema);
-
-
+            foreach (var globalTypeProperty in globalType.GetProperties())
+            {
+                var globalTypePropertySchema = _globalJsonSchema.Properties[globalTypeProperty.Name];
+                LoopThroughTypeMembersAndUpdateSchema(globalTypeProperty.PropertyType, ref globalTypePropertySchema);
+            }
         }
 
-        private void GoThroughAllMembersOfTypeAndUpdateSchema(Type type, ref JSchema schema)
+        private static void LoopThroughTypeMembersAndUpdateSchema(Type type, ref JSchema schema)
         {
+            JSchema arrayPropertySchema = null;
+            if (type.GetInterface(nameof(IEnumerable)) != null)
+            {
+                arrayPropertySchema = schema;
+                type = type.GetElementType() ?? type.GetGenericArguments().Single();
+                schema = schema.Items[0];
+            }
+
             var typeCustomAttributes = GetTypeCustomAttributes(type);
 
-            SetJsonPropertyTypeConstraints(ref schema, typeCustomAttributes);
+            SetJsonPropertyTypeConstraints(ref schema, typeCustomAttributes, arrayPropertySchema);
 
             var typeMembers = GetTypePropertiesAndFields(type);
 
@@ -56,13 +63,13 @@ namespace CustomJsonSchemaGenerator.Generator
 
                 SetJsonPropertyPropertyConstraints(ref typeMemberPropertySchema, typeMemberCustomAttributes);
 
-                var typeMemberType =  typeMember is PropertyInfo
-                    ? ((PropertyInfo)typeMember).PropertyType
-                    : ((FieldInfo)typeMember).FieldType;
+                var typeMemberType = typeMember is PropertyInfo propertyInfo
+                    ? propertyInfo.PropertyType
+                    : ((FieldInfo) typeMember).FieldType;
 
-                if (typeMemberType.Namespace == "System" || typeMemberType.BaseType == typeof(Array)) continue;
+                if (typeMemberType.Namespace == "System") continue;
 
-                GoThroughAllMembersOfTypeAndUpdateSchema(typeMemberType, ref typeMemberPropertySchema);
+                LoopThroughTypeMembersAndUpdateSchema(typeMemberType, ref typeMemberPropertySchema);
             }
         }
 
@@ -84,26 +91,34 @@ namespace CustomJsonSchemaGenerator.Generator
         private static List<MemberInfo> GetTypePropertiesAndFields(Type type) =>
             type.GetMembers().Where(member => member is FieldInfo or PropertyInfo).ToList();
 
-        private static void SetJsonPropertyTypeConstraints(ref JSchema typeSchema, List<Attribute> customAttributes)
+        private static void SetJsonPropertyTypeConstraints(ref JSchema typeSchema, List<Attribute> customAttributes,
+            JSchema optionalArrayPropertySchema)
         {
+            var currentSchema = typeSchema;
+            if (optionalArrayPropertySchema != null)
+            {
+                currentSchema = optionalArrayPropertySchema.Items[0];
+            }
+
             foreach (var customAttribute in customAttributes)
             {
                 switch (customAttribute)
                 {
                     case MaximumPropertiesAttribute maxProperties:
-                        typeSchema.MaximumProperties = maxProperties.Value;
+                        currentSchema.MaximumProperties = maxProperties.Value;
                         break;
                     case MinimumPropertiesAttribute minProperties:
-                        typeSchema.MinimumProperties = minProperties.Value;
+                        currentSchema.MinimumProperties = minProperties.Value;
                         break;
                     case DisallowAdditionalPropertiesAttribute:
-                        typeSchema.AllowAdditionalProperties = false;
+                        currentSchema.AllowAdditionalProperties = false;
                         break;
                 }
             }
         }
 
-        private static void SetJsonPropertyPropertyConstraints(ref JSchema propertySchema, List<Attribute> customAttributes)
+        private static void SetJsonPropertyPropertyConstraints(ref JSchema propertySchema,
+            List<Attribute> customAttributes)
         {
             foreach (var customAttribute in customAttributes)
             {
@@ -144,29 +159,30 @@ namespace CustomJsonSchemaGenerator.Generator
                             case DisallowAdditionalItemsAttribute:
                                 propertySchema.AllowAdditionalItems = false;
                                 break;
-                            case JsonPropertyAttribute jsonPropertyAttribute:
-                                if (jsonPropertyAttribute.Required == Required.AllowNull)
-                                {
-                                    propertySchema.Type = JSchemaType.Array | JSchemaType.Null;
-                                }
-
-                                break;
+                            // case JsonPropertyAttribute jsonPropertyAttribute:
+                            //     if (jsonPropertyAttribute.NullValueHandling == NullValueHandling.Ignore)
+                            //     {
+                            //         propertySchema.Type = JSchemaType.Array | JSchemaType.Null;
+                            //     }
+                            //
+                            //     break;
                         }
 
                         break;
-                    case JSchemaType.Object:
-                    case JSchemaType.Object | JSchemaType.Null:
-                        switch (customAttribute)
-                        {
-                            case JsonPropertyAttribute jsonPropertyAttribute:
-                                if (jsonPropertyAttribute.Required == Required.AllowNull)
-                                {
-                                    propertySchema.Type = JSchemaType.Object | JSchemaType.Null;
-                                }
-                                break;
-                        }
-
-                        break;
+                    // case JSchemaType.Object:
+                    // case JSchemaType.Object | JSchemaType.Null:
+                    //     switch (customAttribute)
+                    //     {
+                    //         case JsonPropertyAttribute jsonPropertyAttribute:
+                    //             if (jsonPropertyAttribute.NullValueHandling == NullValueHandling.Ignore)
+                    //             {
+                    //                 propertySchema.Type = JSchemaType.Object | JSchemaType.Null;
+                    //             }
+                    //
+                    //             break;
+                    //     }
+                    //
+                    //     break;
                 }
             }
         }

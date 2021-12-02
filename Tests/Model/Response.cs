@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using CustomJsonSchemaGenerator.Generator.CustomAttributes;
 using Newtonsoft.Json;
 
@@ -7,7 +8,7 @@ namespace Tests.Model
     [DisallowAdditionalProperties]
     public class Response<T> where T: IResponse, new()
     {
-        [JsonProperty("result", Required = Required.AllowNull), DisallowAdditionalItems]
+        [JsonProperty("result"), DisallowAdditionalItems]
         public T Result { get; set; }
     }
 }
