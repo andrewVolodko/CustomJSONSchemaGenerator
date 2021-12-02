@@ -9,7 +9,7 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
         private readonly AssemblyName _assemblyName;
         public DynamicClassBuilder(string className) => _assemblyName = new AssemblyName(className);
 
-        public Type CreateType(string[] propertyNames, Type[] types)
+        internal Type CreateType(string[] propertyNames, Type[] types)
         {
             if (propertyNames.Length != types.Length)
                 Console.WriteLine("The number of property names should match their corresponding types number");

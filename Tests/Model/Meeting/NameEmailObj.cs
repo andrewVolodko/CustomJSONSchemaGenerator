@@ -7,24 +7,26 @@ namespace Tests.Model.Meeting
     [DisallowAdditionalProperties]
     public class NameEmailObj
     {
-        [JsonProperty("name"), MinLength(1), MaxLength(100)]
+        [JsonProperty("name", Required = Required.AllowNull), MinLength(1), MaxLength(100), Format("NameFormat")]
         public string Name { get; set; }
         
-        [JsonProperty("email")]
+        [JsonProperty("email", Required = Required.Always)]
         [Format("email")]
         [RegularExpression("^.+\\..+(@itechart-group\\.com)$")]
         [MaxLength(250)]
         public string Email { get; set; }
 
-        [JsonProperty("testfortestprop", Required = Required.AllowNull)]
-        public TestForTest TestForTestProp { get; set; }
+        [JsonProperty("exchangeClient", Required = Required.Always)]
+        public ExchangeClient ExchangeClient { get; set; }
     }
 
-    [DisallowAdditionalProperties]
-    public class TestForTest
+    public class ExchangeClient
     {
-        [JsonProperty("teststringprop")]
-        [Format("SUPERSTRANGEFORMAT")]
-        public string TestStringProp { get; set; }
+        [JsonProperty("version")]
+        [Range(0, 100), ExclusiveMinimum]
+        public double Version { get; set; }
+
+        [Format("DescriptionFormat")]
+        public string Description;
     }
 }

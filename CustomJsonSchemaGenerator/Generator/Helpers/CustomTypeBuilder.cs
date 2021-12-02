@@ -16,7 +16,7 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
         /// So that algorithm will generate Response<MeetingObj> generic type, in order to generate such JSON schema in the future
         /// </summary>
         /// <returns>Common type with props of types for which JSON schemas required</returns>
-        public static Type BuildTypeWithTypesToGenerateJsonSchemaByAttribute(Type attributeType, string customTypeName)
+        internal static Type BuildTypeWithTypesToGenerateJsonSchemaByAttribute(Type attributeType, string customTypeName)
         {
             var types = new Dictionary<string, Type>();
 
