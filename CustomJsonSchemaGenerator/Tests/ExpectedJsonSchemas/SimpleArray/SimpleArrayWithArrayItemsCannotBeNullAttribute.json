@@ -1,5 +1,5 @@
 {
-  "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleArray+SimpleArrayWithDisallowAdditionalItemsAttribute",
+  "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleArray+SimpleArrayWithArrayItemsCannotBeNullAttribute",
   "type": [
     "object",
     "null"
@@ -11,13 +11,9 @@
         "array",
         "null"
       ],
-      "additionalItems": false,
       "items": {
         "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleArray+TestType",
-        "type": [
-          "object",
-          "null"
-        ]
+        "type": "object"
       }
     },
     "SimpleArrayProperty": {
@@ -26,13 +22,9 @@
         "array",
         "null"
       ],
-      "additionalItems": false,
       "items": {
         "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleArray+TestType",
-        "type": [
-          "object",
-          "null"
-        ]
+        "type": "object"
       }
     }
   }

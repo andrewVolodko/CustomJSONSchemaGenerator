@@ -15,6 +15,16 @@ namespace CustomJsonSchemaGenerator.Tests.Models
             public IEnumerable<TestType> SimpleArrayProperty { get; set; }
         }
 
+        [GenerateJsonSchema]
+        public class SimpleArrayWithArrayItemsCannotBeNullAttribute
+        {
+            [ArrayItemsCannotBeNull]
+            public IEnumerable<TestType> SimpleArrayField;
+
+            [ArrayItemsCannotBeNull]
+            public IEnumerable<TestType> SimpleArrayProperty { get; set; }
+        }
+
         public class TestType { }
     }
 }

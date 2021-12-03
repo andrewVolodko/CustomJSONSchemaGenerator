@@ -43,6 +43,9 @@
       <None Update="Tests\ExpectedJsonSchemas\SimpleArray\SimpleArrayWithDisallowAdditionalItemsAttribute.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="Tests\ExpectedJsonSchemas\SimpleArray\SimpleArrayWithArrayItemsCannotBeNullAttribute.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

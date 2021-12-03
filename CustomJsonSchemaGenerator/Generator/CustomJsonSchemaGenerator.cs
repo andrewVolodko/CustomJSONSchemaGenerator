@@ -1,4 +1,6 @@
-﻿using CustomJsonSchemaGenerator.Generator.CustomAttributes;
+﻿using System;
+using System.Collections.Generic;
+using CustomJsonSchemaGenerator.Generator.CustomAttributes;
 using CustomJsonSchemaGenerator.Generator.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Schema;
@@ -33,12 +35,22 @@ namespace CustomJsonSchemaGenerator.Generator
         /// <summary>
         ///
         /// </summary>
-        /// <param name="jsonSchemaName">FullName of the type the schema was generated for</param>
+        /// <param name="typeFullName">FullName of the type the schema was generated for</param>
         /// <returns></returns>
-        public static JSchema GetJsonSchema(string jsonSchemaName)
+        public static JSchema GetJsonSchema(string typeFullName)
         {
             _instance ??= new CustomJSchemaGenerator();
-            return _instance._globalJSchema.Properties[jsonSchemaName];
+
+            try
+            {
+                return _instance._globalJSchema.Properties[typeFullName];
+            }
+            catch (KeyNotFoundException)
+            {
+                throw new KeyNotFoundException(
+                    $"Json schema for '{typeFullName}' type was not found. " +
+                    "Possibly, 'GenerateJsonSchema' attribute was not added to the type");
+            }
         }
     }
 }
