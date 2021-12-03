@@ -46,10 +46,10 @@ namespace CustomJsonSchemaGenerator.Tests.Tests
             var expectedJsonSchemaFilePath =
                 $"{ExpectedJsonSchemasFolderName}/{folderName}/{classToGenerateJSchema.Name}.json";
 
-            // var expectedJsonSchema = GetJsonObjectFromJsonFile(expectedJsonSchemaFilePath).ToString();
+            var expectedJsonSchema = GetJsonObjectFromJsonFile(expectedJsonSchemaFilePath).ToString();
             var actualJsonSchema = GetJsonSchema(classToGenerateJSchema.FullName).ToString();
 
-            // Assert.AreEqual(expectedJsonSchema, actualJsonSchema);
+            Assert.AreEqual(expectedJsonSchema, actualJsonSchema);
         }
 
         private static IEnumerable<Type> GetSimpleStringClassesNamesToGenerateJSchema()

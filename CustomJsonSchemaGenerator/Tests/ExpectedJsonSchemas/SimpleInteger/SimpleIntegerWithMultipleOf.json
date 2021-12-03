@@ -1,6 +1,9 @@
 {
   "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleInteger+SimpleIntegerWithMultipleOf",
-  "type": "object",
+  "type": [
+    "object",
+    "null"
+  ],
   "properties": {
     "SimpleIntegerField": {
       "type": "integer",

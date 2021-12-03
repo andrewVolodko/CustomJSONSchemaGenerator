@@ -1,6 +1,9 @@
 {
   "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleNumber+SimpleNumberWithExclusiveMinimumAndExclusiveMaximum",
-  "type": "object",
+  "type": [
+    "object",
+    "null"
+  ],
   "properties": {
     "SimpleNumberField": {
       "type": "number",

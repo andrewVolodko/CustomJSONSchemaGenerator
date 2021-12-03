@@ -1,6 +1,9 @@
 {
   "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleString+SimpleStringWithFormat",
-  "type": "object",
+  "type": [
+    "object",
+    "null"
+  ],
   "properties": {
     "SimpleStringField": {
       "type": [
