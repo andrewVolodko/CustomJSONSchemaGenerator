@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using CustomJsonSchemaGenerator.Generator.CustomAttributes;
@@ -20,11 +21,26 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
             }
         }
 
-        // Recursive method to loop through all properties of provided type
-        // Obtain custom type and field / property attributes
-        // Update current json property schema according to the obtained attribute value
-        private static void LoopThroughTypeMembersAndUpdateSchema(Type type, ref JSchema schema)
+        /// <summary>
+        /// Recursive method to loop through all properties of provided type
+        /// Obtain custom type and field / property attributes
+        /// Update current json property schema according to the obtained attribute value
+        /// </summary>
+        /// <param name="type">The type custom attributes need to be obtained from</param>
+        /// <param name="schema">Already generated schema that should be modified</param>
+        /// <param name="arrayItemsCannotBeNullAttribute">Optional parameter that is used ONLY in cases
+        /// when enumerable type is processing
+        /// The problem is that it's necessary to set array item nullable parameter
+        /// but array - is a property, and its item - object
+        /// and it's necessary to specify PROPERTY attribute to OBJECT
+        /// so that this argument was added to the method to handle the case</param>
+        private static void LoopThroughTypeMembersAndUpdateSchema(Type type, ref JSchema schema,
+            Attribute arrayItemsCannotBeNullAttribute = null)
         {
+            // Declare list with type custom attributes at the beginning
+            // since it will be possibly filled before obtaining the type custom attributes
+            var typeCustomAttributes = new List<Attribute>();
+
             // It's necessary to handle arrays, since they have type "inside" - type of items
             JSchema arrayPropertySchema = null;
             if (type.GetInterface(nameof(IEnumerable)) != null)
@@ -33,10 +49,15 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                 // Get array / list items type
                 type = type.GetElementType() ?? type.GetGenericArguments().Single();
                 schema = schema.Items[0];
+
+                if (arrayItemsCannotBeNullAttribute != null)
+                {
+                    typeCustomAttributes.Add(arrayItemsCannotBeNullAttribute);
+                }
             }
 
             // Get custom attributes of type
-            var typeCustomAttributes = GetTypeCustomAttributes(type);
+            typeCustomAttributes.AddRange(GetTypeCustomAttributes(type));
 
             SetJsonPropertyTypeConstraints(ref schema, typeCustomAttributes, arrayPropertySchema);
 
@@ -62,9 +83,14 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                     typeMemberType.GetElementType() ?? typeMemberType.GetGenericArguments().SingleOrDefault();
 
                 // If type is in System namespace, further processing not necessary, since it's the "simplest" type for json schema
-                if (typeMemberType.Namespace == "System" || possibleSystemArrayItemsType?.Namespace == "System") continue;
+                if (typeMemberType.Namespace == "System" ||
+                    possibleSystemArrayItemsType?.Namespace == "System") continue;
 
-                LoopThroughTypeMembersAndUpdateSchema(typeMemberType, ref typeMemberPropertySchema);
+                // Obtain ArrayItemsCannotBeNull attribute if exists
+                arrayItemsCannotBeNullAttribute =
+                    typeMemberCustomAttributes.SingleOrDefault(attr => attr is ArrayItemsCannotBeNullAttribute);
+
+                LoopThroughTypeMembersAndUpdateSchema(typeMemberType, ref typeMemberPropertySchema, arrayItemsCannotBeNullAttribute);
             }
         }
 
@@ -108,11 +134,12 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                     case DisallowAdditionalPropertiesAttribute:
                         currentSchema.AllowAdditionalProperties = false;
                         break;
-                    case CannotBeNullInArray:
+                    case ArrayItemsCannotBeNullAttribute:
                         if (optionalArrayPropertySchema != null)
                         {
                             currentSchema.Type = JSchemaType.Object;
                         }
+
                         break;
                 }
             }
@@ -147,7 +174,7 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                     case JSchemaType.String | JSchemaType.Null:
                         switch (customAttribute)
                         {
-                            case Format format:
+                            case FormatAttribute format:
                                 propertySchema.Format = format.Value;
                                 break;
                         }

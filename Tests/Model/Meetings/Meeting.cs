@@ -10,10 +10,10 @@ namespace Tests.Model.Meetings
     [DisallowAdditionalProperties]
     public class Meeting : BaseMeeting
     {
-        [JsonProperty("attendees", Required = Required.AllowNull), MinLength(2), MaxLength(100)]
+        [JsonProperty("attendees", Required = Required.AllowNull), ArrayItemsCannotBeNull, MinLength(2), MaxLength(100)]
         public List<NameEmailObj> Attendees { get; set; }
         
-        [JsonProperty("room", Required = Required.Always)]
+        [JsonProperty("room", Required = Required.AllowNull)]
         public NameEmailObj Room { get; set; }
         
         [JsonProperty("start"), Range(0, long.MaxValue), ExclusiveMinimum]

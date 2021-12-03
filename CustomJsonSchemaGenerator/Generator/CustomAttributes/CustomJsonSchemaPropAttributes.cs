@@ -19,12 +19,15 @@ namespace CustomJsonSchemaGenerator.Generator.CustomAttributes
         public MultipleOfAttribute(double value) => Value = value;
     }
 
-    public class Format : CustomJsonSchemaPropAttribute
+    public class FormatAttribute : CustomJsonSchemaPropAttribute
     {
         public string Value { get; }
 
-        public Format(string value) => Value = value;
+        public FormatAttribute(string value) => Value = value;
     }
 
     public class DisallowAdditionalItemsAttribute : CustomJsonSchemaPropAttribute {}
+
+    [Description("Applicable only for enumerable types")]
+    public class ArrayItemsCannotBeNullAttribute : CustomJsonSchemaPropAttribute {}
 }
