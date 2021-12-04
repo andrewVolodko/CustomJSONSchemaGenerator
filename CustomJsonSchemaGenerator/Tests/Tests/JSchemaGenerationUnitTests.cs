@@ -11,40 +11,45 @@ namespace CustomJsonSchemaGenerator.Tests.Tests
     public class JSchemaGenerationUnitTests
     {
         private const string ExpectedJsonSchemasFolderName = "Tests/ExpectedJsonSchemas";
+        private const string ExpectedSimpleJsonSchemasFolderName = "Simple";
 
         [Test]
         [TestCaseSource(nameof(GetSimpleStringClassesNamesToGenerateJSchema))]
         public void VerifySimpleString(Type classToGenerateJSchema)
         {
-            AssertClassSchemas(classToGenerateJSchema, nameof(SimpleString));
+            AssertClassSchemas(classToGenerateJSchema, ExpectedSimpleJsonSchemasFolderName, nameof(SimpleString));
         }
 
         [Test]
         [TestCaseSource(nameof(GetSimpleIntegerClassesNamesToGenerateJSchema))]
         public void VerifySimpleInteger(Type classToGenerateJSchema)
         {
-            AssertClassSchemas(classToGenerateJSchema, nameof(SimpleInteger));
+            AssertClassSchemas(classToGenerateJSchema, ExpectedSimpleJsonSchemasFolderName, nameof(SimpleInteger));
         }
 
         [Test]
         [TestCaseSource(nameof(GetSimpleNumberClassesNamesToGenerateJSchema))]
         public void VerifySimpleNumber(Type classToGenerateJSchema)
         {
-            AssertClassSchemas(classToGenerateJSchema, nameof(SimpleNumber));
+            AssertClassSchemas(classToGenerateJSchema, ExpectedSimpleJsonSchemasFolderName, nameof(SimpleNumber));
         }
 
         [Test]
         [TestCaseSource(nameof(GetSimpleArrayClassesNamesToGenerateJSchema))]
         public void VerifySimpleArray(Type classToGenerateJSchema)
         {
-            AssertClassSchemas(classToGenerateJSchema, nameof(SimpleArray));
+            AssertClassSchemas(classToGenerateJSchema, ExpectedSimpleJsonSchemasFolderName, nameof(SimpleArray));
         }
 
 
-        private static void AssertClassSchemas(Type classToGenerateJSchema, string folderName)
+        private static void AssertClassSchemas(Type classToGenerateJSchema, params string[] path)
         {
-            var expectedJsonSchemaFilePath =
-                $"{ExpectedJsonSchemasFolderName}/{folderName}/{classToGenerateJSchema.Name}.json";
+            var pathList = new List<string>();
+            pathList.Add(ExpectedJsonSchemasFolderName);
+            pathList.AddRange(path);
+            pathList.Add(classToGenerateJSchema.Name + ".json");
+
+            var expectedJsonSchemaFilePath = Path.Combine(pathList.ToArray());
 
             var expectedJsonSchema = GetJsonObjectFromJsonFile(expectedJsonSchemaFilePath).ToString();
             var actualJsonSchema = GetJsonSchema(classToGenerateJSchema.FullName).ToString();

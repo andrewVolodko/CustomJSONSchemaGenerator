@@ -13,39 +13,49 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleString\SimpleStringWithFormat.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleInteger\SimpleIntegerWithExclusiveMinimum.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleInteger\SimpleIntegerWithExclusiveMaximum.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleInteger\SimpleIntegerWithExclusiveMinimumAndExclusiveMaximum.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleInteger\SimpleIntegerWithMultipleOf.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleNumber\SimpleNumberWithExclusiveMaximum.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleNumber\SimpleNumberWithExclusiveMinimum.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleNumber\SimpleNumberWithExclusiveMinimumAndExclusiveMaximum.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Tests\ExpectedJsonSchemas\SimpleNumber\SimpleNumberWithMultipleOf.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
       <None Update="Tests\ExpectedJsonSchemas\SimpleArray\SimpleArrayWithDisallowAdditionalItemsAttribute.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
       <None Update="Tests\ExpectedJsonSchemas\SimpleArray\SimpleArrayWithArrayItemsCannotBeNullAttribute.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="Tests\ExpectedJsonSchemas\Simple\SimpleArray\SimpleArrayWithArrayItemsCannotBeNullAttribute.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\Simple\SimpleArray\SimpleArrayWithDisallowAdditionalItemsAttribute.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\Simple\SimpleInteger\SimpleIntegerWithExclusiveMaximum.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\Simple\SimpleInteger\SimpleIntegerWithExclusiveMinimum.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\Simple\SimpleInteger\SimpleIntegerWithExclusiveMinimumAndExclusiveMaximum.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\Simple\SimpleInteger\SimpleIntegerWithMultipleOf.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\Simple\SimpleNumber\SimpleNumberWithExclusiveMaximum.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\Simple\SimpleNumber\SimpleNumberWithExclusiveMinimum.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\Simple\SimpleNumber\SimpleNumberWithExclusiveMinimumAndExclusiveMaximum.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\Simple\SimpleNumber\SimpleNumberWithMultipleOf.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\Simple\SimpleString\SimpleStringWithFormat.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Tests\ExpectedJsonSchemas\Simple" />
     </ItemGroup>
 
 </Project>
