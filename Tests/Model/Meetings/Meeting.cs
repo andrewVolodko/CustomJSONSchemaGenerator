@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using CustomJsonSchemaGenerator.Generator.CustomAttributes;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Schema;
 using Tests.Model.Meeting;
 
 namespace Tests.Model.Meetings
@@ -10,7 +11,7 @@ namespace Tests.Model.Meetings
     [DisallowAdditionalProperties]
     public class Meeting : BaseMeeting
     {
-        [JsonProperty("attendees", Required = Required.AllowNull), ArrayItemsCannotBeNull, MinLength(2), MaxLength(100)]
+        [JsonProperty("attendees", Required = Required.AllowNull), ArrayItemsCannotBeNull, UniqueItems, Contains(JSchemaType.Object), MinContains(2), MinLength(2), MaxLength(100)]
         public List<NameEmailObj> Attendees { get; set; }
         
         [JsonProperty("room", Required = Required.AllowNull)]

@@ -90,7 +90,8 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                 arrayItemsCannotBeNullAttribute =
                     typeMemberCustomAttributes.SingleOrDefault(attr => attr is ArrayItemsCannotBeNullAttribute);
 
-                LoopThroughTypeMembersAndUpdateSchema(typeMemberType, ref typeMemberPropertySchema, arrayItemsCannotBeNullAttribute);
+                LoopThroughTypeMembersAndUpdateSchema(typeMemberType, ref typeMemberPropertySchema,
+                    arrayItemsCannotBeNullAttribute);
             }
         }
 
@@ -186,6 +187,26 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                         {
                             case DisallowAdditionalItemsAttribute:
                                 propertySchema.AllowAdditionalItems = false;
+                                break;
+                            case ContainsAttribute containsAttribute:
+                                propertySchema.Contains = containsAttribute.Value;
+                                break;
+                            case MaxContainsAttribute maxContainsAttribute:
+                                if (customAttributes.Any(attr => attr is ContainsAttribute))
+                                {
+                                    propertySchema.MaximumContains = maxContainsAttribute.Value;
+                                }
+
+                                break;
+                            case MinContainsAttribute minContainsAttribute:
+                                if (customAttributes.Any(attr => attr is ContainsAttribute))
+                                {
+                                    propertySchema.MinimumContains = minContainsAttribute.Value;
+                                }
+
+                                break;
+                            case UniqueItemsAttribute:
+                                propertySchema.UniqueItems = true;
                                 break;
                         }
 

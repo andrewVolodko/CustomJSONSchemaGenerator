@@ -1,5 +1,7 @@
 using System;
 using System.ComponentModel;
+using Newtonsoft.Json.Schema;
+using Newtonsoft.Json.Schema.Generation;
 
 namespace CustomJsonSchemaGenerator.Generator.CustomAttributes
 {
@@ -30,4 +32,31 @@ namespace CustomJsonSchemaGenerator.Generator.CustomAttributes
 
     [Description("Applicable only for enumerable types")]
     public class ArrayItemsCannotBeNullAttribute : CustomJsonSchemaPropertyAttribute {}
+
+    public class ContainsAttribute : CustomJsonSchemaPropertyAttribute
+    {
+        private const string ContainsTypeString = "{{ \"type\": \"{0}\" }}";
+        public JSchema Value { get; }
+
+        public ContainsAttribute(JSchemaType value) =>
+            Value = JSchema.Parse(string.Format(ContainsTypeString, value.ToString().ToLower()));
+    }
+
+    [Description("Will be added to schema only if Contains attribute provided")]
+    public class MaxContainsAttribute : CustomJsonSchemaPropertyAttribute
+    {
+        public long Value { get; }
+
+        public MaxContainsAttribute(long value) => Value = value;
+    }
+
+    [Description("Will be added to schema only if Contains attribute provided")]
+    public class MinContainsAttribute : CustomJsonSchemaPropertyAttribute
+    {
+        public long Value { get; }
+
+        public MinContainsAttribute(long value) => Value = value;
+    }
+
+    public class UniqueItemsAttribute : CustomJsonSchemaPropertyAttribute { }
 }
