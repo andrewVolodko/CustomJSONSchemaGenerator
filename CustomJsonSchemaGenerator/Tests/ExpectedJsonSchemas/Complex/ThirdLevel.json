@@ -11,7 +11,12 @@
       "minLength": 1,
       "maxLength": 100,
       "pattern": "TestPatternForField",
-      "format": "TestFormatForField"
+      "format": "TestFormatForField",
+      "enum": [
+        "ValueOne",
+        "ValueTwo",
+        "ValueThree"
+      ]
     },
     "thirdLevelSimpleNumberField": {
       "type": "number",
@@ -212,7 +217,12 @@
       "minLength": 1,
       "maxLength": 100,
       "pattern": "TestPatternForField",
-      "format": "TestFormatForField"
+      "format": "TestFormatForField",
+      "enum": [
+        "ValueOne",
+        "ValueTwo",
+        "ValueThree"
+      ]
     },
     "secondLevelSimpleNumberField": {
       "type": "number",
@@ -413,7 +423,12 @@
       "minLength": 1,
       "maxLength": 100,
       "pattern": "TestPatternForField",
-      "format": "TestFormatForField"
+      "format": "TestFormatForField",
+      "enum": [
+        "ValueOne",
+        "ValueTwo",
+        "ValueThree"
+      ]
     },
     "firstLevelSimpleNumberField": {
       "type": "number",
@@ -913,7 +928,12 @@
       "minLength": 1,
       "maxLength": 100,
       "pattern": "TestPatternForProperty",
-      "format": "TestFormatForProperty"
+      "format": "TestFormatForProperty",
+      "enum": [
+        "ValueOne",
+        "ValueTwo",
+        "ValueThree"
+      ]
     },
     "thirdLevelSimpleNumberProperty": {
       "type": "number",
@@ -1114,7 +1134,12 @@
       "minLength": 1,
       "maxLength": 100,
       "pattern": "TestPatternForProperty",
-      "format": "TestFormatForProperty"
+      "format": "TestFormatForProperty",
+      "enum": [
+        "ValueOne",
+        "ValueTwo",
+        "ValueThree"
+      ]
     },
     "secondLevelSimpleNumberProperty": {
       "type": "number",
@@ -1315,7 +1340,12 @@
       "minLength": 1,
       "maxLength": 100,
       "pattern": "TestPatternForProperty",
-      "format": "TestFormatForProperty"
+      "format": "TestFormatForProperty",
+      "enum": [
+        "ValueOne",
+        "ValueTwo",
+        "ValueThree"
+      ]
     },
     "firstLevelSimpleNumberProperty": {
       "type": "number",
@@ -1830,5 +1860,7 @@
     "thirdLevelSimpleObjectArrayProperty",
     "secondLevelSimpleObjectArrayProperty",
     "firstLevelSimpleObjectArrayProperty"
-  ]
+  ],
+  "minProperties": 14,
+  "maxProperties": 42
 }

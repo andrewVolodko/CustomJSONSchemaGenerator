@@ -9,18 +9,22 @@ namespace CustomJsonSchemaGenerator.Tests.Models.ComplexObject
 {
     [GenerateJsonSchema]
     [DisallowAdditionalProperties]
+    [MinimumProperties(14)]
+    [MaximumProperties(42)]
     public class ThirdLevel : SecondLevel
     {
         [JsonProperty("thirdLevelSimpleStringField", Required = Required.Always)]
         [Format("TestFormatForField")]
         [MinLength(1), MaxLength(100)]
         [RegularExpression("TestPatternForField")]
+        [EnumDataType(typeof(AdditionalEnum))]
         public string ThirdLevelSimpleStringField;
 
         [JsonProperty("thirdLevelSimpleStringProperty", Required = Required.Default)]
         [Format("TestFormatForProperty")]
         [MinLength(1), MaxLength(100)]
         [RegularExpression("TestPatternForProperty")]
+        [EnumDataType(typeof(AdditionalEnum))]
         public string ThirdLevelSimpleStringProperty { get; set; }
 
         [JsonProperty("thirdLevelSimpleNumberField", Required = Required.AllowNull)]

@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 namespace Tests.Model.Meeting
 {
     [DisallowAdditionalProperties]
+    [MinimumProperties(10)]
     public class NameEmailObj
     {
         [JsonProperty("name", Required = Required.AllowNull), MinLength(1), MaxLength(100), Format("NameFormat")]

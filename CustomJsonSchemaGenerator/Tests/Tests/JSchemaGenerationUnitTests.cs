@@ -95,8 +95,8 @@ namespace CustomJsonSchemaGenerator.Tests.Tests
 
         private static IEnumerable<Type> GetComplexObjectClassesNamesToGenerateJSchema()
         {
-            yield return typeof(FirstLevel);
-            yield return typeof(SecondLevel);
+            // yield return typeof(FirstLevel);
+            // yield return typeof(SecondLevel);
             yield return typeof(ThirdLevel);
         }
 

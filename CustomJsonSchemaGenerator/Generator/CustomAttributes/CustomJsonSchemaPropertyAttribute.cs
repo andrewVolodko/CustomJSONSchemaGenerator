@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel;
 using Newtonsoft.Json.Schema;
-using Newtonsoft.Json.Schema.Generation;
 
 namespace CustomJsonSchemaGenerator.Generator.CustomAttributes
 {

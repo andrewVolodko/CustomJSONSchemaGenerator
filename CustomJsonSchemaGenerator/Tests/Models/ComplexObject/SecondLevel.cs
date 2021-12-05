@@ -8,18 +8,22 @@ using Newtonsoft.Json.Schema;
 namespace CustomJsonSchemaGenerator.Tests.Models.ComplexObject
 {
     [GenerateJsonSchema]
+    [MinimumProperties(14)]
+    [MaximumProperties(28)]
     public class SecondLevel : FirstLevel
     {
         [JsonProperty("secondLevelSimpleStringField", Required = Required.Always)]
         [Format("TestFormatForField")]
         [MinLength(1), MaxLength(100)]
         [RegularExpression("TestPatternForField")]
+        [EnumDataType(typeof(AdditionalEnum))]
         public string SecondLevelSimpleStringField;
 
         [JsonProperty("secondLevelSimpleStringProperty", Required = Required.Default)]
         [Format("TestFormatForProperty")]
         [MinLength(1), MaxLength(100)]
         [RegularExpression("TestPatternForProperty")]
+        [EnumDataType(typeof(AdditionalEnum))]
         public string SecondLevelSimpleStringProperty { get; set; }
 
         [JsonProperty("secondLevelSimpleNumberField", Required = Required.AllowNull)]

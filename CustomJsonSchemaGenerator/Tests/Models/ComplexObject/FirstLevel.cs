@@ -9,40 +9,44 @@ namespace CustomJsonSchemaGenerator.Tests.Models.ComplexObject
 {
     [GenerateJsonSchema]
     [DisallowAdditionalProperties]
+    [MinimumProperties(14)]
+    [MaximumProperties(14)]
     public class FirstLevel
     {
         [JsonProperty("firstLevelSimpleStringField", Required = Required.Always)]
         [Format("TestFormatForField")]
         [MinLength(1), MaxLength(100)]
         [RegularExpression("TestPatternForField")]
+        [EnumDataType(typeof(AdditionalEnum))]
         public string FirstLevelSimpleStringField;
 
         [JsonProperty("firstLevelSimpleStringProperty", Required = Required.Default)]
         [Format("TestFormatForProperty")]
         [MinLength(1), MaxLength(100)]
         [RegularExpression("TestPatternForProperty")]
+        [EnumDataType(typeof(AdditionalEnum))]
         public string FirstLevelSimpleStringProperty { get; set; }
 
         [JsonProperty("firstLevelSimpleNumberField", Required = Required.AllowNull)]
-        [Range(-100, 100)]
+        [System.ComponentModel.DataAnnotations.Range(-100, 100)]
         [ExclusiveMaximum, ExclusiveMinimum]
         [MultipleOf(25.6)]
         public double FirstLevelSimpleNumberField;
 
         [JsonProperty("firstLevelSimpleNumberProperty", Required = Required.DisallowNull)]
-        [Range(-100, 100)]
+        [System.ComponentModel.DataAnnotations.Range(-100, 100)]
         [ExclusiveMaximum, ExclusiveMinimum]
         [MultipleOf(25.6)]
         public double FirstLevelSimpleNumberProperty { get; set; }
 
         [JsonProperty("firstLevelSimpleIntegerField", Required = Required.Always)]
-        [Range(-100, 100)]
+        [System.ComponentModel.DataAnnotations.Range(-100, 100)]
         [ExclusiveMaximum, ExclusiveMinimum]
         [MultipleOf(25)]
         public int FirstLevelSimpleIntegerField;
 
         [JsonProperty("firstLevelSimpleIntegerProperty", Required = Required.Default)]
-        [Range(-100, 100)]
+        [System.ComponentModel.DataAnnotations.Range(-100, 100)]
         [ExclusiveMaximum, ExclusiveMinimum]
         [MultipleOf(25)]
         public int FirstLevelSimpleIntegerProperty { get; set; }
