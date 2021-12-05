@@ -35,15 +35,17 @@ namespace CustomJsonSchemaGenerator.Generator
         /// <summary>
         ///
         /// </summary>
-        /// <param name="typeFullName">FullName of the type the schema was generated for</param>
+        /// <param name="typeOfObjectToGetSchemaFor">Type the schema was generated for</param>
         /// <returns></returns>
-        public static JSchema GetJsonSchema(string typeFullName)
+        public static JSchema GetJsonSchema(Type typeOfObjectToGetSchemaFor)
         {
             _instance ??= new CustomJSchemaGenerator();
 
+            var typeFullName = typeOfObjectToGetSchemaFor.FullName;
+
             try
             {
-                return _instance._globalJSchema.Properties[typeFullName];
+                return _instance._globalJSchema.Properties[typeFullName!];
             }
             catch (KeyNotFoundException)
             {

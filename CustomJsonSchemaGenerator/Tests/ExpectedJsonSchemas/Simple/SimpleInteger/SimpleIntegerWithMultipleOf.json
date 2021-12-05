@@ -1,5 +1,5 @@
 {
-  "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleInteger+SimpleIntegerWithMultipleOf",
+  "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleObjects.SimpleInteger+SimpleIntegerWithMultipleOf",
   "type": [
     "object",
     "null"

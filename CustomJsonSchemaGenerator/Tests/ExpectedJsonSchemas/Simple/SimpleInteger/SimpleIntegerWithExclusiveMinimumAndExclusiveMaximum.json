@@ -1,5 +1,5 @@
 {
-  "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleInteger+SimpleIntegerWithExclusiveMinimumAndExclusiveMaximum",
+  "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleObjects.SimpleInteger+SimpleIntegerWithExclusiveMinimumAndExclusiveMaximum",
   "type": [
     "object",
     "null"

@@ -61,7 +61,7 @@ namespace CustomJsonSchemaGenerator.Tests.Tests
             var expectedJsonSchemaFilePath = Path.Combine(pathList.ToArray());
 
             var expectedJsonSchema = GetJsonObjectFromJsonFile(expectedJsonSchemaFilePath).ToString();
-            var actualJsonSchema = GetJsonSchema(classToGenerateJSchema.FullName).ToString();
+            var actualJsonSchema = GetJsonSchema(classToGenerateJSchema).ToString();
 
             Assert.AreEqual(expectedJsonSchema, actualJsonSchema);
         }
