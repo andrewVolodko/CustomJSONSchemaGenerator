@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using CustomJsonSchemaGenerator.Tests.Models;
+using CustomJsonSchemaGenerator.Tests.Models.ComplexObject;
+using CustomJsonSchemaGenerator.Tests.Models.SimpleObjects;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using static CustomJsonSchemaGenerator.Generator.CustomJSchemaGenerator;
@@ -12,6 +13,7 @@ namespace CustomJsonSchemaGenerator.Tests.Tests
     {
         private const string ExpectedJsonSchemasFolderName = "Tests/ExpectedJsonSchemas";
         private const string ExpectedSimpleJsonSchemasFolderName = "Simple";
+        private const string ExpectedComplexJsonSchemasFolderName = "Complex";
 
         [Test]
         [TestCaseSource(nameof(GetSimpleStringClassesNamesToGenerateJSchema))]
@@ -39,6 +41,13 @@ namespace CustomJsonSchemaGenerator.Tests.Tests
         public void VerifySimpleArray(Type classToGenerateJSchema)
         {
             AssertClassSchemas(classToGenerateJSchema, ExpectedSimpleJsonSchemasFolderName, nameof(SimpleArray));
+        }
+
+        [Test]
+        [TestCaseSource(nameof(GetComplexObjectClassesNamesToGenerateJSchema))]
+        public void VerifyComplexObjects(Type classToGenerateJSchema)
+        {
+            AssertClassSchemas(classToGenerateJSchema, ExpectedComplexJsonSchemasFolderName);
         }
 
 
@@ -82,6 +91,13 @@ namespace CustomJsonSchemaGenerator.Tests.Tests
         {
             yield return typeof(SimpleArray.SimpleArrayWithDisallowAdditionalItemsAttribute);
             yield return typeof(SimpleArray.SimpleArrayWithArrayItemsCannotBeNullAttribute);
+        }
+
+        private static IEnumerable<Type> GetComplexObjectClassesNamesToGenerateJSchema()
+        {
+            yield return typeof(FirstLevel);
+            yield return typeof(SecondLevel);
+            yield return typeof(ThirdLevel);
         }
 
         private static JObject GetJsonObjectFromJsonFile(string jsonFile)

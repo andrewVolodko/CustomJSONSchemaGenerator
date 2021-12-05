@@ -1,6 +1,6 @@
 using CustomJsonSchemaGenerator.Generator.CustomAttributes;
 
-namespace CustomJsonSchemaGenerator.Tests.Models
+namespace CustomJsonSchemaGenerator.Tests.Models.SimpleObjects
 {
     public class SimpleString
     {

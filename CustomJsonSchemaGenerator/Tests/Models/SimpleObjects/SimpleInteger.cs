@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using CustomJsonSchemaGenerator.Generator.CustomAttributes;
 
-namespace CustomJsonSchemaGenerator.Tests.Models
+namespace CustomJsonSchemaGenerator.Tests.Models.SimpleObjects
 {
     public class SimpleInteger
     {

@@ -52,6 +52,15 @@
       <None Update="Tests\ExpectedJsonSchemas\Simple\SimpleString\SimpleStringWithFormat.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="Tests\ExpectedJsonSchemas\Complex\ThirdLevel.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\Complex\FirstLevel.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Tests\ExpectedJsonSchemas\Complex\SecondLevel.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

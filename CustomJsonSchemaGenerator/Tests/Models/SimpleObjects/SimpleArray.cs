@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using CustomJsonSchemaGenerator.Generator.CustomAttributes;
 
-namespace CustomJsonSchemaGenerator.Tests.Models
+namespace CustomJsonSchemaGenerator.Tests.Models.SimpleObjects
 {
     public class SimpleArray
     {

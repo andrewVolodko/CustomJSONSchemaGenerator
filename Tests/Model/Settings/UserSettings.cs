@@ -9,7 +9,6 @@ namespace Tests.Model.Settings
     public class UserSettings : SettingsObj
     {
         [JsonProperty("email", Required = Required.Always)]
-        [DataType(DataType.EmailAddress)]
         [RegularExpression("^.+\\..+(@itechart-group\\.com)$")]
         public string Email { get; set; }
         
