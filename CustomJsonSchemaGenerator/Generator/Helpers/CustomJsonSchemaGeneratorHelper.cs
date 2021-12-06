@@ -131,8 +131,11 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                     case MinimumPropertiesAttribute minProperties:
                         currentSchema.MinimumProperties = minProperties.Value;
                         break;
-                    case DisallowAdditionalPropertiesAttribute:
+                    case DisallowAdditionalPropertiesAttribute :
                         currentSchema.AllowAdditionalProperties = false;
+                        break;
+                    case AdditionalPropertiesAttribute additionalPropertiesAttribute:
+                        currentSchema.AdditionalProperties = additionalPropertiesAttribute.Value;
                         break;
                     case ArrayItemsCannotBeNullAttribute:
                         if (optionalArrayPropertySchema != null)

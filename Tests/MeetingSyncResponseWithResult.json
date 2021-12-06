@@ -21,6 +21,8 @@
         "start": 9223372036854775807,
         "end": 100,
         "location_name": "Minsk I T10 I 901 I 12",
-        "subject": "New meeting for roomfinder.tbot-qa@itechart-group.com"
+        "subject": "New meeting for roomfinder.tbot-qa@itechart-group.com",
+        "testAdditionalPropString": "testAdditionalPropString",
+        "testAdditionalPropInteger": 10.5
     }
 }

@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using CustomJsonSchemaGenerator.Generator;
-using CustomJsonSchemaGenerator.Tests.Models.ComplexObject;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using NUnit.Framework;
 using Tests.Model;
 using Tests.Model.Meetings;
-using Tests.Model.Settings;
 
 namespace Tests
 {

@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 namespace Tests.Model.Meeting
 {
     [DisallowAdditionalProperties]
-    [MinimumProperties(10)]
     public class NameEmailObj
     {
         [JsonProperty("name", Required = Required.AllowNull), MinLength(1), MaxLength(100), Format("NameFormat")]
@@ -16,18 +15,5 @@ namespace Tests.Model.Meeting
         [RegularExpression("^.+\\..+(@itechart-group\\.com)$")]
         [MaxLength(250)]
         public string Email { get; set; }
-
-        [JsonProperty("exchangeClient", Required = Required.Always)]
-        public ExchangeClient ExchangeClient { get; set; }
-    }
-
-    public class ExchangeClient
-    {
-        [JsonProperty("version")]
-        [Range(0, 100), ExclusiveMinimum]
-        public double Version { get; set; }
-
-        [Format("DescriptionFormat")]
-        public string Description;
     }
 }

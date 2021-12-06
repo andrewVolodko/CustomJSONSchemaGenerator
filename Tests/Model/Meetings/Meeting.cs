@@ -8,9 +8,10 @@ using Tests.Model.Meeting;
 namespace Tests.Model.Meetings
 {
     [GenerateJsonSchema]
-    [DisallowAdditionalProperties]
-    [MaximumProperties(4)]
+    // [DisallowAdditionalProperties]
+    [MaximumProperties(9)]
     [MinimumProperties(1)]
+    [AdditionalProperties(JSchemaType.Integer, JSchemaType.String)]
     public class Meeting : BaseMeeting
     {
         [JsonProperty("attendees", Required = Required.AllowNull), ArrayItemsCannotBeNull, UniqueItems, Contains(JSchemaType.Object), MinContains(2), MinLength(2), MaxLength(100)]
