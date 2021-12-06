@@ -1,0 +1,28 @@
+{
+  "firstName": "Dave",
+  "age": 32,
+  "height": 175.4,
+  "favoriteChild": {
+    "name": "Andrew",
+    "childAge": 3,
+    "childUUID": "73ceb917-6a51-4f5c-846e-9b81ee87b947"
+  },
+  "otherChildren": [
+    {
+      "name": "Dima",
+      "childAge": 10,
+      "childUUID": "b98e27b8-970b-4e55-9c89-bfe2346aaa9c"
+    },
+    {
+      "name": "Igor",
+      "childAge": 15,
+      "childUUID": "b8ff406a-42c4-4866-aa45-b4c229eb2ec2"
+    },
+    {
+      "name": "Kate",
+      "childAge": 8,
+      "childUUID": "d4492b9f-c0ee-4d09-9e0e-2c241121ceda"
+    }
+  ],
+  "isCalm": false
+}

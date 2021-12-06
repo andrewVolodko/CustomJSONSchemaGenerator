@@ -61,6 +61,9 @@
       <None Update="Tests\ExpectedJsonSchemas\Complex\SecondLevel.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="Demo\parent.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
