@@ -1,0 +1,17 @@
+{
+  "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleObjects.SimpleNumber+SimpleNumberWithMultipleOf",
+  "type": [
+    "object",
+    "null"
+  ],
+  "properties": {
+    "SimpleNumberField": {
+      "type": "number",
+      "multipleOf": 10.0
+    },
+    "SimpleNumberProperty": {
+      "type": "number",
+      "multipleOf": 10.0
+    }
+  }
+}

@@ -1,0 +1,1445 @@
+{
+    "$id": "CustomJsonSchemaGenerator.Tests.Models.ComplexObject.SecondLevel",
+    "type": [
+        "object",
+        "null"
+    ],
+    "properties": {
+        "secondLevelSimpleStringField": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "pattern": "TestPatternForField",
+            "format": "TestFormatForField",
+            "enum": [
+                "ValueOne",
+                "ValueTwo",
+                "ValueThree"
+            ]
+        },
+        "secondLevelSimpleNumberField": {
+            "type": "number",
+            "exclusiveMinimum": -100.0,
+            "exclusiveMaximum": 100.0,
+            "multipleOf": 25.6
+        },
+        "secondLevelSimpleIntegerField": {
+            "type": "integer",
+            "exclusiveMinimum": -100.0,
+            "exclusiveMaximum": 100.0,
+            "multipleOf": 25.0
+        },
+        "secondLevelSimpleStringArrayField": {
+            "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+            "type": [
+                "array",
+                "null"
+            ],
+            "additionalItems": false,
+            "items": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "string"
+            }
+        },
+        "secondLevelSimpleNumberArrayField": {
+            "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+            "type": "array",
+            "additionalItems": false,
+            "items": {
+                "type": "number"
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "number"
+            }
+        },
+        "secondLevelSimpleIntegerArrayField": {
+            "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+            "type": [
+                "array",
+                "null"
+            ],
+            "additionalItems": false,
+            "items": {
+                "type": "integer"
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "integer"
+            }
+        },
+        "secondLevelSimpleObjectArrayField": {
+            "$id": "System.Collections.Generic.List`1[[CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectTwo, CustomJsonSchemaGenerator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+            "type": "array",
+            "additionalItems": false,
+            "items": {
+                "$id": "CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectTwo",
+                "type": "object",
+                "properties": {
+                    "AdditionalObjectTwoSimpleStringField": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "AdditionalObjectTwoSimpleNumberField": {
+                        "type": "number"
+                    },
+                    "AdditionalObjectTwoSimpleIntegerField": {
+                        "type": "integer"
+                    },
+                    "AdditionalObjectTwoSimpleStringArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        }
+                    },
+                    "AdditionalObjectTwoSimpleNumberArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "AdditionalObjectTwoSimpleIntegerArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    "AdditionalObjectTwoSimpleObjectArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {}
+                    },
+                    "AdditionalObjectTwoSimpleStringProperty": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "AdditionalObjectTwoSimpleNumberProperty": {
+                        "type": "number"
+                    },
+                    "AdditionalObjectTwoSimpleIntegerProperty": {
+                        "type": "integer"
+                    },
+                    "AdditionalObjectTwoSimpleStringArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        }
+                    },
+                    "AdditionalObjectTwoSimpleNumberArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "AdditionalObjectTwoSimpleIntegerArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    "AdditionalObjectTwoSimpleObjectArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {}
+                    }
+                }
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "object"
+            }
+        },
+        "firstLevelSimpleStringField": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 100,
+            "pattern": "TestPatternForField",
+            "format": "TestFormatForField",
+            "enum": [
+                "ValueOne",
+                "ValueTwo",
+                "ValueThree"
+            ]
+        },
+        "firstLevelSimpleNumberField": {
+            "type": "number",
+            "exclusiveMinimum": -100.0,
+            "exclusiveMaximum": 100.0,
+            "multipleOf": 25.6
+        },
+        "firstLevelSimpleIntegerField": {
+            "type": "integer",
+            "exclusiveMinimum": -100.0,
+            "exclusiveMaximum": 100.0,
+            "multipleOf": 25.0
+        },
+        "firstLevelSimpleStringArrayField": {
+            "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+            "type": [
+                "array",
+                "null"
+            ],
+            "additionalItems": false,
+            "items": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "string"
+            }
+        },
+        "firstLevelSimpleNumberArrayField": {
+            "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+            "type": "array",
+            "additionalItems": false,
+            "items": {
+                "type": "number"
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "number"
+            }
+        },
+        "firstLevelSimpleIntegerArrayField": {
+            "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+            "type": [
+                "array",
+                "null"
+            ],
+            "additionalItems": false,
+            "items": {
+                "type": "integer"
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "integer"
+            }
+        },
+        "firstLevelSimpleObjectArrayField": {
+            "$id": "System.Collections.Generic.List`1[[CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectOne, CustomJsonSchemaGenerator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+            "type": "array",
+            "additionalItems": false,
+            "items": {
+                "$id": "CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectOne",
+                "type": "object",
+                "properties": {
+                    "additionalObjectOneSimpleStringField": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "pattern": "TestPatternForField",
+                        "format": "TestFormatForField"
+                    },
+                    "additionalObjectOneSimpleNumberField": {
+                        "type": "number",
+                        "exclusiveMinimum": -100.0,
+                        "exclusiveMaximum": 100.0,
+                        "multipleOf": 25.6
+                    },
+                    "additionalObjectOneSimpleIntegerField": {
+                        "type": "integer",
+                        "exclusiveMinimum": -100.0,
+                        "exclusiveMaximum": 100.0,
+                        "multipleOf": 25.0
+                    },
+                    "additionalObjectOneSimpleStringArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "additionalItems": false,
+                        "items": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000,
+                        "minContains": 1,
+                        "maxContains": 1000,
+                        "contains": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalObjectOneSimpleNumberArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": "array",
+                        "additionalItems": false,
+                        "items": {
+                            "type": "number"
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000,
+                        "minContains": 1,
+                        "maxContains": 1000,
+                        "contains": {
+                            "type": "number"
+                        }
+                    },
+                    "additionalObjectOneSimpleIntegerArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "additionalItems": false,
+                        "items": {
+                            "type": "integer"
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000,
+                        "minContains": 1,
+                        "maxContains": 1000,
+                        "contains": {
+                            "type": "integer"
+                        }
+                    },
+                    "additionalObjectOneSimpleObjectArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectTwo, CustomJsonSchemaGenerator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+                        "type": "array",
+                        "additionalItems": false,
+                        "items": {
+                            "$id": "CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectTwo",
+                            "type": "object",
+                            "properties": {
+                                "AdditionalObjectTwoSimpleStringField": {
+                                    "type": [
+                                        "string",
+                                        "null"
+                                    ]
+                                },
+                                "AdditionalObjectTwoSimpleNumberField": {
+                                    "type": "number"
+                                },
+                                "AdditionalObjectTwoSimpleIntegerField": {
+                                    "type": "integer"
+                                },
+                                "AdditionalObjectTwoSimpleStringArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleNumberArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "number"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleIntegerArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleObjectArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {}
+                                },
+                                "AdditionalObjectTwoSimpleStringProperty": {
+                                    "type": [
+                                        "string",
+                                        "null"
+                                    ]
+                                },
+                                "AdditionalObjectTwoSimpleNumberProperty": {
+                                    "type": "number"
+                                },
+                                "AdditionalObjectTwoSimpleIntegerProperty": {
+                                    "type": "integer"
+                                },
+                                "AdditionalObjectTwoSimpleStringArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleNumberArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "number"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleIntegerArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleObjectArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000
+                    },
+                    "additionalObjectOneSimpleStringProperty": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "pattern": "TestPatternForProperty",
+                        "format": "TestFormatForProperty"
+                    },
+                    "additionalObjectOneSimpleNumberProperty": {
+                        "type": "number",
+                        "exclusiveMinimum": -100.0,
+                        "exclusiveMaximum": 100.0,
+                        "multipleOf": 25.6
+                    },
+                    "additionalObjectOneSimpleIntegerProperty": {
+                        "type": "integer",
+                        "exclusiveMinimum": -100.0,
+                        "exclusiveMaximum": 100.0,
+                        "multipleOf": 25.0
+                    },
+                    "additionalObjectOneSimpleStringArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": "array",
+                        "additionalItems": false,
+                        "items": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000,
+                        "minContains": 1,
+                        "maxContains": 1000,
+                        "contains": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalObjectOneSimpleNumberArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "additionalItems": false,
+                        "items": {
+                            "type": "number"
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000,
+                        "minContains": 1,
+                        "maxContains": 1000,
+                        "contains": {
+                            "type": "number"
+                        }
+                    },
+                    "additionalObjectOneSimpleIntegerArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": "array",
+                        "additionalItems": false,
+                        "items": {
+                            "type": "integer"
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000,
+                        "minContains": 1,
+                        "maxContains": 1000,
+                        "contains": {
+                            "type": "integer"
+                        }
+                    },
+                    "additionalObjectOneSimpleObjectArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectTwo, CustomJsonSchemaGenerator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+                        "type": "array",
+                        "additionalItems": false,
+                        "items": {
+                            "$id": "CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectTwo",
+                            "type": "object",
+                            "properties": {
+                                "AdditionalObjectTwoSimpleStringField": {
+                                    "type": [
+                                        "string",
+                                        "null"
+                                    ]
+                                },
+                                "AdditionalObjectTwoSimpleNumberField": {
+                                    "type": "number"
+                                },
+                                "AdditionalObjectTwoSimpleIntegerField": {
+                                    "type": "integer"
+                                },
+                                "AdditionalObjectTwoSimpleStringArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleNumberArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "number"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleIntegerArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleObjectArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {}
+                                },
+                                "AdditionalObjectTwoSimpleStringProperty": {
+                                    "type": [
+                                        "string",
+                                        "null"
+                                    ]
+                                },
+                                "AdditionalObjectTwoSimpleNumberProperty": {
+                                    "type": "number"
+                                },
+                                "AdditionalObjectTwoSimpleIntegerProperty": {
+                                    "type": "integer"
+                                },
+                                "AdditionalObjectTwoSimpleStringArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleNumberArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "number"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleIntegerArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleObjectArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000
+                    }
+                },
+                "required": [
+                    "additionalObjectOneSimpleStringField",
+                    "additionalObjectOneSimpleNumberField",
+                    "additionalObjectOneSimpleIntegerField",
+                    "additionalObjectOneSimpleStringArrayField",
+                    "additionalObjectOneSimpleNumberArrayField",
+                    "additionalObjectOneSimpleIntegerArrayField",
+                    "additionalObjectOneSimpleObjectArrayField",
+                    "additionalObjectOneSimpleObjectArrayProperty"
+                ]
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "object"
+            }
+        },
+        "secondLevelSimpleStringProperty": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "minLength": 1,
+            "maxLength": 100,
+            "pattern": "TestPatternForProperty",
+            "format": "TestFormatForProperty",
+            "enum": [
+                "ValueOne",
+                "ValueTwo",
+                "ValueThree"
+            ]
+        },
+        "secondLevelSimpleNumberProperty": {
+            "type": "number",
+            "exclusiveMinimum": -100.0,
+            "exclusiveMaximum": 100.0,
+            "multipleOf": 25.6
+        },
+        "secondLevelSimpleIntegerProperty": {
+            "type": "integer",
+            "exclusiveMinimum": -100.0,
+            "exclusiveMaximum": 100.0,
+            "multipleOf": 25.0
+        },
+        "secondLevelSimpleStringArrayProperty": {
+            "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+            "type": "array",
+            "additionalItems": false,
+            "items": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "string"
+            }
+        },
+        "secondLevelSimpleNumberArrayProperty": {
+            "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+            "type": [
+                "array",
+                "null"
+            ],
+            "additionalItems": false,
+            "items": {
+                "type": "number"
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "number"
+            }
+        },
+        "secondLevelSimpleIntegerArrayProperty": {
+            "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+            "type": "array",
+            "additionalItems": false,
+            "items": {
+                "type": "integer"
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "integer"
+            }
+        },
+        "secondLevelSimpleObjectArrayProperty": {
+            "$id": "System.Collections.Generic.List`1[[CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectTwo, CustomJsonSchemaGenerator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+            "type": "array",
+            "additionalItems": false,
+            "items": {
+                "$id": "CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectTwo",
+                "type": "object",
+                "properties": {
+                    "AdditionalObjectTwoSimpleStringField": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "AdditionalObjectTwoSimpleNumberField": {
+                        "type": "number"
+                    },
+                    "AdditionalObjectTwoSimpleIntegerField": {
+                        "type": "integer"
+                    },
+                    "AdditionalObjectTwoSimpleStringArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        }
+                    },
+                    "AdditionalObjectTwoSimpleNumberArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "AdditionalObjectTwoSimpleIntegerArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    "AdditionalObjectTwoSimpleObjectArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {}
+                    },
+                    "AdditionalObjectTwoSimpleStringProperty": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "AdditionalObjectTwoSimpleNumberProperty": {
+                        "type": "number"
+                    },
+                    "AdditionalObjectTwoSimpleIntegerProperty": {
+                        "type": "integer"
+                    },
+                    "AdditionalObjectTwoSimpleStringArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        }
+                    },
+                    "AdditionalObjectTwoSimpleNumberArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "number"
+                        }
+                    },
+                    "AdditionalObjectTwoSimpleIntegerArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    "AdditionalObjectTwoSimpleObjectArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "items": {}
+                    }
+                }
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "object"
+            }
+        },
+        "firstLevelSimpleStringProperty": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "minLength": 1,
+            "maxLength": 100,
+            "pattern": "TestPatternForProperty",
+            "format": "TestFormatForProperty",
+            "enum": [
+                "ValueOne",
+                "ValueTwo",
+                "ValueThree"
+            ]
+        },
+        "firstLevelSimpleNumberProperty": {
+            "type": "number",
+            "exclusiveMinimum": -100.0,
+            "exclusiveMaximum": 100.0,
+            "multipleOf": 25.6
+        },
+        "firstLevelSimpleIntegerProperty": {
+            "type": "integer",
+            "exclusiveMinimum": -100.0,
+            "exclusiveMaximum": 100.0,
+            "multipleOf": 25.0
+        },
+        "firstLevelSimpleStringArrayProperty": {
+            "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+            "type": "array",
+            "additionalItems": false,
+            "items": {
+                "type": [
+                    "string",
+                    "null"
+                ]
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "string"
+            }
+        },
+        "firstLevelSimpleNumberArrayProperty": {
+            "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+            "type": [
+                "array",
+                "null"
+            ],
+            "additionalItems": false,
+            "items": {
+                "type": "number"
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "number"
+            }
+        },
+        "firstLevelSimpleIntegerArrayProperty": {
+            "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+            "type": "array",
+            "additionalItems": false,
+            "items": {
+                "type": "integer"
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "integer"
+            }
+        },
+        "firstLevelSimpleObjectArrayProperty": {
+            "$id": "System.Collections.Generic.List`1[[CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectOne, CustomJsonSchemaGenerator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+            "type": "array",
+            "additionalItems": false,
+            "items": {
+                "$id": "CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectOne",
+                "type": "object",
+                "properties": {
+                    "additionalObjectOneSimpleStringField": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "pattern": "TestPatternForField",
+                        "format": "TestFormatForField"
+                    },
+                    "additionalObjectOneSimpleNumberField": {
+                        "type": "number",
+                        "exclusiveMinimum": -100.0,
+                        "exclusiveMaximum": 100.0,
+                        "multipleOf": 25.6
+                    },
+                    "additionalObjectOneSimpleIntegerField": {
+                        "type": "integer",
+                        "exclusiveMinimum": -100.0,
+                        "exclusiveMaximum": 100.0,
+                        "multipleOf": 25.0
+                    },
+                    "additionalObjectOneSimpleStringArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "additionalItems": false,
+                        "items": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000,
+                        "minContains": 1,
+                        "maxContains": 1000,
+                        "contains": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalObjectOneSimpleNumberArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": "array",
+                        "additionalItems": false,
+                        "items": {
+                            "type": "number"
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000,
+                        "minContains": 1,
+                        "maxContains": 1000,
+                        "contains": {
+                            "type": "number"
+                        }
+                    },
+                    "additionalObjectOneSimpleIntegerArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "additionalItems": false,
+                        "items": {
+                            "type": "integer"
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000,
+                        "minContains": 1,
+                        "maxContains": 1000,
+                        "contains": {
+                            "type": "integer"
+                        }
+                    },
+                    "additionalObjectOneSimpleObjectArrayField": {
+                        "$id": "System.Collections.Generic.List`1[[CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectTwo, CustomJsonSchemaGenerator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+                        "type": "array",
+                        "additionalItems": false,
+                        "items": {
+                            "$id": "CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectTwo",
+                            "type": "object",
+                            "properties": {
+                                "AdditionalObjectTwoSimpleStringField": {
+                                    "type": [
+                                        "string",
+                                        "null"
+                                    ]
+                                },
+                                "AdditionalObjectTwoSimpleNumberField": {
+                                    "type": "number"
+                                },
+                                "AdditionalObjectTwoSimpleIntegerField": {
+                                    "type": "integer"
+                                },
+                                "AdditionalObjectTwoSimpleStringArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleNumberArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "number"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleIntegerArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleObjectArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {}
+                                },
+                                "AdditionalObjectTwoSimpleStringProperty": {
+                                    "type": [
+                                        "string",
+                                        "null"
+                                    ]
+                                },
+                                "AdditionalObjectTwoSimpleNumberProperty": {
+                                    "type": "number"
+                                },
+                                "AdditionalObjectTwoSimpleIntegerProperty": {
+                                    "type": "integer"
+                                },
+                                "AdditionalObjectTwoSimpleStringArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleNumberArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "number"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleIntegerArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleObjectArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000
+                    },
+                    "additionalObjectOneSimpleStringProperty": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "minLength": 1,
+                        "maxLength": 100,
+                        "pattern": "TestPatternForProperty",
+                        "format": "TestFormatForProperty"
+                    },
+                    "additionalObjectOneSimpleNumberProperty": {
+                        "type": "number",
+                        "exclusiveMinimum": -100.0,
+                        "exclusiveMaximum": 100.0,
+                        "multipleOf": 25.6
+                    },
+                    "additionalObjectOneSimpleIntegerProperty": {
+                        "type": "integer",
+                        "exclusiveMinimum": -100.0,
+                        "exclusiveMaximum": 100.0,
+                        "multipleOf": 25.0
+                    },
+                    "additionalObjectOneSimpleStringArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": "array",
+                        "additionalItems": false,
+                        "items": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000,
+                        "minContains": 1,
+                        "maxContains": 1000,
+                        "contains": {
+                            "type": "string"
+                        }
+                    },
+                    "additionalObjectOneSimpleNumberArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": [
+                            "array",
+                            "null"
+                        ],
+                        "additionalItems": false,
+                        "items": {
+                            "type": "number"
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000,
+                        "minContains": 1,
+                        "maxContains": 1000,
+                        "contains": {
+                            "type": "number"
+                        }
+                    },
+                    "additionalObjectOneSimpleIntegerArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                        "type": "array",
+                        "additionalItems": false,
+                        "items": {
+                            "type": "integer"
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000,
+                        "minContains": 1,
+                        "maxContains": 1000,
+                        "contains": {
+                            "type": "integer"
+                        }
+                    },
+                    "additionalObjectOneSimpleObjectArrayProperty": {
+                        "$id": "System.Collections.Generic.List`1[[CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectTwo, CustomJsonSchemaGenerator, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+                        "type": "array",
+                        "additionalItems": false,
+                        "items": {
+                            "$id": "CustomJsonSchemaGenerator.Tests.Models.ComplexObject.AdditionalObjects.AdditionalObjectTwo",
+                            "type": "object",
+                            "properties": {
+                                "AdditionalObjectTwoSimpleStringField": {
+                                    "type": [
+                                        "string",
+                                        "null"
+                                    ]
+                                },
+                                "AdditionalObjectTwoSimpleNumberField": {
+                                    "type": "number"
+                                },
+                                "AdditionalObjectTwoSimpleIntegerField": {
+                                    "type": "integer"
+                                },
+                                "AdditionalObjectTwoSimpleStringArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleNumberArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "number"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleIntegerArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleObjectArrayField": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {}
+                                },
+                                "AdditionalObjectTwoSimpleStringProperty": {
+                                    "type": [
+                                        "string",
+                                        "null"
+                                    ]
+                                },
+                                "AdditionalObjectTwoSimpleNumberProperty": {
+                                    "type": "number"
+                                },
+                                "AdditionalObjectTwoSimpleIntegerProperty": {
+                                    "type": "integer"
+                                },
+                                "AdditionalObjectTwoSimpleStringArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": [
+                                            "string",
+                                            "null"
+                                        ]
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleNumberArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Double, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "number"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleIntegerArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Int32, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "AdditionalObjectTwoSimpleObjectArrayProperty": {
+                                    "$id": "System.Collections.Generic.List`1[[System.Object, System.Private.CoreLib, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+                                    "type": [
+                                        "array",
+                                        "null"
+                                    ],
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "uniqueItems": true,
+                        "minItems": 1,
+                        "maxItems": 1000
+                    }
+                },
+                "required": [
+                    "additionalObjectOneSimpleStringField",
+                    "additionalObjectOneSimpleNumberField",
+                    "additionalObjectOneSimpleIntegerField",
+                    "additionalObjectOneSimpleStringArrayField",
+                    "additionalObjectOneSimpleNumberArrayField",
+                    "additionalObjectOneSimpleIntegerArrayField",
+                    "additionalObjectOneSimpleObjectArrayField",
+                    "additionalObjectOneSimpleObjectArrayProperty"
+                ]
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1000,
+            "minContains": 1,
+            "maxContains": 1000,
+            "contains": {
+                "type": "object"
+            }
+        }
+    },
+    "required": [
+        "secondLevelSimpleStringField",
+        "secondLevelSimpleNumberField",
+        "secondLevelSimpleIntegerField",
+        "secondLevelSimpleStringArrayField",
+        "secondLevelSimpleNumberArrayField",
+        "secondLevelSimpleIntegerArrayField",
+        "secondLevelSimpleObjectArrayField",
+        "firstLevelSimpleStringField",
+        "firstLevelSimpleNumberField",
+        "firstLevelSimpleIntegerField",
+        "firstLevelSimpleStringArrayField",
+        "firstLevelSimpleNumberArrayField",
+        "firstLevelSimpleIntegerArrayField",
+        "firstLevelSimpleObjectArrayField",
+        "secondLevelSimpleObjectArrayProperty",
+        "firstLevelSimpleObjectArrayProperty"
+    ],
+    "minProperties": 14,
+    "maxProperties": 28
+}

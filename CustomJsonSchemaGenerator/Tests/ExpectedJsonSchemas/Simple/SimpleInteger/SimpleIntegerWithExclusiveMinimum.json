@@ -1,0 +1,19 @@
+{
+  "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleObjects.SimpleInteger+SimpleIntegerWithExclusiveMinimum",
+  "type": [
+    "object",
+    "null"
+  ],
+  "properties": {
+    "SimpleIntegerField": {
+      "type": "integer",
+      "exclusiveMinimum": -2147483648.0,
+      "maximum": 2147483647.0
+    },
+    "SimpleIntegerProperty": {
+      "type": "integer",
+      "exclusiveMinimum": -2147483648.0,
+      "maximum": 2147483647.0
+    }
+  }
+}

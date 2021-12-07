@@ -1,0 +1,23 @@
+{
+  "$id": "CustomJsonSchemaGenerator.Tests.Models.SimpleObjects.SimpleString+SimpleStringWithFormat",
+  "type": [
+    "object",
+    "null"
+  ],
+  "properties": {
+    "SimpleStringField": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uuid"
+    },
+    "SimpleStringProperty": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uuid"
+    }
+  }
+}
