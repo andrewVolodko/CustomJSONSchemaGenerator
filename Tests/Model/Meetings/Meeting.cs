@@ -8,7 +8,6 @@ using Tests.Model.Meeting;
 namespace Tests.Model.Meetings
 {
     [GenerateJsonSchema]
-    // [DisallowAdditionalProperties]
     [MaximumProperties(9)]
     [MinimumProperties(1)]
     [AdditionalProperties(JSchemaType.Integer, JSchemaType.String)]
