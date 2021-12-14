@@ -5,7 +5,6 @@ namespace CustomJsonSchemaGenerator.Tests.Models.SimpleObjects
 {
     public class SimpleArray
     {
-        [GenerateJsonSchema]
         public class SimpleArrayWithDisallowAdditionalItemsAttribute
         {
             [DisallowAdditionalItems]
@@ -15,7 +14,6 @@ namespace CustomJsonSchemaGenerator.Tests.Models.SimpleObjects
             public IEnumerable<TestType> SimpleArrayProperty { get; set; }
         }
 
-        [GenerateJsonSchema]
         public class SimpleArrayWithArrayItemsCannotBeNullAttribute
         {
             [ArrayItemsCannotBeNull]

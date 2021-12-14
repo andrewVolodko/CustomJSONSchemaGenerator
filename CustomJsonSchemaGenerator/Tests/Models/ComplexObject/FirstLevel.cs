@@ -7,7 +7,6 @@ using Newtonsoft.Json.Schema;
 
 namespace CustomJsonSchemaGenerator.Tests.Models.ComplexObject
 {
-    [GenerateJsonSchema]
     [DisallowAdditionalProperties]
     [MinimumProperties(14)]
     [MaximumProperties(14)]

@@ -5,7 +5,6 @@ namespace CustomJsonSchemaGenerator.Tests.Models.SimpleObjects
 {
     public class SimpleNumber
     {
-        [GenerateJsonSchema]
         public class SimpleNumberWithExclusiveMinimum
         {
             [Range(double.MinValue, double.MaxValue), ExclusiveMinimum]
@@ -15,7 +14,6 @@ namespace CustomJsonSchemaGenerator.Tests.Models.SimpleObjects
             public double SimpleNumberProperty { get; set; }
         }
 
-        [GenerateJsonSchema]
         public class SimpleNumberWithExclusiveMaximum
         {
             [Range(double.MinValue, double.MaxValue), ExclusiveMaximum]
@@ -25,7 +23,6 @@ namespace CustomJsonSchemaGenerator.Tests.Models.SimpleObjects
             public double SimpleNumberProperty { get; set; }
         }
 
-        [GenerateJsonSchema]
         public class SimpleNumberWithExclusiveMinimumAndExclusiveMaximum
         {
             [Range(double.MinValue, double.MaxValue), ExclusiveMinimum, ExclusiveMaximum]
@@ -35,7 +32,6 @@ namespace CustomJsonSchemaGenerator.Tests.Models.SimpleObjects
             public double SimpleNumberProperty { get; set; }
         }
 
-        [GenerateJsonSchema]
         public class SimpleNumberWithMultipleOf
         {
             [MultipleOf(10)]

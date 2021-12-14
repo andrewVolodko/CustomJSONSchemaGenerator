@@ -7,7 +7,6 @@ using Newtonsoft.Json.Schema;
 
 namespace CustomJsonSchemaGenerator.Tests.Models.ComplexObject
 {
-    [GenerateJsonSchema]
     [MinimumProperties(14)]
     [MaximumProperties(28)]
     public class SecondLevel : FirstLevel

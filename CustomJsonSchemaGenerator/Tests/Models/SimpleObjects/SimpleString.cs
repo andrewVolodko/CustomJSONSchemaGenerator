@@ -4,7 +4,6 @@ namespace CustomJsonSchemaGenerator.Tests.Models.SimpleObjects
 {
     public class SimpleString
     {
-        [GenerateJsonSchema]
         public class SimpleStringWithFormat
         {
             [Format("uuid")]

@@ -7,9 +7,6 @@ namespace CustomJsonSchemaGenerator.Generator.CustomAttributes
     [AttributeUsage(AttributeTargets.Class ,Inherited = false)]
     public abstract class CustomJsonSchemaTypeAttribute : Attribute { }
 
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface, Inherited = false)]
-    public class GenerateJsonSchemaAttribute : Attribute {}
-
     public class MaximumPropertiesAttribute : CustomJsonSchemaTypeAttribute
     {
         public long Value { get; }

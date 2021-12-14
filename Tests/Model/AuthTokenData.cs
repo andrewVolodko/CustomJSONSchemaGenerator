@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 
 namespace Tests.Model
 {
-    [GenerateJsonSchema]
     [DisallowAdditionalProperties]
     public class AuthTokenData : IResponse
     {

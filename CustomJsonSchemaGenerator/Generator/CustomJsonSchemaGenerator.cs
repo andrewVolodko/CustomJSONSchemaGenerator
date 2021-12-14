@@ -23,9 +23,7 @@ namespace CustomJsonSchemaGenerator.Generator
                 DefaultRequired = Required.Default
             };
 
-            var globalType = CustomTypeBuilder.BuildTypeWithTypesToGenerateJsonSchemaByAttribute(
-                typeof(GenerateJsonSchemaAttribute),
-                "TypesToCreateJSchema");
+            var globalType = CustomTypeBuilder.BuildTypeWithTypesToGenerateJsonSchemaByAttribute();
 
             _globalJSchema = generator.Generate(globalType);
 
@@ -41,18 +39,7 @@ namespace CustomJsonSchemaGenerator.Generator
         {
             _instance ??= new CustomJSchemaGenerator();
 
-            var typeFullName = typeOfObjectToGetSchemaFor.FullName;
-
-            try
-            {
-                return _instance._globalJSchema.Properties[typeFullName!];
-            }
-            catch (KeyNotFoundException)
-            {
-                throw new KeyNotFoundException(
-                    $"Json schema for '{typeFullName}' type was not found. " +
-                    "Possibly, 'GenerateJsonSchema' attribute was not added to the type");
-            }
+            return _instance._globalJSchema.Properties[typeOfObjectToGetSchemaFor.FullName!];
         }
     }
 }

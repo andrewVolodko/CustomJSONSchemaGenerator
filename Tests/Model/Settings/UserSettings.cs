@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 
 namespace Tests.Model.Settings
 {
-    [GenerateJsonSchema]
     [DisallowAdditionalProperties]
     public class UserSettings : SettingsObj
     {
