@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
+using CustomJsonSchemaGenerator.Tests.Tests;
+using Mono.Reflection;
 
 namespace CustomJsonSchemaGenerator.Generator.Helpers
 {
@@ -18,6 +22,29 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
         /// <returns>Common type with props of types for which JSON schemas required</returns>
         internal static Type BuildTypeWithTypesToGenerateJsonSchemaByAttribute(Type attributeType, string customTypeName)
         {
+
+            MethodBase methodBase = typeof(JSchemaGenerationUnitTests).GetMethod("AssertClassSchemas");
+            var instructions = methodBase.GetInstructions();
+
+            var typesToGenerateSchema = new List<Type>();
+
+            for (var i = 2; i < instructions.Count; i++)
+            {
+                dynamic operand = instructions[i].Operand;
+                if (instructions[i].OpCode.OperandType.Equals(OperandType.InlineMethod) && operand.Name.Equals("GetJsonSchema"))
+                {
+                    if (instructions[i - 2].OpCode.OperandType.Equals(OperandType.InlineTok))
+                    {
+                        dynamic operandTest = instructions[i - 2].Operand;
+                        var testType = Type.GetType(operandTest.AssemblyQualifiedName);
+
+                        typesToGenerateSchema.Add(testType);
+                    }
+                }
+            }
+
+
+
             var types = new Dictionary<string, Type>();
 
             var assembleTypes = AppDomain.CurrentDomain.GetAssemblies()
