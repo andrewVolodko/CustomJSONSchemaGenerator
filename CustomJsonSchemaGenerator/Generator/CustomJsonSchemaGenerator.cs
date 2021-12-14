@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using CustomJsonSchemaGenerator.Generator.CustomAttributes;
 using CustomJsonSchemaGenerator.Generator.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Schema;
@@ -36,6 +34,7 @@ namespace CustomJsonSchemaGenerator.Generator
         /// <param name="typeOfObjectToGetSchemaFor">Type the schema was generated for</param>
         /// <returns></returns>
         public static JSchema GetJsonSchema(Type typeOfObjectToGetSchemaFor)
+
         {
             _instance ??= new CustomJSchemaGenerator();
 

@@ -110,7 +110,9 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
             type.GetCustomAttributes(false).Cast<Attribute>().ToList();
 
         private static List<MemberInfo> GetTypePropertiesAndFields(Type type) =>
-            type.GetMembers().Where(member => member is FieldInfo or PropertyInfo).ToList();
+            type.Namespace == "System" ?
+                new List<MemberInfo>() :
+                type.GetMembers().Where(member => member is FieldInfo or PropertyInfo).ToList();
 
         private static void SetJsonPropertyTypeConstraints(ref JSchema typeSchema, List<Attribute> customAttributes,
             JSchema optionalArrayPropertySchema)

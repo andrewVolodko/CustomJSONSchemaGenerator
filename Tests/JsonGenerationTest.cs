@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using CustomJsonSchemaGenerator.Demo;
 using CustomJsonSchemaGenerator.Generator;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using NUnit.Framework;
-using Tests.Model;
 using Tests.Model.Meetings;
 
 namespace Tests
@@ -18,7 +16,7 @@ namespace Tests
         public void Test1()
         {
             var jsonData = GetJsonObjectFromJsonFile("MeetingSyncResponseWithResult.json").ToString();
-            var schema = CustomJSchemaGenerator.GetJsonSchema(typeof(List<string>));
+            var schema = CustomJSchemaGenerator.GetJsonSchema(typeof(List<Meeting>));
 
             var test = schema.ToString();
             var result = ValidateJsonSchema(jsonData, schema, out var jsonSchemaValidationErrors);
