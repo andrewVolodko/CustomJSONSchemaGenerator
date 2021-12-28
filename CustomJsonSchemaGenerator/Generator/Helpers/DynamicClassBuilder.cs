@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
 
@@ -9,15 +10,12 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
         private readonly AssemblyName _assemblyName;
         public DynamicClassBuilder(string className) => _assemblyName = new AssemblyName(className);
 
-        internal Type CreateType(string[] propertyNames, Type[] types)
+        internal Type CreateType(List<(string typeId, Type type, Dictionary<Type, dynamic> attributesWithValues)> typesToGenerateSchemas)
         {
-            if (propertyNames.Length != types.Length)
-                Console.WriteLine("The number of property names should match their corresponding types number");
-
             var dynamicClass = CreateClass();
             CreateConstructor(dynamicClass);
-            for (var ind = 0; ind < propertyNames.Length; ind++)
-                CreateProperty(dynamicClass, propertyNames[ind], types[ind]);
+            for (var ind = 0; ind < typesToGenerateSchemas.Count; ind++)
+                CreateProperty(dynamicClass, typesToGenerateSchemas[ind].typeId, typesToGenerateSchemas[ind].type);
             var type = dynamicClass.CreateType();
 
             return type;

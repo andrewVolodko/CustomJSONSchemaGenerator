@@ -21,13 +21,14 @@ namespace Tests
             var schema = CustomJSchemaGenerator
                 .GetJsonSchema(typeof(Meeting),
                     new MaxLengthAttribute(6567),
-                    new FormatAttribute("weweferfw"));
+                    new FormatAttribute("weweferfw"),
+                    new ExclusiveMaximumAttribute());
 
             // var test = schema.ToString();
             // var result = ValidateJsonSchema(jsonData, schema, out var jsonSchemaValidationErrors);
 
             var schema1 = CustomJSchemaGenerator
-                .GetJsonSchema(typeof(Meeting));
+                .GetJsonSchema(typeof(Meeting), new ExclusiveMaximumAttribute(false), new ArrayItemsCannotBeNullAttribute(false));
 
             // Console.WriteLine(result);
         }

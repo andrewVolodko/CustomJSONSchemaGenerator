@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Security.Cryptography;
+using System.Text;
 using Mono.Reflection;
 
 namespace CustomJsonSchemaGenerator.Generator.Helpers
@@ -27,7 +29,8 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                                                     BindingFlags.Instance | BindingFlags.Static))
                 .Where(method => method.GetMethodBody() != null);
 
-            var typesToGenerateSchemas = new Dictionary<string, Type>();
+            var typesToGenerateSchemas =
+                new List<(string typeId, Type type, Dictionary<Type, dynamic> attributesWithValues)>();
 
             foreach (var method in methods)
             {
@@ -36,7 +39,8 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                 for (var i = 2; i < instructions.Count; i++)
                 {
                     dynamic operand = instructions[i].Operand;
-                    if (instructions[i].OpCode.OperandType.Equals(OperandType.InlineMethod) && operand.Name.Equals("GetJsonSchema"))
+                    if (instructions[i].OpCode.OperandType.Equals(OperandType.InlineMethod) &&
+                        operand.Name.Equals("GetJsonSchema"))
                     {
                         int indexOfProvidedType = 0;
                         Type providedType = null;
@@ -48,6 +52,8 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
 
                                 operand = instructions[k].Operand;
                                 providedType = Type.GetType(operand.AssemblyQualifiedName);
+
+                                break;
                             }
                         }
 
@@ -59,33 +65,54 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
 
                             operand = instructions[u + 1].Operand;
                             var attributeType = Type.GetType(operand.DeclaringType.AssemblyQualifiedName);
-                            attributesWithValues.Add(attributeType, instructions[u].Operand);
+
+                            if (operand.DeclaringType.DeclaredProperties[0].PropertyType.Name == "Boolean")
+                            {
+                                var value = instructions[u].OpCode.Value == 23;
+                                attributesWithValues.Add(attributeType, value);
+                            }
+                            else
+                            {
+                                attributesWithValues.Add(attributeType, instructions[u].Operand);
+                            }
                         }
 
                         var propertyId = GenerateIdForType(providedType, attributesWithValues);
-                        if (!typesToGenerateSchemas.ContainsKey(propertyId))
-                            typesToGenerateSchemas.Add(propertyId, providedType);
+
+                        var doesValueAlreadyExist = typesToGenerateSchemas.Any(el => el.typeId.Equals(propertyId));
+                        if (!doesValueAlreadyExist)
+                            typesToGenerateSchemas.Add((propertyId, providedType, attributesWithValues));
                     }
                 }
             }
 
             var classBuilder = new DynamicClassBuilder("TypesToCreateJSchema");
-            return classBuilder.CreateType(typesToGenerateSchemas.Keys.ToArray(), typesToGenerateSchemas.Values.ToArray());
+            return classBuilder.CreateType(typesToGenerateSchemas);
         }
 
         private static string GenerateIdForType(Type type, Dictionary<Type, dynamic> attributesWithValues = null)
         {
-            var resultId = type.GetHashCode();
+            using SHA256 hash = SHA256.Create();
+
+            var resultId = GetSha256Hash(type.FullName);
 
             if (attributesWithValues != null)
             {
                 foreach (var (attrType, value) in attributesWithValues)
                 {
-                    resultId += attrType.GetHashCode() + value.GetHashCode();
+                    resultId += GetSha256Hash(attrType.FullName) + value.GetHashCode().ToString();
                 }
             }
 
             return $"{type.Name}_{resultId}";
+        }
+
+        private static string GetSha256Hash(string value)
+        {
+            using var hash = SHA256.Create();
+            return string.Concat(hash
+                .ComputeHash(Encoding.UTF8.GetBytes(value))
+                .Select(item => item.ToString("x2")));
         }
     }
 }
