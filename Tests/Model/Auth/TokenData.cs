@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Tests.Model.Auth
 {
-    [DisallowAdditionalProperties]
+    [AllowAdditionalProperties]
     public class TokenData : AuthTokenData
     {
         [JsonProperty("refresh_token", Required = Required.Always)]

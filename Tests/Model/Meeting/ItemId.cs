@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Tests.Model.Meeting
 {
-    [DisallowAdditionalProperties]
+    [AllowAdditionalProperties]
     public class ItemId
     {
         [JsonProperty("id", Required = Required.Always), Format("uuid")]

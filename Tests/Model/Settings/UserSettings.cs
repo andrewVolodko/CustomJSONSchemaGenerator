@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Tests.Model.Settings
 {
-    [DisallowAdditionalProperties]
+    [AllowAdditionalProperties]
     public class UserSettings : SettingsObj
     {
         [JsonProperty("email", Required = Required.Always)]

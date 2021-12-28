@@ -8,10 +8,20 @@ namespace CustomJsonSchemaGenerator.Generator.CustomAttributes
     public abstract class CustomJsonSchemaPropertyAttribute : Attribute {}
 
     [Description("If provided, Maximum property will be verified not inclusively")]
-    public class ExclusiveMaximumAttribute : CustomJsonSchemaPropertyAttribute {}
+    public class ExclusiveMaximumAttribute : CustomJsonSchemaPropertyAttribute
+    {
+        public bool Value { get; }
+
+        public ExclusiveMaximumAttribute(bool value = true) => Value = value;
+    }
 
     [Description("If provided, Minimum property will be verified not inclusively")]
-    public class ExclusiveMinimumAttribute : CustomJsonSchemaPropertyAttribute {}
+    public class ExclusiveMinimumAttribute : CustomJsonSchemaPropertyAttribute
+    {
+        public bool Value { get; }
+
+        public ExclusiveMinimumAttribute(bool value = true) => Value = value;
+    }
 
     public class MultipleOfAttribute : CustomJsonSchemaPropertyAttribute
     {
@@ -27,10 +37,20 @@ namespace CustomJsonSchemaGenerator.Generator.CustomAttributes
         public FormatAttribute(string value) => Value = value;
     }
 
-    public class DisallowAdditionalItemsAttribute : CustomJsonSchemaPropertyAttribute {}
+    public class AllowAdditionalItemsAttribute : CustomJsonSchemaPropertyAttribute
+    {
+        public bool Value { get; }
+
+        public AllowAdditionalItemsAttribute(bool value = true) => Value = value;
+    }
 
     [Description("Applicable only for enumerable types")]
-    public class ArrayItemsCannotBeNullAttribute : CustomJsonSchemaPropertyAttribute {}
+    public class ArrayItemsCannotBeNullAttribute : CustomJsonSchemaPropertyAttribute
+    {
+        public bool Value { get; }
+
+        public ArrayItemsCannotBeNullAttribute(bool value = true) => Value = value;
+    }
 
     public class ContainsAttribute : CustomJsonSchemaPropertyAttribute
     {
@@ -57,5 +77,10 @@ namespace CustomJsonSchemaGenerator.Generator.CustomAttributes
         public MinContainsAttribute(long value) => Value = value;
     }
 
-    public class UniqueItemsAttribute : CustomJsonSchemaPropertyAttribute { }
+    public class UniqueItemsAttribute : CustomJsonSchemaPropertyAttribute
+    {
+        public bool Value { get; }
+
+        public UniqueItemsAttribute(bool value = true) => Value = value;
+    }
 }

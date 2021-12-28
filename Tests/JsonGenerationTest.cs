@@ -19,15 +19,17 @@ namespace Tests
         {
             var jsonData = GetJsonObjectFromJsonFile("MeetingSyncResponseWithResult.json").ToString();
             var schema = CustomJSchemaGenerator
-                .GetJsonSchema(typeof(List<string>),
+                .GetJsonSchema(typeof(Meeting),
                     new MaxLengthAttribute(6567),
-                    new FormatAttribute("weweferfw"),
-                    new MinLengthAttribute(232323));
+                    new FormatAttribute("weweferfw"));
 
-            var test = schema.ToString();
-            var result = ValidateJsonSchema(jsonData, schema, out var jsonSchemaValidationErrors);
+            // var test = schema.ToString();
+            // var result = ValidateJsonSchema(jsonData, schema, out var jsonSchemaValidationErrors);
 
-            Console.WriteLine(result);
+            var schema1 = CustomJSchemaGenerator
+                .GetJsonSchema(typeof(Meeting));
+
+            // Console.WriteLine(result);
         }
 
         public static bool ValidateJsonSchema(string jsonData, JSchema schema, out IList<ValidationError> errors) // Add errors

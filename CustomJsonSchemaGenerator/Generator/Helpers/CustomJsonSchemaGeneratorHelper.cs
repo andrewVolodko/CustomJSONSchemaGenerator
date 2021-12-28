@@ -133,14 +133,14 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                     case MinimumPropertiesAttribute minProperties:
                         currentSchema.MinimumProperties = minProperties.Value;
                         break;
-                    case DisallowAdditionalPropertiesAttribute :
-                        currentSchema.AllowAdditionalProperties = false;
+                    case AllowAdditionalPropertiesAttribute allowAdditionalPropertiesAttribute:
+                        currentSchema.AllowAdditionalProperties = allowAdditionalPropertiesAttribute.Value;
                         break;
                     case AdditionalPropertiesAttribute additionalPropertiesAttribute:
                         currentSchema.AdditionalProperties = additionalPropertiesAttribute.Value;
                         break;
-                    case ArrayItemsCannotBeNullAttribute:
-                        if (optionalArrayPropertySchema != null)
+                    case ArrayItemsCannotBeNullAttribute arrayItemsCannotBeNullAttribute:
+                        if (arrayItemsCannotBeNullAttribute.Value && optionalArrayPropertySchema != null)
                         {
                             currentSchema.Type = JSchemaType.Object;
                         }
@@ -163,11 +163,11 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                     case JSchemaType.Integer | JSchemaType.Null:
                         switch (customAttribute)
                         {
-                            case ExclusiveMaximumAttribute:
-                                propertySchema.ExclusiveMaximum = true;
+                            case ExclusiveMaximumAttribute exclusiveMaximumAttribute:
+                                propertySchema.ExclusiveMaximum = exclusiveMaximumAttribute.Value;
                                 break;
-                            case ExclusiveMinimumAttribute:
-                                propertySchema.ExclusiveMinimum = true;
+                            case ExclusiveMinimumAttribute exclusiveMinimumAttribute:
+                                propertySchema.ExclusiveMinimum = exclusiveMinimumAttribute.Value;
                                 break;
                             case MultipleOfAttribute multipleOfAttribute:
                                 propertySchema.MultipleOf = multipleOfAttribute.Value;
@@ -189,8 +189,8 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                     case JSchemaType.Array | JSchemaType.Null:
                         switch (customAttribute)
                         {
-                            case DisallowAdditionalItemsAttribute:
-                                propertySchema.AllowAdditionalItems = false;
+                            case AllowAdditionalItemsAttribute additionalItemsAttribute:
+                                propertySchema.AllowAdditionalItems = additionalItemsAttribute.Value;
                                 break;
                             case ContainsAttribute containsAttribute:
                                 propertySchema.Contains = containsAttribute.Value;
@@ -209,8 +209,8 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                                 }
 
                                 break;
-                            case UniqueItemsAttribute:
-                                propertySchema.UniqueItems = true;
+                            case UniqueItemsAttribute uniqueItemsAttribute:
+                                propertySchema.UniqueItems = uniqueItemsAttribute.Value;
                                 break;
                         }
 

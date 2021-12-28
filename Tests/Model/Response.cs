@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Tests.Model
 {
-    [DisallowAdditionalProperties]
+    [AllowAdditionalProperties]
     public class Response<T> where T: IResponse, new()
     {
         [JsonProperty("result", Required = Required.Always), MinLength(1)]

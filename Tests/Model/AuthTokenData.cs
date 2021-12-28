@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Tests.Model
 {
-    [DisallowAdditionalProperties]
+    [AllowAdditionalProperties]
     public class AuthTokenData : IResponse
     {
         [JsonProperty("auth_token", Required = Required.AllowNull), MinLength(10), Format("uuid")]

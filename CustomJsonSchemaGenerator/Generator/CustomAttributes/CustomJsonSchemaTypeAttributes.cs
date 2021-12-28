@@ -20,8 +20,13 @@ namespace CustomJsonSchemaGenerator.Generator.CustomAttributes
 
         public MinimumPropertiesAttribute(long value) => Value = value;
     }
-    
-    public class DisallowAdditionalPropertiesAttribute : CustomJsonSchemaTypeAttribute {}
+
+    public class AllowAdditionalPropertiesAttribute : CustomJsonSchemaTypeAttribute
+    {
+        public bool Value { get; }
+
+        public AllowAdditionalPropertiesAttribute(bool value = true) => Value = value;
+    }
 
     public class AdditionalPropertiesAttribute : CustomJsonSchemaTypeAttribute
     {

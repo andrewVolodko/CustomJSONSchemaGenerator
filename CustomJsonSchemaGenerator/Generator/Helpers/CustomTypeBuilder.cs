@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using CustomJsonSchemaGenerator.Tests.Tests;
 using Mono.Reflection;
 
 namespace CustomJsonSchemaGenerator.Generator.Helpers
@@ -39,21 +38,54 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                     dynamic operand = instructions[i].Operand;
                     if (instructions[i].OpCode.OperandType.Equals(OperandType.InlineMethod) && operand.Name.Equals("GetJsonSchema"))
                     {
-                        if (instructions[i - 2].OpCode.OperandType.Equals(OperandType.InlineTok))
+                        int indexOfProvidedType = 0;
+                        Type providedType = null;
+                        for (var k = i; k > 2; k--)
                         {
-                            operand = instructions[i - 2].Operand;
-                            var type = Type.GetType(operand.AssemblyQualifiedName);
+                            if (instructions[k].OpCode.OperandType.Equals(OperandType.InlineTok))
+                            {
+                                indexOfProvidedType = k;
 
-                            var fullName = type.FullName;
-                            if (!typesToGenerateSchemas.ContainsKey(fullName!))
-                                typesToGenerateSchemas.Add(fullName, type);
+                                operand = instructions[k].Operand;
+                                providedType = Type.GetType(operand.AssemblyQualifiedName);
+                            }
                         }
+
+                        // Find provided attributes with their values
+                        Dictionary<Type, dynamic> attributesWithValues = null;
+                        for (var u = indexOfProvidedType + 6; u < i; u += 5)
+                        {
+                            attributesWithValues ??= new Dictionary<Type, dynamic>();
+
+                            operand = instructions[u + 1].Operand;
+                            var attributeType = Type.GetType(operand.DeclaringType.AssemblyQualifiedName);
+                            attributesWithValues.Add(attributeType, instructions[u].Operand);
+                        }
+
+                        var propertyId = GenerateIdForType(providedType, attributesWithValues);
+                        if (!typesToGenerateSchemas.ContainsKey(propertyId))
+                            typesToGenerateSchemas.Add(propertyId, providedType);
                     }
                 }
             }
 
             var classBuilder = new DynamicClassBuilder("TypesToCreateJSchema");
             return classBuilder.CreateType(typesToGenerateSchemas.Keys.ToArray(), typesToGenerateSchemas.Values.ToArray());
+        }
+
+        private static string GenerateIdForType(Type type, Dictionary<Type, dynamic> attributesWithValues = null)
+        {
+            var resultId = type.GetHashCode();
+
+            if (attributesWithValues != null)
+            {
+                foreach (var (attrType, value) in attributesWithValues)
+                {
+                    resultId += attrType.GetHashCode() + value.GetHashCode();
+                }
+            }
+
+            return $"{type.Name}_{resultId}";
         }
     }
 }
