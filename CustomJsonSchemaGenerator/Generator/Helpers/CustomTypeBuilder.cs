@@ -74,9 +74,11 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
 
                             var opCode = instructions[u].OpCode;
                             dynamic value;
+
+                            const int booleanOperatorOpCodeValue = 23;
                             if (operand.DeclaringType.DeclaredProperties[0].PropertyType.Name == "Boolean")
                             {
-                                value = opCode.Value == 23;
+                                value = opCode.Value == booleanOperatorOpCodeValue;
                             }
                             else
                             {
