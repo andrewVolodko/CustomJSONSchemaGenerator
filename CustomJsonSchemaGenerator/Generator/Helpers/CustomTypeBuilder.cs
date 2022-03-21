@@ -61,13 +61,14 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                         // Find provided attributes parameters with their values
                         Dictionary<Type, dynamic> attributesWithValues = null;
 
-                        /*
-                         * Create variables for indexes increasers
-                         */
-                        for (var u = indexOfProvidedType + 6; u < i; u += 5)
+                        var startIndexIncreaser = 6;
+                        var step = 5;
+                        for (var u = indexOfProvidedType + startIndexIncreaser; u < i; u += step)
                         {
                             attributesWithValues ??= new Dictionary<Type, dynamic>();
 
+                            // It's necessary to obtain type of attribute value
+                            // Type of attribute stores by current index plus 1
                             operand = instructions[u + 1].Operand;
                             var attributeType = Type.GetType(operand.DeclaringType.AssemblyQualifiedName);
 
@@ -88,8 +89,13 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                             attributesWithValues.Add(attributeType, value);
                         }
 
+                        // It's necessary to generate unique Id for our type
+                        // Since we can have several identical objects, but their attributes set is different
+                        // So that for these objects we need unique JSON schema
                         var propertyId = RandomHelper.GenerateIdForType(providedType, attributesWithValues);
 
+                        // If JSON schema was already generated for the same object,
+                        // there is no need to generate the new one
                         var doesValueAlreadyExist = typesToGenerateSchemas.Any(el => el.typeId.Equals(propertyId));
                         if (!doesValueAlreadyExist)
                             typesToGenerateSchemas.Add((propertyId, providedType, attributesWithValues));
