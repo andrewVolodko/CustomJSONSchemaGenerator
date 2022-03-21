@@ -61,8 +61,8 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                         // Find provided attributes parameters with their values
                         Dictionary<Type, dynamic> attributesWithValues = null;
 
-                        var startIndexIncreaser = 6;
-                        var step = 5;
+                        const int startIndexIncreaser = 6;
+                        const int step = 5;
                         for (var u = indexOfProvidedType + startIndexIncreaser; u < i; u += step)
                         {
                             attributesWithValues ??= new Dictionary<Type, dynamic>();
