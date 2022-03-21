@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using CustomJsonSchemaGenerator.Generator;
 using CustomJsonSchemaGenerator.Generator.CustomAttributes;
@@ -8,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using NUnit.Framework;
 using Tests.Model.Meetings;
+using RangeAttribute = System.ComponentModel.DataAnnotations.RangeAttribute;
 
 namespace Tests
 {
@@ -20,15 +19,15 @@ namespace Tests
             var jsonData = GetJsonObjectFromJsonFile("MeetingSyncResponseWithResult.json").ToString();
             var schema = CustomJSchemaGenerator
                 .GetJsonSchema(typeof(Meeting),
-                    new MaxLengthAttribute(6567),
-                    new FormatAttribute("weweferfw"),
+                    new MaximumPropertiesAttribute(8),
+                    new MinimumPropertiesAttribute(29),
                     new ExclusiveMaximumAttribute());
 
             // var test = schema.ToString();
             // var result = ValidateJsonSchema(jsonData, schema, out var jsonSchemaValidationErrors);
 
             var schema1 = CustomJSchemaGenerator
-                .GetJsonSchema(typeof(Meeting), new ExclusiveMaximumAttribute(false), new ArrayItemsCannotBeNullAttribute(false));
+                .GetJsonSchema(typeof(Meeting), new ExclusiveMaximumAttribute(), new ArrayItemsCannotBeNullAttribute(false));
 
             // Console.WriteLine(result);
         }

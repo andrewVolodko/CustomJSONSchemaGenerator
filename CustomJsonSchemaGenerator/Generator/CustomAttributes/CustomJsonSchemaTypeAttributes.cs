@@ -4,21 +4,21 @@ using Newtonsoft.Json.Schema;
 
 namespace CustomJsonSchemaGenerator.Generator.CustomAttributes
 {
-    [AttributeUsage(AttributeTargets.Class ,Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public abstract class CustomJsonSchemaTypeAttribute : Attribute { }
 
     public class MaximumPropertiesAttribute : CustomJsonSchemaTypeAttribute
     {
-        public long Value { get; }
+        public int Value { get; }
 
-        public MaximumPropertiesAttribute(long value) => Value = value;
+        public MaximumPropertiesAttribute(int value) => Value = value;
     }
 
     public class MinimumPropertiesAttribute : CustomJsonSchemaTypeAttribute
     {
-        public long Value { get; }
+        public int Value { get; }
 
-        public MinimumPropertiesAttribute(long value) => Value = value;
+        public MinimumPropertiesAttribute(int value) => Value = value;
     }
 
     public class AllowAdditionalPropertiesAttribute : CustomJsonSchemaTypeAttribute

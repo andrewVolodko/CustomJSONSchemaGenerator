@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Security.Cryptography;
-using System.Text;
+using System.Text.RegularExpressions;
 using Mono.Reflection;
 
 namespace CustomJsonSchemaGenerator.Generator.Helpers
@@ -39,10 +38,12 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                 for (var i = 2; i < instructions.Count; i++)
                 {
                     dynamic operand = instructions[i].Operand;
+                    // If current instruction type is InlineMethod and name of operand (method) equals "GetJsonSchema"
+                    // then it's necessary to process this instruction
                     if (instructions[i].OpCode.OperandType.Equals(OperandType.InlineMethod) &&
                         operand.Name.Equals("GetJsonSchema"))
                     {
-                        int indexOfProvidedType = 0;
+                        var indexOfProvidedType = 0;
                         Type providedType = null;
                         for (var k = i; k > 2; k--)
                         {
@@ -57,8 +58,12 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                             }
                         }
 
-                        // Find provided attributes with their values
+                        // Find provided attributes parameters with their values
                         Dictionary<Type, dynamic> attributesWithValues = null;
+
+                        /*
+                         * Create variables for indexes increasers
+                         */
                         for (var u = indexOfProvidedType + 6; u < i; u += 5)
                         {
                             attributesWithValues ??= new Dictionary<Type, dynamic>();
@@ -66,18 +71,24 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                             operand = instructions[u + 1].Operand;
                             var attributeType = Type.GetType(operand.DeclaringType.AssemblyQualifiedName);
 
+                            var opCode = instructions[u].OpCode;
+                            dynamic value;
                             if (operand.DeclaringType.DeclaredProperties[0].PropertyType.Name == "Boolean")
                             {
-                                var value = instructions[u].OpCode.Value == 23;
-                                attributesWithValues.Add(attributeType, value);
+                                value = opCode.Value == 23;
                             }
                             else
                             {
-                                attributesWithValues.Add(attributeType, instructions[u].Operand);
+                                // If int attribute value is less than 9, Operand will be null
+                                // So that it's necessary to obtain attribute value from OpCode name
+                                value = instructions[u].Operand ??
+                                            int.Parse(Regex.Match(opCode.Name!, "(?!.*\\..*\\.)\\d{1}$").Value);
                             }
+
+                            attributesWithValues.Add(attributeType, value);
                         }
 
-                        var propertyId = GenerateIdForType(providedType, attributesWithValues);
+                        var propertyId = RandomHelper.GenerateIdForType(providedType, attributesWithValues);
 
                         var doesValueAlreadyExist = typesToGenerateSchemas.Any(el => el.typeId.Equals(propertyId));
                         if (!doesValueAlreadyExist)
@@ -88,31 +99,6 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
 
             var classBuilder = new DynamicClassBuilder("TypesToCreateJSchema");
             return classBuilder.CreateType(typesToGenerateSchemas);
-        }
-
-        private static string GenerateIdForType(Type type, Dictionary<Type, dynamic> attributesWithValues = null)
-        {
-            using SHA256 hash = SHA256.Create();
-
-            var resultId = GetSha256Hash(type.FullName);
-
-            if (attributesWithValues != null)
-            {
-                foreach (var (attrType, value) in attributesWithValues)
-                {
-                    resultId += GetSha256Hash(attrType.FullName) + value.GetHashCode().ToString();
-                }
-            }
-
-            return $"{type.Name}_{resultId}";
-        }
-
-        private static string GetSha256Hash(string value)
-        {
-            using var hash = SHA256.Create();
-            return string.Concat(hash
-                .ComputeHash(Encoding.UTF8.GetBytes(value))
-                .Select(item => item.ToString("x2")));
         }
     }
 }

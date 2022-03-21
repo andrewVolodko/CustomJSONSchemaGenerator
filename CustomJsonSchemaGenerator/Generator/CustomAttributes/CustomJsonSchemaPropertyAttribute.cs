@@ -64,17 +64,17 @@ namespace CustomJsonSchemaGenerator.Generator.CustomAttributes
     [Description("Will be added to schema only if Contains attribute provided")]
     public class MaxContainsAttribute : CustomJsonSchemaPropertyAttribute
     {
-        public long Value { get; }
+        public int Value { get; }
 
-        public MaxContainsAttribute(long value) => Value = value;
+        public MaxContainsAttribute(int value) => Value = value;
     }
 
     [Description("Will be added to schema only if Contains attribute provided")]
     public class MinContainsAttribute : CustomJsonSchemaPropertyAttribute
     {
-        public long Value { get; }
+        public int Value { get; }
 
-        public MinContainsAttribute(long value) => Value = value;
+        public MinContainsAttribute(int value) => Value = value;
     }
 
     public class UniqueItemsAttribute : CustomJsonSchemaPropertyAttribute

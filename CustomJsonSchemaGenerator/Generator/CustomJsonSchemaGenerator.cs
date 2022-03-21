@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CustomJsonSchemaGenerator.Generator.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Schema;
@@ -39,7 +40,18 @@ namespace CustomJsonSchemaGenerator.Generator
         {
             _instance ??= new CustomJSchemaGenerator();
 
-            return _instance._globalJSchema.Properties[typeOfObjectToGetSchemaFor.FullName!];
+            Dictionary<Type, dynamic> attributesWithValues = null;
+            if (attributes.Any())
+            {
+                attributesWithValues =
+                    attributes.ToDictionary(
+                        keySelector: attr => attr.GetType(),
+                        elementSelector: attr => ((dynamic)attr).Value);
+            }
+
+            var typeId = RandomHelper.GenerateIdForType(typeOfObjectToGetSchemaFor, attributesWithValues);
+
+            return _instance._globalJSchema.Properties[typeId];
         }
     }
 
