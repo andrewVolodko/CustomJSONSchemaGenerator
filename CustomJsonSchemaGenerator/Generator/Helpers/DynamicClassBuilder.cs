@@ -14,12 +14,21 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
         {
             var dynamicClass = CreateClass();
             CreateConstructor(dynamicClass);
-            for (var ind = 0; ind < typesToGenerateSchemas.Count; ind++)
-                CreateProperty(dynamicClass, typesToGenerateSchemas[ind].typeId, typesToGenerateSchemas[ind].type);
+
+            for (var i = 0; i < typesToGenerateSchemas.Count; i++)
+            {
+                CreateProperty(
+                    dynamicClass,
+                    typesToGenerateSchemas[i].typeId,
+                    typesToGenerateSchemas[i].type,
+                    typesToGenerateSchemas[i].attributesWithValues);
+            }
+
             var type = dynamicClass.CreateType();
 
             return type;
         }
+
         private TypeBuilder CreateClass()
         {
             var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(_assemblyName, AssemblyBuilderAccess.Run);
@@ -37,7 +46,7 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
         private static void CreateConstructor(TypeBuilder typeBuilder) =>
             typeBuilder.DefineDefaultConstructor(MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName);
 
-        private static void CreateProperty(TypeBuilder typeBuilder, string propertyName, Type propertyType)
+        private static void CreateProperty(TypeBuilder typeBuilder, string propertyName, Type propertyType, Dictionary<Type, dynamic> attributesWithValues)
         {
             var fieldBuilder = typeBuilder.DefineField("_" + propertyName, propertyType, FieldAttributes.Private);
 
@@ -70,6 +79,14 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
 
             propertyBuilder.SetGetMethod(getPropMthdBldr);
             propertyBuilder.SetSetMethod(setPropMthdBldr);
+
+            foreach (var (attrType, attrValue) in attributesWithValues)
+            {
+                var constructorInfo = attrType.GetConstructor(new Type[] { attrValue.GetType() });
+                var attrBuilder = new CustomAttributeBuilder(constructorInfo, new [] { attrValue });
+
+                propertyBuilder.SetCustomAttribute(attrBuilder);
+            }
         }
     }
 }

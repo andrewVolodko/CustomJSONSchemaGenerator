@@ -20,6 +20,7 @@ namespace Tests
             var schema = CustomJSchemaGenerator
                 .GetJsonSchema(typeof(Meeting),
                     new MaximumPropertiesAttribute(8),
+                    // new AdditionalPropertiesAttribute(JSchemaType.Integer),
                     new MinimumPropertiesAttribute(29),
                     new ExclusiveMaximumAttribute());
 

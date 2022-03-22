@@ -70,24 +70,39 @@ namespace CustomJsonSchemaGenerator.Generator.Helpers
                             // It's necessary to obtain type of attribute value
                             // Type of attribute stores by current index plus 1
                             operand = instructions[u + 1].Operand;
-                            var attributeType = Type.GetType(operand.DeclaringType.AssemblyQualifiedName);
+
+                            string typeAssemblyQualifiedName;
 
                             var opCode = instructions[u].OpCode;
-                            dynamic value;
+                            dynamic value = instructions[u].Operand;
 
-                            const int booleanOperatorOpCodeValue = 23;
-                            if (operand.DeclaringType.DeclaredProperties[0].PropertyType.Name == "Boolean")
+                            if (operand.DeclaringType == null)
                             {
-                                value = opCode.Value == booleanOperatorOpCodeValue;
+                                typeAssemblyQualifiedName = operand.AssemblyQualifiedName;
+                                value = Type.GetType(typeAssemblyQualifiedName);
                             }
                             else
                             {
-                                // If int attribute value is less than 9, Operand will be null
-                                // So that it's necessary to obtain attribute value from OpCode name
-                                value = instructions[u].Operand ??
-                                            int.Parse(Regex.Match(opCode.Name!, "(?!.*\\..*\\.)\\d{1}$").Value);
+                                typeAssemblyQualifiedName = operand.DeclaringType.AssemblyQualifiedName;
+
+                                const int booleanOperatorOpCodeValue = 23;
+                                if (operand.DeclaringType.DeclaredProperties[0].PropertyType.Name == "Boolean")
+                                {
+                                    value = opCode.Value == booleanOperatorOpCodeValue;
+                                }
+                                else if (operand.DeclaringType.DeclaredProperties[0].PropertyType.Name == "Int32")
+                                {
+                                    // If int attribute value is less than 9, Operand will be null
+                                    // So that it's necessary to obtain attribute value from OpCode name
+                                    value = value switch
+                                    {
+                                        null => int.Parse(Regex.Match(opCode.Name!, "(?!.*\\..*\\.)\\d{1}$").Value),
+                                        _ => (int) value
+                                    };
+                                }
                             }
 
+                            var attributeType = Type.GetType(typeAssemblyQualifiedName);
                             attributesWithValues.Add(attributeType, value);
                         }
 
